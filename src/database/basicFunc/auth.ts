@@ -8,8 +8,22 @@ import {
 import { User } from "../../type/model";
 import { auth } from "../firebase";
 
+//ログインしているかどうかを確かめる。
+export const isLogined = (logined: () => void, isntLogined: () => void) => {
+  auth.onAuthStateChanged((user) => {
+    if (!user) {
+      console.log("isn't logined");
+      logined();
+    } else {
+      console.log("logined");
+      isntLogined();
+    }
+  });
+};
+
 //新規登録
 export const signUp = (email: string, password: string) => {
+  console.log("aiueo");
   let result: {
     err: AuthError | null;
     userData: User;
@@ -26,10 +40,12 @@ export const signUp = (email: string, password: string) => {
         id: userCredential.user.uid,
         history: [],
       };
+      console.log(result);
       return result;
     })
     .catch((error: AuthError) => {
       result.err = error;
+      console.log(result);
       return result;
     });
 };

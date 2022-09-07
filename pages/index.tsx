@@ -3,6 +3,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import InitialPage from "../src/components/InitialPage";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
@@ -16,6 +17,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
+        <InitialPage></InitialPage>
         <h1 className={styles.title}>
           アプリのアイコンを表示
           <br />
