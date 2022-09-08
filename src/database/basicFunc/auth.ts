@@ -5,6 +5,7 @@ import {
   AuthError,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import { exit } from "process";
 import { User } from "../../type/model";
 import { auth } from "../firebase";
 
@@ -22,12 +23,10 @@ export const isLogined = (logined: () => void, isntLogined: () => void) => {
 };
 
 //新規登録
-export const signUp = (email: string, password: string) => {
+type result = { err: AuthError | null; userData: User };
+export const AuthSignUp = (email: string, password: string): result => {
   console.log("aiueo");
-  let result: {
-    err: AuthError | null;
-    userData: User;
-  } = {
+  let result: result = {
     err: null,
     userData: {
       id: "",
@@ -40,21 +39,16 @@ export const signUp = (email: string, password: string) => {
         id: userCredential.user.uid,
         history: [],
       };
-      console.log(result);
-      return result;
     })
     .catch((error: AuthError) => {
       result.err = error;
       console.log(result);
-      return result;
     });
+  return result;
 };
 //ログイン
-export const Login = (email: string, password: string) => {
-  let result: {
-    err: AuthError | null;
-    userData: User;
-  } = {
+export const AuthLogin = (email: string, password: string): result => {
+  let result: result = {
     err: null,
     userData: {
       id: "",
@@ -73,9 +67,10 @@ export const Login = (email: string, password: string) => {
       result.err = error;
       return result;
     });
+  return result;
 };
 //ログアウト
-export const logOut = () => {
+export const AuthLogOut = () => {
   let result: AuthError | null = null;
   auth
     .signOut()

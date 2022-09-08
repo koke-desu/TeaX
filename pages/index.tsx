@@ -26,14 +26,14 @@ const Home: NextPage = () => {
 
         <button
           onClick={() => {
-            router.push("/main/main");
+            router.replace("/main/main");
           }}
         >
           ログインしています！
         </button>
         <button
           onClick={() => {
-            router.push("/userAction/introduction");
+            router.replace("/userAction/introduction");
           }}
         >
           アプリ開いたの初めてです

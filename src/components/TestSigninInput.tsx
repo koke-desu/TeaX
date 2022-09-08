@@ -1,11 +1,11 @@
-import { logIn } from "../database/accountFunc";
+import { signUp } from "../database/accountFunc";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
 type Inputs = {
   email: string;
   password: string;
 };
-const TestLoginInput = () => {
+const TestSigninInput = () => {
   const router = useRouter();
   const {
     register,
@@ -15,7 +15,7 @@ const TestLoginInput = () => {
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log("aiueo");
-    logIn(data.email, data.password, () => router.replace("/main/main"));
+    signUp(data.email, data.password, () => router.replace("/main/main"));
   };
 
   //   console.log(watch("email")); // watch input value by passing the name of it
@@ -37,4 +37,4 @@ const TestLoginInput = () => {
   );
 };
 
-export default TestLoginInput;
+export default TestSigninInput;

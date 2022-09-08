@@ -7,7 +7,7 @@ const introduction = () => {
       <button
         onClick={() => {
           window.localStorage.setItem("tmp", "tmp");
-          router.push("/userAction/signup");
+          router.replace("/userAction/signup");
         }}
       >
         紹介ページ見終わった！！

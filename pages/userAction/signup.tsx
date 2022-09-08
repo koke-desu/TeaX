@@ -1,9 +1,9 @@
-import TestLoginInput from "../../src/components/testLoginInput";
+import TestSigninInput from "../../src/components/TestSigninInput";
 
 const signUp = () => {
   return (
     <div>
-      signUpがめん<TestLoginInput></TestLoginInput>
+      signUpがめん<TestSigninInput></TestSigninInput>
     </div>
   );
 };
