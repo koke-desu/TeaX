@@ -8,11 +8,11 @@ const InitialPage = () => {
     isLogined(
       () => {
         console.log("not login");
-        // router.push("/userAction/login");
+        router.replace("/userAction/login");
       },
       () => {
         console.log("logined");
-        // router.push("/main/main");
+        router.replace("/main/main");
       }
     );
   }, []);

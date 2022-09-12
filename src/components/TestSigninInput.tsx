@@ -33,6 +33,7 @@ const TestSigninInput = () => {
 
         <input type="submit" />
       </form>
+      <a onClick={() => router.replace("login")}>ログインはこちら</a>
     </div>
   );
 };

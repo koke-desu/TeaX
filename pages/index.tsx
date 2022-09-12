@@ -18,7 +18,7 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <InitialPage></InitialPage>
-        <h1 className={styles.title}>
+        {/* <h1 className={styles.title}>
           アプリのアイコンを表示
           <br />
           <a>ローディング中…</a>
@@ -44,7 +44,7 @@ const Home: NextPage = () => {
           }}
         >
           紹介は見たけどログインしてません
-        </button>
+        </button> */}
 
         {/* <p className={styles.description}>
           Get started by editing{' '}

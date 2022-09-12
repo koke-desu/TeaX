@@ -4,9 +4,10 @@ import {
   createUserWithEmailAndPassword,
   AuthError,
   signInWithEmailAndPassword,
+  deleteUser,
+  User,
 } from "firebase/auth";
-import { exit } from "process";
-import { User } from "../../type/model";
+// import { User } from "../../type/model";
 import { auth } from "../firebase";
 
 //ログインしているかどうかを確かめる。
@@ -23,62 +24,19 @@ export const isLogined = (logined: () => void, isntLogined: () => void) => {
 };
 
 //新規登録
-type result = { err: AuthError | null; userData: User };
-export const AuthSignUp = (email: string, password: string): result => {
-  console.log("aiueo");
-  let result: result = {
-    err: null,
-    userData: {
-      id: "",
-      history: [],
-    },
-  };
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      result.userData = {
-        id: userCredential.user.uid,
-        history: [],
-      };
-    })
-    .catch((error: AuthError) => {
-      result.err = error;
-      console.log(result);
-    });
-  return result;
+export const AuthSignUp = (email: string, password: string) => {
+  return createUserWithEmailAndPassword(auth, email, password);
 };
 //ログイン
-export const AuthLogin = (email: string, password: string): result => {
-  let result: result = {
-    err: null,
-    userData: {
-      id: "",
-      history: [],
-    },
-  };
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      result.userData = {
-        id: userCredential.user.uid,
-        history: [],
-      };
-      return result;
-    })
-    .catch((error: AuthError) => {
-      result.err = error;
-      return result;
-    });
-  return result;
+export const AuthLogin = (email: string, password: string) => {
+  return signInWithEmailAndPassword(auth, email, password);
 };
 //ログアウト
 export const AuthLogOut = () => {
-  let result: AuthError | null = null;
-  auth
-    .signOut()
-    .then(() => {
-      return result;
-    })
-    .catch((error) => {
-      result = error;
-      return result;
-    });
+  return auth.signOut();
+};
+
+//ユーザーの削除（使わないかも）
+export const AuthDelete = (user: User) => {
+  return deleteUser(user);
 };

@@ -10,7 +10,6 @@ const TestLoginInput = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data) => {
@@ -33,6 +32,7 @@ const TestLoginInput = () => {
 
         <input type="submit" />
       </form>
+      <a onClick={() => router.replace("signup")}>アカウントが無い方</a>
     </div>
   );
 };
