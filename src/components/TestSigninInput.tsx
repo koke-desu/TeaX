@@ -1,24 +1,21 @@
-import { signUp } from "../database/accountFunc";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
+import { useAccountFunc } from "../database/accountFunc";
 type Inputs = {
   email: string;
   password: string;
 };
 const TestSigninInput = () => {
+  const accountFunc = useAccountFunc();
   const router = useRouter();
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log("aiueo");
-    signUp(data.email, data.password, () => router.replace("/main/main"));
+    accountFunc.signUp(data.email, data.password);
   };
-
-  //   console.log(watch("email")); // watch input value by passing the name of it
 
   return (
     <div>

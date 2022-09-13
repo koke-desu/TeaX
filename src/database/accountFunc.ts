@@ -60,7 +60,6 @@ export const useAccountFunc = () => {
     if (userId)
       await getUserData(userId)
         .then((data: User) => {
-          console.log("getted UserData", data);
           setUser(data);
           router.replace("/main/main");
         })

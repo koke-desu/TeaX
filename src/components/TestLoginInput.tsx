@@ -1,11 +1,15 @@
-import { logIn } from "../database/accountFunc";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
+import { useSetRecoilState } from "recoil";
+import { userAtom } from "../database/atom";
+import { User } from "../type/model";
+import { useAccountFunc } from "../database/accountFunc";
 type Inputs = {
   email: string;
   password: string;
 };
 const TestLoginInput = () => {
+  const accountFunc = useAccountFunc();
   const router = useRouter();
   const {
     register,
@@ -13,8 +17,7 @@ const TestLoginInput = () => {
     formState: { errors },
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log("aiueo");
-    logIn(data.email, data.password, () => router.replace("/main/main"));
+    accountFunc.logIn(data.email, data.password);
   };
 
   //   console.log(watch("email")); // watch input value by passing the name of it
