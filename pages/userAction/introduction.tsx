@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-const introduction = () => {
+const Introduction = () => {
   const router = useRouter();
   return (
     <div>
@@ -16,4 +16,4 @@ const introduction = () => {
   );
 };
 
-export default introduction;
+export default Introduction;
