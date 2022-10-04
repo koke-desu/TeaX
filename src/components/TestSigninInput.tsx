@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
-import { useAccountFunc } from "../database/accountFunc";
+import { useAccountFunc } from "../database/authFunc";
 type Inputs = {
   email: string;
   password: string;

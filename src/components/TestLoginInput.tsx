@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useSetRecoilState } from "recoil";
 import { userAtom } from "../database/atom";
 import { User } from "../type/model";
-import { useAccountFunc } from "../database/accountFunc";
+import { useAccountFunc } from "../database/authFunc";
 type Inputs = {
   email: string;
   password: string;
