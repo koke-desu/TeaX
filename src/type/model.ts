@@ -39,6 +39,8 @@ export type Menu = {
   price: number;
   //バナナ:falseのような感じで記述するイメージ
   allergy: { [allergyName: string]: boolean };
+  soldNum: number;
+  remaining: number;
 };
 
 // トッピング。複数種類つけることが出来る。
@@ -52,6 +54,8 @@ export type Topping = {
   name: string;
   description: number;
   price: number;
+  soldNum: number;
+  remaining: number;
 };
 
 export type Coupons = {
