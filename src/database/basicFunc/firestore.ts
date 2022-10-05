@@ -23,10 +23,7 @@ export const fetchUserData = (id: string): any => {
 
 //TODO:関数を試す
 export const fetchToppings = () => {
-  return getDocs(collection(db, "toppings")).then((docs: any) => {
-    console.log("getToppings from firestore", docs.data());
-    return docs.data();
-  });
+  return getDocs(collection(db, "toppings"));
 };
 
 //TODO:関数を試す
@@ -43,6 +40,11 @@ export const fetchMenus = () => {
     console.log("getMenus from firestore");
     return docs.docs();
   });
+};
+
+//TODO:関数を試す
+export const fetchCoupons = () => {
+  return getDocs(collection(db, "coupons"));
 };
 
 //TODO:関数を試す

@@ -1,7 +1,16 @@
 import { useRecoilState } from "recoil";
-import { Menu, OrderData, OrderMenu, Topping, Toppings } from "../type/model";
+import {
+  Coupon,
+  Coupons,
+  Menu,
+  OrderData,
+  OrderMenu,
+  Topping,
+  Toppings,
+} from "../type/model";
 import {
   cartItemsAtom,
+  couponsAtom,
   keywordLengthAtom,
   menusAtom,
   orderedDataAtom,
@@ -13,8 +22,11 @@ import {
   addKeywordNum,
   changeStateOfCoupon,
   deleteOrder,
+  fetchCoupons,
   fetchKeyword,
+  fetchKeywordLength,
   fetchMenus,
+  fetchToppings,
   setOrder,
   snapOrderState,
 } from "./basicFunc/firestore";
@@ -26,6 +38,7 @@ export const useOrderFunc = () => {
   const [cartItems, setCartItems] = useRecoilState(cartItemsAtom);
   const [toppings, setToppings] = useRecoilState(toppingsAtom);
   const [userData, setUserData] = useRecoilState(userAtom);
+  const [coupons, setCoupons] = useRecoilState(couponsAtom);
   const [tmpCouponsState, setTmpCouponsState] =
     useRecoilState(tmpCouponsStateAtom);
   const [orderedData, setOrderedData] = useRecoilState(orderedDataAtom);
@@ -39,9 +52,55 @@ export const useOrderFunc = () => {
     });
   };
 
+  const getKeywordLength = () => {
+    fetchKeywordLength()
+      .then((docs) => {
+        setKeywordLength(docs.size);
+      })
+      .catch((error) => {
+        alert(
+          `キーワードの種類数を取得できませんでしたアプリを再起動してください:${error.message}`
+        );
+      });
+  };
+
+  const getToppings = () => {
+    fetchToppings().then((docs) => {
+      const toppings: Toppings = {};
+      docs.forEach((doc) => {
+        //TODO:ここ無理やりTopping型にしているので改善したい
+        toppings[doc.id] = doc.data() as Topping;
+      });
+    });
+    setToppings(toppings);
+  };
+
+  const getCoupons = () => {
+    const coupons: Coupons = {};
+    fetchCoupons().then((docs) => {
+      docs.forEach((doc) => {
+        //TODO:ここ無理やりCoupon型にしているので改善したい
+        coupons[doc.id] = doc.data() as Coupon;
+      });
+    });
+    setCoupons(coupons);
+  };
+
   //IDからメニューデータを取得する関数
   const getMenuByID = (menuId: string) => {
     const tmp = menus[menuId];
+    return tmp;
+  };
+
+  //IDからクーポンデータを取得する関数
+  const getCouponByID = (couponId: string) => {
+    const tmp = coupons[couponId];
+    return tmp;
+  };
+
+  //IDからトッピングデータを取得する関数
+  const getToppingsByID = (toppingId: string) => {
+    const tmp = toppings[toppingId];
     return tmp;
   };
 
