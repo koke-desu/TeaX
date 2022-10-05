@@ -6,6 +6,8 @@ import {
   User,
   OrderMenu,
   Toppings,
+  couponState,
+  OrderData,
 } from "../type/model";
 import { auth } from "./firebase";
 
@@ -16,6 +18,11 @@ export const userAtom = atom({
     coupons: {},
     quizzes: {},
   } as User,
+});
+
+export const tmpCouponsStateAtom = atom({
+  key: "tmpCouponsStateAtom",
+  default: {} as { [couponID: string]: couponState },
 });
 
 export const couponsAtom = atom({
@@ -41,4 +48,15 @@ export const quizzesAtom = atom({
 export const cartItemsAtom = atom({
   key: "cartItemsAtom",
   default: [] as OrderMenu[],
+});
+
+//注文済みかつ作成待ちの注文データ
+export const orderedDataAtom = atom({
+  key: "orderedDataAtom",
+  default: null as OrderData | null,
+});
+
+export const keywordLengthAtom = atom({
+  key: "keywordLengthAtom",
+  default: 0 as number,
 });
