@@ -20,7 +20,6 @@ import {
 } from "./basicFunc/firestore";
 
 //モバイルオーダーで使用する関数をまとめたファイル
-export {};
 
 export const useOrderFunc = () => {
   const [menus, setMenus] = useRecoilState(menusAtom);
