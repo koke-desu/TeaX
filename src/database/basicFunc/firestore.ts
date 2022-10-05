@@ -1,14 +1,17 @@
 //ユーザーのデータをfirestoreから取得したり変更したりする処理をまとめたファイル
 import {
   collection,
+  deleteDoc,
   doc,
+  DocumentData,
+  DocumentSnapshot,
   getDoc,
   getDocs,
   onSnapshot,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { Coupons, couponState, User } from "../../type/model";
+import { Coupons, couponState, OrderData, User } from "../../type/model";
 import { db } from "../firebase";
 //ユーザーのアカウント情報を取得
 export const fetchUserData = (id: string): any => {
@@ -42,10 +45,43 @@ export const fetchMenus = () => {
   });
 };
 
+//TODO:関数を試す
+export const setOrder = (userId: string, orderData: OrderData) => {
+  return setDoc(doc(db, "orders", `${userId}`), orderData);
+};
+
+//TODO:関数を試す
+export const deleteOrder = (userId: string) => {
+  return deleteDoc(doc(db, "orders", `${userId}`));
+};
+
+//TODO:関数を試す
+//キーワードの種類数を取得するランダム数の範囲を指定する用（アプリの起動時に取得する感じ）
+export const fetchKeywordLength = () => {
+  return getDocs(collection(db, "keywords"));
+};
+
+//キーワードを取得する
+//TODO:関数を試す
+export const fetchKeyword = (index: number) => {
+  return getDoc(doc(db, "keywords", `${index}`));
+};
+
+//キーワードの後半の番号を1つ増やす
+//TODO:関数を試す
+export const addKeywordNum = (index: number, preNum: number) => {
+  return updateDoc(doc(db, "keywords", `${index}`), {
+    number: preNum + 1,
+  });
+};
+
 //クーポンのステートを変更する関数
-export const changeStateOfCoupon = (userId: string, couponData: Coupons) => {
+export const changeStateOfCoupon = (
+  userId: string,
+  couponStates: { [couponID: string]: couponState }
+) => {
   return updateDoc(doc(db, "users", `${userId}`), {
-    coupons: couponData,
+    coupons: couponStates,
   });
 };
 
@@ -61,4 +97,10 @@ export const createUserData = (id: string) => {
 export const updateUserData = (userData: User) => {
   console.log("updateUserData at firestore");
   return updateDoc(doc(db, "users", `${userData.id}`), userData);
+};
+
+export const snapOrderState = async (userId: string): Promise<DocumentData> => {
+  return onSnapshot(doc(db, "orders", `${userId}`), (doc: DocumentSnapshot) => {
+    return doc.data();
+  });
 };
