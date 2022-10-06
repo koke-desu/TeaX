@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useRouter } from "next/router";
 import { useRecoilValue } from "recoil";
-import { useInitPage } from "../../src/database/accountFunc";
 import { userAtom } from "../../src/database/atom";
+import { useInitPage } from "../../src/database/authFunc";
 import { AuthLogOut } from "../../src/database/basicFunc/auth";
 
 const main = () => {
