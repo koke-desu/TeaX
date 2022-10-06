@@ -15,7 +15,7 @@ import { Coupons, couponState, OrderData, User } from "../../type/model";
 import { db } from "../firebase";
 //ユーザーのアカウント情報を取得
 export const fetchUserData = (id: string): any => {
-  return getDoc(doc(db, "users", `${id}`)).then((doc: any) => {
+  return getDoc(doc(db, "users", id)).then((doc: any) => {
     console.log("getUserData from firestore", doc.data());
     return doc.data();
   });
@@ -49,12 +49,12 @@ export const fetchCoupons = () => {
 
 //TODO:関数を試す
 export const setOrder = (userId: string, orderData: OrderData) => {
-  return setDoc(doc(db, "orders", `${userId}`), orderData);
+  return setDoc(doc(db, "orders", userId), orderData);
 };
 
 //TODO:関数を試す
 export const deleteOrder = (userId: string) => {
-  return deleteDoc(doc(db, "orders", `${userId}`));
+  return deleteDoc(doc(db, "orders", userId));
 };
 
 //TODO:関数を試す
@@ -82,7 +82,7 @@ export const changeStateOfCoupon = (
   userId: string,
   couponStates: { [couponID: string]: couponState }
 ) => {
-  return updateDoc(doc(db, "users", `${userId}`), {
+  return updateDoc(doc(db, "users", userId), {
     coupons: couponStates,
   });
 };
@@ -90,7 +90,7 @@ export const changeStateOfCoupon = (
 //ユーザーのアカウント情報を初期状態で生成
 export const createUserData = (id: string) => {
   console.log("createUserData at firestore", id);
-  return setDoc(doc(db, "users", `${id}`), {
+  return setDoc(doc(db, "users", id), {
     id: id,
   });
 };
@@ -98,11 +98,11 @@ export const createUserData = (id: string) => {
 //ユーザーアカウント情報を更新
 export const updateUserData = (userData: User) => {
   console.log("updateUserData at firestore");
-  return updateDoc(doc(db, "users", `${userData.id}`), userData);
+  return updateDoc(doc(db, "users", userData.id), userData);
 };
 
 export const snapOrderState = async (userId: string): Promise<DocumentData> => {
-  return onSnapshot(doc(db, "orders", `${userId}`), (doc: DocumentSnapshot) => {
+  return onSnapshot(doc(db, "orders", userId), (doc: DocumentSnapshot) => {
     return doc.data();
   });
 };
