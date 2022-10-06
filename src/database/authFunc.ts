@@ -104,8 +104,8 @@ export const useAccountFunc = () => {
       });
   };
   //ログアウト
-  const logOut = (then: () => void) => {
-    AuthLogOut()
+  const logOut = async (then: () => void) => {
+    await AuthLogOut()
       .then(() => {
         console.log("logouted");
         setUser({ id: "", coupons: {}, quizzes: {} });
