@@ -135,66 +135,60 @@ export const useOrderFunc = () => {
   };
 
   //注文する関数(thenはうまく行った時の処理を書く)
-  const order = (then: () => void) => {
+  const order = async (then: () => void) => {
     if (cartItems.length !== 0) {
       const keywordIndex = Math.floor(Math.random() * keywordLength);
-      fetchKeyword(keywordIndex)
-        .then((keywordDoc) => {
-          const keywordData = keywordDoc.data();
-          if (keywordData) {
-            addKeywordNum(keywordIndex, keywordData.number)
-              .then(() => {
-                const keyword: string = keywordData.name + keywordData.number;
-                let totalPrice = 0;
-                cartItems.forEach((item) => {
-                  totalPrice += item.menuPrice;
-                });
-                const tmp: OrderData = {
-                  OrderMenus: cartItems,
-                  createdAt: new Date(),
-                  isCompleted: false,
-                  orderKeyword: keyword,
-                  totalPrice: totalPrice,
-                  userId: userData.id,
-                };
-                setOrder(userData.id, tmp)
-                  .then(() => {
-                    changeStateOfCoupon(userData.id, tmpCouponsState)
-                      .then(() => {
-                        then();
-                      })
-                      .catch((error) => {
-                        alert(
-                          "クーポンを正しく使用できませんでした。注文をキャンセルします"
-                        );
-                        deleteOrder(userData.id).catch((error) => {
-                          alert(
-                            "注文のキャンセルができませんでした。以下のメールアドレスから連絡をお願いします。"
-                          );
-                        });
-                      });
-                  })
-                  .catch(() => {
-                    alert(
-                      "注文ができませんでした。しばらくしてからもう一度注文し直してください"
-                    );
-                    setTmpCouponsState(userData.coupons);
-                  });
-              })
-              .catch((error) => {
-                alert(
-                  `注文番号を取得できませんでした。注文をし直してください:${error.message}`
-                );
-              });
-          } else {
-            alert("注文番号を取得できませんでした。注文をし直してください");
-          }
-        })
-        .catch((error) => {
-          alert(
-            `注文番号を取得できませんでした。注文をし直してください:${error.message}`
-          );
-        });
+      let keywordData;
+      try {
+        keywordData = (await fetchKeyword(keywordIndex)).data();
+      } catch (error) {
+        alert(
+          `注文番号を取得できませんでした。注文をし直してください:${error}`
+        );
+        return;
+      }
+      if (!keywordData) {
+        alert(`注文番号を取得できませんでした。注文をし直してください。`);
+        return;
+      }
+      try {
+        addKeywordNum(keywordIndex, keywordData.number);
+      } catch (error) {
+        alert(
+          `注文番号を取得できませんでした。注文をし直してください:${error}`
+        );
+        return;
+      }
+      const keyword: string = keywordData.name + keywordData.number;
+      let totalPrice = 0;
+      cartItems.forEach((item) => {
+        totalPrice += item.menuPrice;
+      });
+      const tmp: OrderData = {
+        OrderMenus: cartItems,
+        createdAt: new Date(),
+        isCompleted: false,
+        orderKeyword: keyword,
+        totalPrice: totalPrice,
+        userId: userData.id,
+      };
+      try {
+        setOrder(userData.id, tmp);
+      } catch (error) {
+        alert(
+          "注文のキャンセルができませんでした。以下のメールアドレスから連絡をお願いします。"
+        );
+        return;
+      }
+      try {
+        changeStateOfCoupon(userData.id, tmpCouponsState);
+      } catch (error) {
+        alert(
+          `クーポンを正しく使用できませんでした。注文をキャンセルします${error}`
+        );
+        return;
+      }
+      then();
     } else {
       alert("カートに商品がありません");
     }
