@@ -14,7 +14,7 @@ import { auth } from "./firebase";
 export const userAtom = atom({
   key: "user",
   default: {
-    id: auth.currentUser?.uid,
+    id: auth.currentUser?.uid || "",
     coupons: {},
     quizzes: {},
   } as User,
