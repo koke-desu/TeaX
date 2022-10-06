@@ -8,10 +8,10 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { User } from "../type/model";
 import { userAtom } from "./atom";
 import {
-  AuthDelete,
-  AuthLogin,
-  AuthLogOut,
-  AuthSignUp,
+  authDelete,
+  authLogin,
+  authLogOut,
+  authSignUp,
   isLogined,
 } from "./basicFunc/auth";
 import { createUserData, fetchUserData } from "./basicFunc/firestore";
@@ -49,7 +49,7 @@ export const useAccountFunc = () => {
   //ログイン
   const logIn = async (email: string, password: string) => {
     let userId: string | null = null;
-    await AuthLogin(email, password)
+    await authLogin(email, password)
       .then((userCredential) => {
         console.log("logined");
         userId = userCredential.user.uid;
@@ -66,7 +66,7 @@ export const useAccountFunc = () => {
         })
         .catch((error: AuthError) => {
           console.log(error.message);
-          AuthLogOut();
+          authLogOut();
           return error;
         });
   };
@@ -74,7 +74,7 @@ export const useAccountFunc = () => {
   //新規登録
   const signUp = async (email: string, password: string) => {
     console.log("サインアップします");
-    await AuthSignUp(email, password)
+    await authSignUp(email, password)
       .then((userCredential) => {
         console.log("signUped");
         let user = userCredential.user;
@@ -88,7 +88,7 @@ export const useAccountFunc = () => {
             console.log(error.message);
             console.log("アカウントを削除します");
             if (user)
-              AuthDelete(user)
+              authDelete(user)
                 .then(() => console.log("削除しました"))
                 .catch((error: AuthError) => {
                   console.log(error.message);
@@ -105,7 +105,7 @@ export const useAccountFunc = () => {
   };
   //ログアウト
   const logOut = async (then: () => void) => {
-    await AuthLogOut()
+    await authLogOut()
       .then(() => {
         console.log("logouted");
         setUser({ id: "", coupons: {}, quizzes: {} });

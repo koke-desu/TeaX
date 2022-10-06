@@ -26,22 +26,22 @@ export const isLogined = (
 };
 
 //新規登録
-export const AuthSignUp = (email: string, password: string) => {
+export const authSignUp = (email: string, password: string) => {
   console.log("create account at firebase auth");
   return createUserWithEmailAndPassword(auth, email, password);
 };
 //ログイン
-export const AuthLogin = (email: string, password: string) => {
+export const authLogin = (email: string, password: string) => {
   console.log("logined at firebase auth");
   return signInWithEmailAndPassword(auth, email, password);
 };
 //ログアウト
-export const AuthLogOut = () => {
+export const authLogOut = () => {
   console.log("logout at firebase auth");
   return auth.signOut();
 };
 
 //ユーザーの削除（使わないかも）
-export const AuthDelete = (user: User) => {
+export const authDelete = (user: User) => {
   return deleteUser(user);
 };
