@@ -202,9 +202,7 @@ export const useOrderFunc = () => {
 
   //注文状況をスナップショットで受け取る関数
   const getOrderState = () => {
-    snapOrderState(userData.id).then((doc) => {
-      setOrderedData(doc as OrderData);
-    });
+    snapOrderState(userData.id, (orderData) => setOrderedData(orderData));
   };
 
   //支払い完了時に実行する関数（オーダーデータを削除）

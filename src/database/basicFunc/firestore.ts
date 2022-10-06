@@ -101,8 +101,16 @@ export const updateUserData = (userData: User) => {
   return updateDoc(doc(db, "users", userData.id), userData);
 };
 
-export const snapOrderState = async (userId: string): Promise<DocumentData> => {
-  return onSnapshot(doc(db, "orders", userId), (doc: DocumentSnapshot) => {
-    return doc.data();
+export const snapOrderState = async (
+  userId: string,
+  then: (orderData: OrderData) => void
+): Promise<DocumentData> => {
+  return onSnapshot(doc(db, "orders", userId), (doc) => {
+    const orderData = doc.data();
+    if (orderData) {
+      then(orderData as OrderData);
+    } else {
+      alert(`間違ったデータを取得しました。:${orderData}`);
+    }
   });
 };
