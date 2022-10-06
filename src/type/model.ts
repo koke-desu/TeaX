@@ -5,8 +5,10 @@ export type User = {
   id: string;
   coupons: { [couponID: string]: couponState };
   //booleanはスタンプラリーのスポットをクリアし終わっていたらtrueそうでなければfalse
-  quizzes: { [quizID: string]: boolean };
+  quizzes: { [quizID: string]: quizState };
 };
+
+export type quizState = "notCleared" | "cleared";
 
 export type couponState = "used" | "unOwned" | "useable";
 
