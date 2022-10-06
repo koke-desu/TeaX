@@ -5,7 +5,7 @@ import { userAtom } from "../../src/database/atom";
 import { useInitPage } from "../../src/database/authFunc";
 import { AuthLogOut } from "../../src/database/basicFunc/auth";
 
-const main = () => {
+const Main = () => {
   useInitPage();
   const router = useRouter();
   const user = useRecoilValue(userAtom);
@@ -25,5 +25,4 @@ const main = () => {
   );
 };
 
-export default main;
-main;
+export default Main;
