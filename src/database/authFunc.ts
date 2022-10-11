@@ -32,7 +32,7 @@ export const useInitPage = () => {
           console.log("setUserData to recoil", data);
           setUser(data);
         });
-        router.replace("/main/main");
+        if (router.pathname === "/") router.replace("/order/main");
       }
     );
   }, []);
@@ -62,7 +62,7 @@ export const useAccountFunc = () => {
       await fetchUserData(userId)
         .then((data: User) => {
           setUser(data);
-          router.replace("/main/main");
+          router.replace("/order/main");
         })
         .catch((error: AuthError) => {
           console.log(error.message);

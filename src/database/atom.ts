@@ -60,3 +60,23 @@ export const keywordLengthAtom = atom({
   key: "keywordLengthAtom",
   default: 0 as number,
 });
+
+export const couponListModalAtom = atom({
+  key: "couponListModalAtom",
+  default: false,
+});
+
+export const productItemModalAtom = atom({
+  key: "productItemModalAtom",
+  default: false,
+});
+
+export const orderingListModalAtom = atom({
+  key: "orderingListModalAtom",
+  default: false,
+});
+
+export const cartProductModalAtom = atom({
+  key: "cartProductModalAtom",
+  default: false,
+});
