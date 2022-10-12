@@ -8,6 +8,7 @@ import {
   getDoc,
   getDocs,
   onSnapshot,
+  QueryDocumentSnapshot,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
@@ -22,8 +23,14 @@ export const fetchUserData = (id: string): any => {
 };
 
 //TODO:関数を試す
-export const fetchToppings = () => {
-  return getDocs(collection(db, "toppings"));
+export const fetchToppings = async () => {
+  const docs = await getDocs(collection(db, "toppings"));
+  console.log("getCoupons from firestore");
+  let tmp: any[] = [];
+  docs.forEach((doc) => {
+    tmp.push(doc.data());
+  });
+  return tmp;
 };
 
 //TODO:関数を試す
@@ -35,16 +42,25 @@ export const fetchQuizzes = () => {
 };
 
 //TODO:関数を試す
-export const fetchMenus = () => {
-  return getDocs(collection(db, "menus")).then((docs: any) => {
-    console.log("getMenus from firestore");
-    return docs.docs();
+export const fetchMenus = async () => {
+  const docs = await getDocs(collection(db, "menus"));
+  console.log("getMenus from firestore");
+  let tmp: any[] = [];
+  docs.forEach((doc) => {
+    tmp.push(doc.data());
   });
+  return tmp;
 };
 
 //TODO:関数を試す
-export const fetchCoupons = () => {
-  return getDocs(collection(db, "coupons"));
+export const fetchCoupons = async () => {
+  const docs = await getDocs(collection(db, "coupons"));
+  console.log("getCoupons from firestore");
+  let tmp: any[] = [];
+  docs.forEach((doc) => {
+    tmp.push(doc.data());
+  });
+  return tmp;
 };
 
 //TODO:関数を試す

@@ -4,8 +4,8 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import Layout from "../../src/components/Layout";
 import Product from "../../src/components/orderComps/Product";
 import { couponListModalAtom, userAtom } from "../../src/database/atom";
-import { useInitPage } from "../../src/database/authFunc";
 import { authLogOut } from "../../src/database/basicFunc/auth";
+import { useInitPage } from "../../src/hooks/initAppHooks";
 
 const Main = () => {
   useInitPage();

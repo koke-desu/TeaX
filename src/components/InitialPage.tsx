@@ -1,9 +1,10 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
-import { useAccountFunc, useInitPage } from "../database/authFunc";
+import { useAccountFunc } from "../database/authFunc";
 import { userAtom } from "../database/atom";
 import { isLogined } from "../database/basicFunc/auth";
+import { useInitPage } from "../hooks/initAppHooks";
 
 const InitialPage = () => {
   useInitPage();

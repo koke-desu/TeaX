@@ -47,7 +47,7 @@ export const useOrderFunc = () => {
   //メニューデータを取得する関数
   const getMenus = () => {
     fetchMenus().then((data: any) => {
-      console.log("got data", data);
+      console.log("setMenusData to recoil", data);
       setMenus(data);
     });
   };
@@ -65,25 +65,22 @@ export const useOrderFunc = () => {
   };
 
   const getToppings = () => {
-    fetchToppings().then((docs) => {
-      const toppings: Toppings = {};
-      docs.forEach((doc) => {
-        //TODO:ここ無理やりTopping型にしているので改善したい
-        toppings[doc.id] = doc.data() as Topping;
-      });
+    const tmp = fetchToppings();
+    tmp.then((data) => {
+      //TODO:ここ無理やりCoupon型にしているので改善したい
+      console.log("setToppingsData to recoil", data);
+      setToppings(data as unknown as Toppings);
     });
-    setToppings(toppings);
   };
 
   const getCoupons = () => {
-    const coupons: Coupons = {};
-    fetchCoupons().then((docs) => {
-      docs.forEach((doc) => {
-        //TODO:ここ無理やりCoupon型にしているので改善したい
-        coupons[doc.id] = doc.data() as Coupon;
-      });
+    const tmp = fetchCoupons();
+    // setCoupons(coupons);
+    tmp.then((data) => {
+      //TODO:ここ無理やりCoupon型にしているので改善したい
+      console.log("setCouponData to recoil", data);
+      setCoupons(data as unknown as Coupons);
     });
-    setCoupons(coupons);
   };
 
   //IDからメニューデータを取得する関数
@@ -212,5 +209,20 @@ export const useOrderFunc = () => {
           );
         });
     }
+  };
+
+  return {
+    getMenus,
+    getKeywordLength,
+    getToppings,
+    getCoupons,
+    getMenuByID,
+    getCouponByID,
+    getToppingsByID,
+    setToppingToMenu,
+    setOrderMenuToCart,
+    order,
+    getOrderState,
+    completeOrder,
   };
 };
