@@ -1,6 +1,7 @@
 import Head from "next/head";
-import { FC, ReactNode } from "react";
-import { useInitPage } from "../database/authFunc";
+import { FC, ReactNode, useEffect } from "react";
+import { useRecoilValue } from "recoil";
+import { orderedDataAtom } from "../database/atom";
 import BottomNavigation from "./BottomNavigation";
 import CartProductsModal from "./CartProductsModal";
 import CouponHalfModal from "./CouponHalfModal";
@@ -14,6 +15,7 @@ type Props = {
 };
 
 const Layout: FC<Props> = ({ children }) => {
+  const orderData = useRecoilValue(orderedDataAtom);
   return (
     <div
       style={{
@@ -31,10 +33,9 @@ const Layout: FC<Props> = ({ children }) => {
       </Head>
       <Header></Header>
       <main style={{ display: "flex", flexGrow: 1 }}>{children}</main>
-      <OrderingFAB></OrderingFAB>
+      {orderData && <OrderingFAB></OrderingFAB>}
       <BottomNavigation></BottomNavigation>
       <CouponHalfModal></CouponHalfModal>
-      <ProductItemModal></ProductItemModal>
       <OrderingListModal></OrderingListModal>
       <CartProductsModal></CartProductsModal>
     </div>
