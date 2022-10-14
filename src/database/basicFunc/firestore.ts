@@ -12,7 +12,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { Coupons, couponState, OrderData, User } from "../../type/model";
+import { couponState, OrderData, User } from "../../type/model";
 import { db } from "../firebase";
 //ユーザーのアカウント情報を取得
 export const fetchUserData = (id: string): any => {
@@ -124,9 +124,8 @@ export const snapOrderState = async (
   return onSnapshot(doc(db, "orders", userId), (doc) => {
     const orderData = doc.data();
     if (orderData) {
+      console.log("get orderState from firestore", orderData);
       then(orderData as OrderData);
-    } else {
-      alert(`間違ったデータを取得しました。:${orderData}`);
     }
   });
 };
