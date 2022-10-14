@@ -14,11 +14,14 @@ const HalfModal: FC<Props> = ({ children, isOpen, setIsOpen }) => {
         width: "100vw",
         height: "100vh",
         zIndex: 1,
-        backgroundColor: "rgba(0,0,0,0.5)",
         position: "fixed",
         bottom: 0,
+        left: 0,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
       }}
-      onClick={() => setIsOpen(false)}
     >
       <div
         style={{
@@ -50,6 +53,19 @@ const HalfModal: FC<Props> = ({ children, isOpen, setIsOpen }) => {
         </div>
         {children}
       </div>
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          backgroundColor: "rgba(0,0,0,0.5)",
+          position: "absolute",
+          zIndex: 1,
+        }}
+        onClick={() => {
+          setIsOpen(false);
+          console.log("pressed");
+        }}
+      />
     </div>
   );
 };
