@@ -13,30 +13,25 @@ const Modal: FC<Props> = ({ children, isOpen, setIsOpen }) => {
       style={{
         width: "100vw",
         height: "100vh",
-        zIndex: 0,
-        backgroundColor: "rgba(0,0,0,0.5)",
+        zIndex: 1,
         position: "fixed",
         bottom: 0,
+        left: 0,
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-      }}
-      onClick={() => {
-        setIsOpen(false);
-        console.log("pressed");
       }}
     >
       <div
         style={{
           width: "90%",
           height: "90%",
-          zIndex: 1000,
+          zIndex: 10,
           margin: "12px",
           borderRadius: 8,
           backgroundColor: "white",
           padding: "12px",
-          pointerEvents: "none",
         }}
       >
         <div
@@ -51,7 +46,7 @@ const Modal: FC<Props> = ({ children, isOpen, setIsOpen }) => {
               width: "20px",
               height: "20px",
               backgroundColor: "gray",
-              borderRadius: 100,
+              borderRadius: 2,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -63,6 +58,19 @@ const Modal: FC<Props> = ({ children, isOpen, setIsOpen }) => {
         </div>
         {children}
       </div>
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          backgroundColor: "rgba(0,0,0,0.5)",
+          position: "absolute",
+          zIndex: 1,
+        }}
+        onClick={() => {
+          setIsOpen(false);
+          console.log("pressed");
+        }}
+      />
     </div>
   );
 };
