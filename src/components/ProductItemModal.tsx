@@ -1,7 +1,4 @@
-import { memoryUsage } from "process";
-import { FC, useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
-import { productItemModalAtom } from "../database/atom";
+import { FC, useState } from "react";
 import { useOrderFunc } from "../database/orderFunc";
 import { Menu, OrderMenu } from "../type/model";
 import Modal from "./Modal";

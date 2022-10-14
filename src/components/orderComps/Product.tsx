@@ -1,6 +1,5 @@
 import { FC, useState } from "react";
 import { useRecoilState } from "recoil";
-import { productItemModalAtom } from "../../database/atom";
 import { Menu, OrderMenu } from "../../type/model";
 import ProductItemModal from "../ProductItemModal";
 
