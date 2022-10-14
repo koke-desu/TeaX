@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { userAtom } from "../database/atom";
 import { isLogined } from "../database/basicFunc/auth";
 import { fetchUserData } from "../database/basicFunc/firestore";
@@ -10,7 +10,7 @@ import { User } from "../type/model";
 export const useInitPage = () => {
   const router = useRouter();
   const orderFunc = useOrderFunc();
-  const setUser = useSetRecoilState(userAtom);
+  const [user, setUser] = useRecoilState(userAtom);
   useEffect(() => {
     isLogined(
       () => {
@@ -20,10 +20,11 @@ export const useInitPage = () => {
         fetchUserData(id).then((data: User) => {
           console.log("setUserData to recoil", data);
           setUser(data);
+          orderFunc.getMenus();
+          orderFunc.getCoupons();
+          orderFunc.getToppings();
+          orderFunc.getOrderState(data.id);
         });
-        orderFunc.getMenus();
-        orderFunc.getCoupons();
-        orderFunc.getToppings();
         if (router.pathname === "/") router.replace("/order/main");
       }
     );
