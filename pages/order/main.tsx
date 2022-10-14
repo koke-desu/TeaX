@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import CouponHalfModal from "../../src/components/CouponHalfModal";
 import Layout from "../../src/components/Layout";
 import Product from "../../src/components/orderComps/Product";
 import {
@@ -16,18 +18,20 @@ const Main = () => {
 
   const router = useRouter();
   const user = useRecoilValue(userAtom);
-  const setIsCouponModalOpen = useSetRecoilState(couponListModalAtom);
+  // const setIsCouponModalOpen = useSetRecoilState(couponListModalAtom);
+  const [isCouponModalOpen, setIsCouponModalOpen] = useState(false);
   const menus = useRecoilValue(menusAtom);
   return (
-    <div
-      style={{
-        display: "flex",
-        flex: 1,
-        flexDirection: "column",
-      }}
-    >
-      {/* <p>userID:{user.id}</p> */}
-      {/* <button
+    <>
+      <div
+        style={{
+          display: "flex",
+          flex: 1,
+          flexDirection: "column",
+        }}
+      >
+        {/* <p>userID:{user.id}</p> */}
+        {/* <button
         onClick={() => {
           authLogOut();
           router.replace("/userAction/login");
@@ -35,28 +39,37 @@ const Main = () => {
       >
         signout
       </button> */}
-      <div
-        style={{ display: "flex", justifyContent: "flex-end", margin: "12px" }}
-      >
-        <button
-          onClick={() => setIsCouponModalOpen(true)}
-          style={{ width: "120px", height: "40px", borderRadius: 8 }}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            margin: "12px",
+          }}
         >
-          クーポン一覧
-        </button>
+          <button
+            onClick={() => setIsCouponModalOpen(true)}
+            style={{ width: "120px", height: "40px", borderRadius: 8 }}
+          >
+            クーポン一覧
+          </button>
+        </div>
+        <div
+          style={{
+            margin: "12px",
+            display: "flex",
+            flexWrap: "wrap",
+          }}
+        >
+          {Object.values(menus).map((menu, index) => (
+            <Product key={index} menu={menu}></Product>
+          ))}
+        </div>
       </div>
-      <div
-        style={{
-          margin: "12px",
-          display: "flex",
-          flexWrap: "wrap",
-        }}
-      >
-        {Object.values(menus).map((menu, index) => (
-          <Product key={index} menu={menu}></Product>
-        ))}
-      </div>
-    </div>
+      <CouponHalfModal
+        modalIsOpen={isCouponModalOpen}
+        setModalIsOpen={setIsCouponModalOpen}
+      />
+    </>
   );
 };
 

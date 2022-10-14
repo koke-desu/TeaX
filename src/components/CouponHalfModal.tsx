@@ -1,14 +1,30 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { FC } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { couponListModalAtom } from "../database/atom";
+import { couponListModalAtom, couponsAtom, userAtom } from "../database/atom";
+import { useOrderFunc } from "../database/orderFunc";
+import { couponState, OrderMenu } from "../type/model";
 import HalfModal from "./HalfModal";
 
-const CouponHalfModal = () => {
-  const [modalIsOpen, setModalIsOpen] = useRecoilState(couponListModalAtom);
+type Props = {
+  orderMenu?: OrderMenu;
+  setOrderMenu?: (orderMenu: OrderMenu) => void;
+  modalIsOpen: boolean;
+  setModalIsOpen: (a: boolean) => void;
+};
+
+const CouponHalfModal: FC<Props> = ({
+  modalIsOpen,
+  setModalIsOpen,
+  orderMenu,
+  setOrderMenu = () => {},
+}) => {
   console.log(modalIsOpen);
   const router = useRouter();
-
+  const coupons = useRecoilValue(couponsAtom);
+  const userData = useRecoilValue(userAtom);
+  const orderFunc = useOrderFunc();
   return (
     <HalfModal isOpen={modalIsOpen} setIsOpen={setModalIsOpen}>
       <div
@@ -19,26 +35,43 @@ const CouponHalfModal = () => {
         }}
       >
         <p>クーポン一覧</p>
-        {new Array(4).fill(0).map((zero, index) => (
-          <div
-            key={index}
-            style={{
-              width: "80%",
-              height: "50px",
-              border: "1px solid black",
-              margin: "4px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-around",
-            }}
-          >
-            <p>使用済み</p>
-            <Link href="/quiz/main">
-              <a>スタンプラリーへ</a>
-            </Link>
-            <button>クーポンを使う</button>
-          </div>
-        ))}
+        {coupons.map((coupon, index) => {
+          const tmp = userData.coupons[coupon.id];
+          const state: couponState = tmp ? tmp : "unOwned";
+          return (
+            <div
+              key={index}
+              style={{
+                width: "80%",
+                height: "50px",
+                border: "1px solid black",
+                margin: "4px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-around",
+              }}
+            >
+              <p>{state}</p>
+              <Link href="/quiz/main">
+                <a>スタンプラリーへ</a>
+              </Link>
+              {state === "useable" && orderMenu && (
+                <button
+                  onClick={() => {
+                    orderFunc.setCouponToOrderMenu(
+                      coupon.id,
+                      orderMenu,
+                      setOrderMenu
+                    );
+                    setModalIsOpen(false);
+                  }}
+                >
+                  クーポンを使う
+                </button>
+              )}
+            </div>
+          );
+        })}
       </div>
     </HalfModal>
   );

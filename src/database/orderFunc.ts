@@ -98,11 +98,11 @@ export const useOrderFunc = () => {
 
   //トッピングをセットする(トッピングのセットは基本的にカートに入れないのでデータを返す感じ)
   const setToppingToMenu = (
-    menuId: string,
+    orderMenu: OrderMenu,
     toppingIds: string[],
     couponID?: string
   ): OrderMenu => {
-    const menuPrice: number | undefined = getMenuByID(menuId)?.price;
+    const menuPrice: number | undefined = getMenuByID(orderMenu.menuID)?.price;
     const toppingList: string[] = toppingIds;
     let totalToppingPrices: number = 0;
     toppingList.forEach((topping) => {
@@ -120,7 +120,7 @@ export const useOrderFunc = () => {
     }
     const tmp: OrderMenu = {
       toppings: toppingIds,
-      menuID: menuId,
+      menuID: orderMenu.menuID,
       menuPrice: totalPrice,
       couponID: couponID ? couponID : null,
     };
@@ -133,6 +133,20 @@ export const useOrderFunc = () => {
     tmp.push(orderMenu);
     setCartItems(tmp);
     console.log("setted menu to cart", orderMenu);
+  };
+
+  const setCouponToOrderMenu = (
+    couponId: string,
+    orderMenu: OrderMenu,
+    setOrderMenu: (orderMenu: OrderMenu) => void
+  ) => {
+    if (orderMenu.couponID) {
+      alert("クーポンはすでに使用しています。");
+    } else {
+      const tmp = { ...orderMenu };
+      tmp.couponID = couponId;
+      setOrderMenu(tmp);
+    }
   };
 
   //注文する関数(thenはうまく行った時の処理を書く)
@@ -229,5 +243,6 @@ export const useOrderFunc = () => {
     order,
     getOrderState,
     completeOrder,
+    setCouponToOrderMenu,
   };
 };
