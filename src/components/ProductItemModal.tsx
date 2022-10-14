@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { couponsAtom } from "../database/atom";
+import { couponsAtom, orderedDataAtom } from "../database/atom";
 import { useOrderFunc } from "../database/orderFunc";
 import { Menu, OrderMenu } from "../type/model";
 import CouponHalfModal from "./CouponHalfModal";
@@ -22,6 +22,7 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
     couponID: null,
     menuID: menu.id,
   });
+  const orderData = useRecoilValue(orderedDataAtom);
   const coupons = useRecoilValue(couponsAtom);
   console.log("couponId is", orderMenu.couponID);
 
@@ -101,31 +102,36 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
               <div>
                 <h1>単品￥{menu.price}</h1>
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-around",
-                  // zIndex: 2,
-                }}
-              >
-                {orderMenu.couponID ? (
-                  <div>
-                    {orderFunc.getCouponByID(orderMenu.couponID)?.title}
-                  </div>
-                ) : (
-                  <button onClick={() => setIsCouponModalOpen(true)}>
-                    クーポンを追加
-                  </button>
-                )}
-                <button
-                  onClick={() => {
-                    orderFunc.setOrderMenuToCart(orderMenu);
-                    setIsOpen(false);
+              {!orderData ? (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-around",
+                    // zIndex: 2,
                   }}
                 >
-                  カートに追加
-                </button>
-              </div>
+                  {orderMenu.couponID ? (
+                    <div>
+                      {orderFunc.getCouponByID(orderMenu.couponID)?.title}
+                    </div>
+                  ) : (
+                    <button onClick={() => setIsCouponModalOpen(true)}>
+                      クーポンを追加
+                    </button>
+                  )}
+
+                  <button
+                    onClick={() => {
+                      orderFunc.setOrderMenuToCart(orderMenu);
+                      setIsOpen(false);
+                    }}
+                  >
+                    カートに追加
+                  </button>
+                </div>
+              ) : (
+                <p>注文中の商品の受け取り完了をしてから注文してください</p>
+              )}
             </div>
           </div>
           <CouponHalfModal

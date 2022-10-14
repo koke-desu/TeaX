@@ -69,7 +69,7 @@ export type Topping = {
 export type Coupon = {
   id: string;
   title: string;
-  description: number;
+  description: string;
   type: CouponType;
   number: number;
 };

@@ -35,7 +35,7 @@ const Layout: FC<Props> = ({ children }) => {
       <main style={{ display: "flex", flexGrow: 1 }}>{children}</main>
       {orderData && <OrderingFAB></OrderingFAB>}
       <BottomNavigation></BottomNavigation>
-      <CouponHalfModal></CouponHalfModal>
+
       <OrderingListModal></OrderingListModal>
       <CartProductsModal></CartProductsModal>
     </div>

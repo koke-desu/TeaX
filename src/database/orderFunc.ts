@@ -220,6 +220,7 @@ export const useOrderFunc = () => {
     if (orderedData?.isCompleted) {
       deleteOrder(userData.id)
         .then(() => {
+          setOrderedData(null);
           then();
         })
         .catch((error) => {
