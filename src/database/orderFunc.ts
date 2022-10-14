@@ -1,13 +1,5 @@
 import { useRecoilState } from "recoil";
-import {
-  Coupon,
-  Coupons,
-  Menu,
-  OrderData,
-  OrderMenu,
-  Topping,
-  Toppings,
-} from "../type/model";
+import { Coupon, Menu, OrderData, OrderMenu, Topping } from "../type/model";
 import {
   cartItemsAtom,
   couponsAtom,
@@ -43,12 +35,11 @@ export const useOrderFunc = () => {
     useRecoilState(tmpCouponsStateAtom);
   const [orderedData, setOrderedData] = useRecoilState(orderedDataAtom);
   const [keywordLength, setKeywordLength] = useRecoilState(keywordLengthAtom);
-
   //メニューデータを取得する関数
   const getMenus = () => {
-    fetchMenus().then((data: any) => {
-      console.log("setMenusData to recoil", data);
-      setMenus(data);
+    fetchMenus().then((data) => {
+      const tmp = [...data];
+      setMenus(tmp);
     });
   };
 
@@ -69,7 +60,8 @@ export const useOrderFunc = () => {
     tmp.then((data) => {
       //TODO:ここ無理やりCoupon型にしているので改善したい
       console.log("setToppingsData to recoil", data);
-      setToppings(data as unknown as Toppings);
+      const tmp = [...data];
+      setToppings(tmp);
     });
   };
 
@@ -79,25 +71,28 @@ export const useOrderFunc = () => {
     tmp.then((data) => {
       //TODO:ここ無理やりCoupon型にしているので改善したい
       console.log("setCouponData to recoil", data);
-      setCoupons(data as unknown as Coupons);
+      const tmp = [...data];
+      setCoupons(tmp);
     });
   };
 
   //IDからメニューデータを取得する関数
   const getMenuByID = (menuId: string) => {
-    const tmp = menus[menuId];
+    const tmp = menus.find((data) => data.id === menuId);
+    console.log("get menudata", menus, menuId, tmp);
+
     return tmp;
   };
 
   //IDからクーポンデータを取得する関数
   const getCouponByID = (couponId: string) => {
-    const tmp = coupons[couponId];
+    const tmp = coupons.find((data) => data.id === couponId);
     return tmp;
   };
 
   //IDからトッピングデータを取得する関数
   const getToppingsByID = (toppingId: string) => {
-    const tmp = toppings[toppingId];
+    const tmp = toppings.find((data) => data.id === toppingId);
     return tmp;
   };
 
@@ -107,14 +102,22 @@ export const useOrderFunc = () => {
     toppingIds: string[],
     couponID?: string
   ): OrderMenu => {
-    const menuPrice: number = menus[menuId].price;
+    const menuPrice: number | undefined = getMenuByID(menuId)?.price;
     const toppingList: string[] = toppingIds;
     let totalToppingPrices: number = 0;
     toppingList.forEach((topping) => {
-      const tmp: number = toppings[topping].price;
-      totalToppingPrices += tmp;
+      const tmp: number | undefined = getToppingsByID(topping)?.price;
+      if (tmp) totalToppingPrices += tmp;
+      else {
+        alert("トッピングのデータがありません");
+      }
     });
-    const totalPrice = menuPrice + totalToppingPrices;
+    let totalPrice = 0;
+    if (!menuPrice) {
+      alert("メニューデータがありません");
+    } else {
+      totalPrice = menuPrice + totalToppingPrices;
+    }
     const tmp: OrderMenu = {
       toppings: toppingIds,
       menuID: menuId,
@@ -129,6 +132,7 @@ export const useOrderFunc = () => {
     const tmp = [...cartItems];
     tmp.push(orderMenu);
     setCartItems(tmp);
+    console.log("setted menu to cart", orderMenu);
   };
 
   //注文する関数(thenはうまく行った時の処理を書く)
@@ -185,6 +189,7 @@ export const useOrderFunc = () => {
         );
         return;
       }
+      setCartItems([]);
       then();
     } else {
       alert("カートに商品がありません");
@@ -192,8 +197,8 @@ export const useOrderFunc = () => {
   };
 
   //注文状況をスナップショットで受け取る関数
-  const getOrderState = () => {
-    snapOrderState(userData.id, (orderData) => setOrderedData(orderData));
+  const getOrderState = (userId: string) => {
+    snapOrderState(userId, (orderData) => setOrderedData(orderData));
   };
 
   //支払い完了時に実行する関数（オーダーデータを削除）
