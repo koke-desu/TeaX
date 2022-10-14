@@ -3,7 +3,11 @@ import { useRouter } from "next/router";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import Layout from "../../src/components/Layout";
 import Product from "../../src/components/orderComps/Product";
-import { couponListModalAtom, userAtom } from "../../src/database/atom";
+import {
+  couponListModalAtom,
+  menusAtom,
+  userAtom,
+} from "../../src/database/atom";
 import { authLogOut } from "../../src/database/basicFunc/auth";
 import { useInitPage } from "../../src/hooks/initAppHooks";
 
@@ -13,6 +17,7 @@ const Main = () => {
   const router = useRouter();
   const user = useRecoilValue(userAtom);
   const setIsCouponModalOpen = useSetRecoilState(couponListModalAtom);
+  const menus = useRecoilValue(menusAtom);
   return (
     <div
       style={{
@@ -47,8 +52,8 @@ const Main = () => {
           flexWrap: "wrap",
         }}
       >
-        {new Array(12).fill(0).map((zero, index) => (
-          <Product key={index}></Product>
+        {Object.values(menus).map((menu, index) => (
+          <Product key={index} menu={menu}></Product>
         ))}
       </div>
     </div>

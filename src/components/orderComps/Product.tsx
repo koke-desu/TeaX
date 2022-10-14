@@ -1,33 +1,47 @@
+import { FC, useState } from "react";
 import { useRecoilState } from "recoil";
 import { productItemModalAtom } from "../../database/atom";
+import { Menu, OrderMenu } from "../../type/model";
+import ProductItemModal from "../ProductItemModal";
 
-const Product = () => {
-  const [isModalOpen, setIsModalOpen] = useRecoilState(productItemModalAtom);
+type Props = {
+  menu: Menu;
+};
+
+const Product: FC<Props> = ({ menu }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
-    <div
-      style={{
-        backgroundColor: "white",
-        width: "150px",
-        height: "180px",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "flex-start",
-        border: "1px solid black",
-        borderRadius: 10,
-      }}
-      onClick={() => setIsModalOpen(true)}
-    >
+    <>
       <div
         style={{
+          backgroundColor: "white",
+          width: "150px",
+          height: "180px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "flex-start",
           border: "1px solid black",
+          borderRadius: 10,
         }}
+        onClick={() => setIsModalOpen(true)}
       >
-        <p>商品画像</p>
+        <div
+          style={{
+            border: "1px solid black",
+          }}
+        >
+          <p>商品画像</p>
+        </div>
+        <p>{menu.name}</p>
+        <p>￥{menu.price}</p>
       </div>
-      <p>商品名</p>
-      <p>￥500</p>
-    </div>
+      <ProductItemModal
+        menu={menu}
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+      />
+    </>
   );
 };
 
