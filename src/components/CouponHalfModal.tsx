@@ -45,7 +45,8 @@ const CouponHalfModal: FC<Props> = ({
           return (
             <CouponCard
               key={index}
-              isUsable={state === "useable" && orderMenu ? true : false}
+              state={state}
+              isUseMode={orderMenu ? true : false}
               title={coupon.title}
               description={coupon.description}
               onClick={() => {
