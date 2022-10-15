@@ -4,7 +4,7 @@ import { FC } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { couponListModalAtom, couponsAtom, userAtom } from "../database/atom";
 import { useOrderFunc } from "../database/orderFunc";
-import CouponCard from "../html&cssComps/CouponCard/CouponCard";
+import CouponCard from "../html&cssComps/CouponCard";
 import { couponState, OrderMenu } from "../type/model";
 import HalfModal from "./HalfModal";
 

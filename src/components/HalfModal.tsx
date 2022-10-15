@@ -1,3 +1,4 @@
+import { css, cx } from "@emotion/css";
 import { FC, ReactNode } from "react";
 
 type Props = {
@@ -6,35 +7,52 @@ type Props = {
   setIsOpen: (isOpen: boolean) => void;
 };
 
+const styles = {
+  backDrop: css`
+    transition: background-color 0.3s ease-in-out;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0);
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  `,
+  backDropIsOpen: css`
+    pointer-events: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+  `,
+  modal: css`
+    transition: all 0.3s ease-in-out;
+    transform: translateY(0%);
+    background-color: white;
+    z-index: 10;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 16px;
+    border-top-right-radius: 16px;
+    border-top-left-radius: 16px;
+  `,
+  modalClose: css`
+    transform: translateY(120%);
+  `,
+  back: css`
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+  `,
+};
+
 const HalfModal: FC<Props> = ({ children, isOpen, setIsOpen }) => {
-  if (!isOpen) return <></>;
   return (
-    <div
-      style={{
-        width: "100vw",
-        height: "100vh",
-        zIndex: 1,
-        position: "fixed",
-        bottom: 0,
-        left: 0,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <div
-        style={{
-          zIndex: 2,
-          position: "fixed",
-          bottom: 0,
-          borderTopRightRadius: 8,
-          borderTopLeftRadius: 8,
-          backgroundColor: "white",
-          width: "100vw",
-          padding: "12px",
-        }}
-      >
+    <div className={cx(styles.backDrop, { [styles.backDropIsOpen]: isOpen })}>
+      <div className={cx(styles.modal, { [styles.modalClose]: !isOpen })}>
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <button
             style={{
@@ -57,7 +75,6 @@ const HalfModal: FC<Props> = ({ children, isOpen, setIsOpen }) => {
         style={{
           width: "100%",
           height: "100%",
-          backgroundColor: "rgba(0,0,0,0.5)",
           position: "absolute",
           zIndex: 1,
         }}
