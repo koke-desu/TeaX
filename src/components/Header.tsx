@@ -3,10 +3,12 @@ import { useRouter } from "next/router";
 import { memo } from "react";
 import { useSetRecoilState } from "recoil";
 import { cartProductModalAtom } from "../database/atom";
+import { useAccountFunc } from "../database/authFunc";
 
 export const Header = memo(() => {
   const router = useRouter();
   const setModalOpen = useSetRecoilState(cartProductModalAtom);
+  const authFunc = useAccountFunc();
   return (
     <>
       <div
@@ -21,6 +23,7 @@ export const Header = memo(() => {
           backgroundColor: "white",
         }}
       >
+        <button onClick={() => authFunc.logOut()}>logout</button>
         {router.pathname === "/order/main" ||
         router.pathname === "/quiz/main" ? (
           <p>ロゴ</p>

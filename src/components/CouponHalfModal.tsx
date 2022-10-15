@@ -37,8 +37,11 @@ const CouponHalfModal: FC<Props> = ({
       >
         <p>クーポン一覧</p>
         {coupons.map((coupon, index) => {
-          const tmp = userData.coupons[coupon.id];
-          const state: couponState = tmp ? tmp : "unOwned";
+          console.log("coupons is", userData);
+
+          const state: couponState = userData.coupons
+            ? userData.coupons[coupon.id]
+            : "unOwned";
           return (
             <CouponCard
               key={index}
