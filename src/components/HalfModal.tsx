@@ -10,12 +10,12 @@ type Props = {
 const styles = {
   backDrop: css`
     transition: background-color 0.3s ease-in-out;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0);
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     z-index: 1;
     display: flex;
     align-items: center;
@@ -28,7 +28,7 @@ const styles = {
   `,
   modal: css`
     transition: all 0.3s ease-in-out;
-    transform: translateY(0%);
+    transform: translateY(0);
     background-color: white;
     z-index: 10;
     position: fixed;
@@ -39,7 +39,7 @@ const styles = {
     border-top-left-radius: 16px;
   `,
   modalClose: css`
-    transform: translateY(120%);
+    transform: translateY(100vh);
   `,
   back: css`
     width: 100%;

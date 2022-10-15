@@ -10,12 +10,12 @@ type Props = {
 const styles = {
   backDrop: css`
     transition: background-color 0.3s ease-in-out;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0);
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     z-index: 1;
     display: flex;
     align-items: center;
@@ -28,13 +28,12 @@ const styles = {
   `,
   modal: css`
     transition: all 0.3s ease-in-out;
-    transform: translateY(120%);
+    transform: translateY(100vh);
     background-color: white;
     z-index: 10;
     display: flex;
     flex-direction: column;
     width: 90%;
-    height: 90%;
     padding: 16px;
     margin: 12px;
     border-radius: 8px;
@@ -52,40 +51,42 @@ const styles = {
 
 const Modal: FC<Props> = ({ children, isOpen, setIsOpen }) => {
   return (
-    <div className={cx(styles.backDrop, { [styles.backDropIsOpen]: isOpen })}>
-      <div className={cx(styles.modal, { [styles.modalOpen]: isOpen })}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            width: "100%",
-          }}
-        >
-          <button
+    <>
+      <div className={cx(styles.backDrop, { [styles.backDropIsOpen]: isOpen })}>
+        <div className={cx(styles.modal, { [styles.modalOpen]: isOpen })}>
+          <div
             style={{
-              width: "20px",
-              height: "20px",
-              backgroundColor: "gray",
-              borderRadius: 2,
               display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              justifyContent: "flex-end",
+              width: "100%",
             }}
-            onClick={() => setIsOpen(false)}
           >
-            X
-          </button>
+            <button
+              style={{
+                width: "20px",
+                height: "20px",
+                backgroundColor: "gray",
+                borderRadius: 2,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              onClick={() => setIsOpen(false)}
+            >
+              X
+            </button>
+          </div>
+          {children}
         </div>
-        {children}
+        <div
+          className={styles.back}
+          onClick={() => {
+            setIsOpen(false);
+            console.log("pressed");
+          }}
+        />
       </div>
-      <div
-        className={styles.back}
-        onClick={() => {
-          setIsOpen(false);
-          console.log("pressed");
-        }}
-      />
-    </div>
+    </>
   );
 };
 

@@ -9,7 +9,7 @@ import { couponState, OrderMenu } from "../type/model";
 import HalfModal from "./HalfModal";
 
 type Props = {
-  orderMenu?: OrderMenu;
+  orderMenu?: OrderMenu | null;
   setOrderMenu?: (orderMenu: OrderMenu) => void;
   modalIsOpen: boolean;
   setModalIsOpen: (a: boolean) => void;
