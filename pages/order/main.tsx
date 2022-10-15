@@ -12,6 +12,7 @@ import {
 } from "../../src/database/atom";
 import { authLogOut } from "../../src/database/basicFunc/auth";
 import { useInitPage } from "../../src/hooks/initAppHooks";
+import LargeButton from "../../src/html&cssComps/LargeButton";
 
 const Main = () => {
   useInitPage();
@@ -46,12 +47,10 @@ const Main = () => {
             margin: "12px",
           }}
         >
-          <button
+          <LargeButton
+            title="クーポン一覧"
             onClick={() => setIsCouponModalOpen(true)}
-            style={{ width: "120px", height: "40px", borderRadius: 8 }}
-          >
-            クーポン一覧
-          </button>
+          />
         </div>
         <div
           style={{
