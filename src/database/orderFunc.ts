@@ -14,12 +14,14 @@ import {
 import {
   addKeywordNum,
   changeStateOfCoupon,
+  decreaseProduct,
   deleteOrder,
   fetchCoupons,
   fetchKeyword,
   fetchKeywordLength,
   fetchMenus,
   fetchToppings,
+  setAnalytics,
   setOrder,
   snapOrderState,
   updateUserData,
@@ -181,7 +183,7 @@ export const useOrderFunc = () => {
         setOrder(userData.id, tmp);
       } catch (error) {
         alert(
-          "注文のキャンセルができませんでした。以下のメールアドレスから連絡をお願いします。"
+          `注文のキャンセルができませんでした。以下のメールアドレスから連絡をお願いします。${error}`
         );
         return;
       }
@@ -212,7 +214,19 @@ export const useOrderFunc = () => {
       deleteOrder(userData.id)
         .then(() => {
           setOrderedData(null);
-          then();
+          orderedData.OrderMenus.forEach((menu) => {
+            decreaseProduct(`menus/${menu.menuID}`);
+            menu.toppings.forEach((topping) => {
+              decreaseProduct(`toppings/${topping}`);
+            });
+          });
+          setAnalytics(orderedData)
+            .then(() => {
+              then();
+            })
+            .catch((error) => {
+              then();
+            });
         })
         .catch((error) => {
           alert(
