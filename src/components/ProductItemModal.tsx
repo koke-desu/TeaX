@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { couponsAtom, orderedDataAtom } from "../database/atom";
+import { couponsAtom, orderedDataAtom, toppingsAtom } from "../database/atom";
 import { useOrderFunc } from "../database/orderFunc";
 import { Menu, OrderMenu } from "../type/model";
 import CouponHalfModal from "./CouponHalfModal";
@@ -22,6 +22,7 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
     couponID: null,
     menuID: menu.id,
   });
+  const toppings = useRecoilValue(toppingsAtom);
   const orderData = useRecoilValue(orderedDataAtom);
   const coupons = useRecoilValue(couponsAtom);
   console.log("couponId is", orderMenu.couponID);
@@ -63,41 +64,74 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
                 }}
               >
                 <p>トッピング</p>
-                <button>カスタム</button>
               </div>
               <div
                 style={{
                   display: "flex",
-                  flexDirection: "column",
+                  flexDirection: "row",
                   alignItems: "flex-start",
+                  marginLeft: "10%",
                 }}
               >
-                <p style={{ margin: 0 }}>・チョコソース</p>
-                <p style={{ margin: 0 }}>・チョコソース</p>
-              </div>
-              <div
-                style={{
-                  marginTop: "40px",
-                  display: "flex",
-                  alignItems: "flex-start",
-                  flexDirection: "column",
-                }}
-              >
-                <p style={{ margin: 0 }}>アレルギー情報</p>
-                <div style={{ display: "flex" }}>
-                  {Object.keys(menu.allergy).map((key, index) => (
+                {toppings.map((topping) => (
+                  <button
+                    style={{
+                      width: "80px",
+                      height: "100px",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      margin: "4px",
+                      padding: 0,
+                      position: "relative",
+                    }}
+                    key={topping.id}
+                    onClick={() => {
+                      let tmp = { ...orderMenu };
+                      if (
+                        orderMenu.toppings.some((data) => data === topping.id)
+                      ) {
+                        tmp.toppings = tmp.toppings.filter(
+                          (data) => data !== topping.id
+                        );
+                        console.log(tmp.menuPrice);
+
+                        tmp.menuPrice -= topping.price;
+                        console.log(tmp.menuPrice);
+                      } else {
+                        tmp.toppings.push(topping.id);
+                        console.log(tmp.menuPrice);
+
+                        tmp.menuPrice = tmp.menuPrice + topping.price;
+                        console.log(tmp.menuPrice);
+                      }
+
+                      setOrderMenu(tmp);
+                    }}
+                  >
+                    {orderMenu.toppings.some((data) => data === topping.id) && (
+                      <div
+                        style={{
+                          backgroundColor: "rgba(0,0,0,0.6)",
+                          position: "absolute",
+                          width: "100%",
+                          height: "100%",
+                        }}
+                      >
+                        <p style={{ color: "white" }}>check</p>
+                      </div>
+                    )}
                     <div
-                      key={index}
                       style={{
-                        width: "24px",
-                        height: "24px",
+                        width: "50px",
+                        height: "50px",
                         backgroundColor: "gray",
                       }}
-                    >
-                      {menu.allergy[key]}
-                    </div>
-                  ))}
-                </div>
+                    ></div>
+                    <p style={{ fontSize: "8px", margin: 0 }}>{topping.name}</p>
+                    <p>{topping.price}</p>
+                  </button>
+                ))}
               </div>
               <div>
                 <h1>単品￥{orderMenu.menuPrice}</h1>
