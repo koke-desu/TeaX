@@ -12,7 +12,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { couponState, OrderData, User } from "../../type/model";
+import { couponState, OrderData, OrderMenu, User } from "../../type/model";
 import { db } from "../firebase";
 //ユーザーのアカウント情報を取得
 export const fetchUserData = (id: string): any => {
@@ -154,4 +154,37 @@ export const setUserCoupon = async (userId: string) => {
     },
   });
   fetchUserData(userId);
+};
+
+export const decreaseProduct = (docRef: string) => {
+  getDoc(doc(db, docRef)).then((docData) => {
+    const data = docData.data();
+    if (data) {
+      let remaining = data.remaining;
+      let soldNum = data.soldNum;
+      remaining -= 1;
+      soldNum += 1;
+      updateDoc(doc(db, docRef), {
+        remaining: remaining,
+        soldNum: soldNum,
+      });
+    }
+  });
+};
+
+export const setAnalytics = async (orderData: OrderData) => {
+  const docData = await getDoc(doc(db, "appAnalytics", "earnings"));
+  const data = docData.data();
+  if (data) {
+    let tmpEarnMoney = data.totalEarnMoney;
+    tmpEarnMoney = tmpEarnMoney + orderData.totalPrice;
+    let tmpSoldedProducts: OrderMenu[] = [...data.soldedProducts];
+    orderData.OrderMenus.forEach((menu) => {
+      tmpSoldedProducts.push(menu);
+    });
+    setDoc(doc(db, "appAnalytics", "earnings"), {
+      soldedProducts: tmpSoldedProducts,
+      totalEarnMoney: tmpEarnMoney,
+    });
+  }
 };
