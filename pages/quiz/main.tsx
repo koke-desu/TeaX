@@ -4,6 +4,7 @@ import { useRecoilValue } from "recoil";
 import Layout from "../../src/components/Layout";
 import { userAtom } from "../../src/database/atom";
 import { authLogOut } from "../../src/database/basicFunc/auth";
+import { setUserCoupon } from "../../src/database/basicFunc/firestore";
 import { useInitPage } from "../../src/hooks/initAppHooks";
 
 const Main = () => {
@@ -22,6 +23,7 @@ const Main = () => {
       >
         signout
       </button>
+      <button onClick={() => setUserCoupon(user.id)}>クーポン獲得する</button>
     </>
   );
 };
