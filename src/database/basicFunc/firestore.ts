@@ -8,11 +8,10 @@ import {
   getDoc,
   getDocs,
   onSnapshot,
-  QueryDocumentSnapshot,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { couponState, OrderData, User } from "../../type/model";
+import { Coupons, couponState, OrderData, User } from "../../type/model";
 import { db } from "../firebase";
 //ユーザーのアカウント情報を取得
 export const fetchUserData = (id: string): any => {
@@ -23,14 +22,8 @@ export const fetchUserData = (id: string): any => {
 };
 
 //TODO:関数を試す
-export const fetchToppings = async () => {
-  const docs = await getDocs(collection(db, "toppings"));
-  console.log("getCoupons from firestore");
-  let tmp: any[] = [];
-  docs.forEach((doc) => {
-    tmp.push(doc.data());
-  });
-  return tmp;
+export const fetchToppings = () => {
+  return getDocs(collection(db, "toppings"));
 };
 
 //TODO:関数を試す
@@ -42,25 +35,16 @@ export const fetchQuizzes = () => {
 };
 
 //TODO:関数を試す
-export const fetchMenus = async () => {
-  const docs = await getDocs(collection(db, "menus"));
-  console.log("getMenus from firestore");
-  let tmp: any[] = [];
-  docs.forEach((doc) => {
-    tmp.push(doc.data());
+export const fetchMenus = () => {
+  return getDocs(collection(db, "menus")).then((docs: any) => {
+    console.log("getMenus from firestore");
+    return docs.docs();
   });
-  return tmp;
 };
 
 //TODO:関数を試す
-export const fetchCoupons = async () => {
-  const docs = await getDocs(collection(db, "coupons"));
-  console.log("getCoupons from firestore");
-  let tmp: any[] = [];
-  docs.forEach((doc) => {
-    tmp.push(doc.data());
-  });
-  return tmp;
+export const fetchCoupons = () => {
+  return getDocs(collection(db, "coupons"));
 };
 
 //TODO:関数を試す
@@ -124,34 +108,9 @@ export const snapOrderState = async (
   return onSnapshot(doc(db, "orders", userId), (doc) => {
     const orderData = doc.data();
     if (orderData) {
-      console.log("get orderState from firestore", orderData);
       then(orderData as OrderData);
+    } else {
+      alert(`間違ったデータを取得しました。:${orderData}`);
     }
   });
-};
-
-export const useUserCoupon = (userData: User, couponId: string) => {
-  const tmp = {
-    ...userData.coupons,
-  };
-  tmp[couponId] = "used";
-  return updateDoc(doc(db, "users", userData.id), {
-    coupons: tmp,
-  })
-    .then(() => {
-      fetchUserData(userData.id);
-    })
-    .catch((error) => {
-      alert("クーポンを使用できませんでした。もう一度お試しください");
-    });
-};
-
-//TODO:関数を試す
-export const setUserCoupon = async (userId: string) => {
-  await updateDoc(doc(db, "users", userId), {
-    coupons: {
-      "49O2mKW3tynsEBC2LFXQ": "useable",
-    },
-  });
-  fetchUserData(userId);
 };
