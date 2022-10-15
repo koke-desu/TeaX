@@ -2,6 +2,7 @@ import { FC, useState } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { couponsAtom, orderedDataAtom, toppingsAtom } from "../database/atom";
 import { useOrderFunc } from "../database/orderFunc";
+import LargeButton from "../html&cssComps/LargeButton";
 import { Menu, OrderMenu } from "../type/model";
 import CouponHalfModal from "./CouponHalfModal";
 import Modal from "./Modal";
@@ -154,7 +155,7 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
                     </button>
                   )}
 
-                  <button
+                  {/* <button
                     onClick={() => {
                       orderFunc.setOrderMenuToCart(orderMenu);
                       setOrderMenu({
@@ -167,7 +168,20 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
                     }}
                   >
                     カートに追加
-                  </button>
+                  </button> */}
+                  <LargeButton
+                    title="カートに追加"
+                    onClick={() => {
+                      orderFunc.setOrderMenuToCart(orderMenu);
+                      setOrderMenu({
+                        toppings: [],
+                        menuPrice: menu.price,
+                        couponID: null,
+                        menuID: menu.id,
+                      });
+                      setIsOpen(false);
+                    }}
+                  />
                 </div>
               ) : (
                 <p>注文中の商品の受け取り完了をしてから注文してください</p>

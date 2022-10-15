@@ -4,25 +4,36 @@ import { FC } from "react";
 type Props = {
   onClick: () => void;
   title: string;
+  isOutlined?: boolean;
+  backgroundColor?: string;
 };
 
-const LargeButton: FC<Props> = ({ onClick, title }) => {
+const LargeButton: FC<Props> = ({
+  onClick,
+  title,
+  isOutlined = false,
+  backgroundColor = "#e4c76f",
+}) => {
   return (
-    <button className={styles.button} type="button" onClick={onClick}>
+    <button
+      className={styles.button(isOutlined, backgroundColor)}
+      type="button"
+      onClick={onClick}
+    >
       {title}
     </button>
   );
 };
 
 const styles = {
-  button: css`
+  button: (isOutlined: boolean, backgroundColor: string) => css`
     color: #090909;
     padding: 0.7em 1.7em;
     font-size: 20px;
     border-radius: 0.6em;
     font-weight: 900;
     line-height: 1;
-    background: #e4c76f;
+    background: ${isOutlined ? "#ffffff" : backgroundColor};
     border: 1px solid #e4c76f;
     width: 150px;
     height: 50px;
@@ -30,7 +41,7 @@ const styles = {
     transition: background-color 0.1s ease-out;
 
     &:active {
-      background: #d1b562;
+      background: #eeeeee;
     }
   `,
 };

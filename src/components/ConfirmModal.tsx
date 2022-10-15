@@ -1,4 +1,5 @@
 import { FC } from "react";
+import LargeButton from "../html&cssComps/LargeButton";
 
 type Props = {
   isOpen: boolean;
@@ -33,36 +34,14 @@ const ConfirmModal: FC<Props> = ({
     >
       <div
         style={{
-          width: "70%",
           zIndex: 10,
           margin: "12px",
+          maxWidth: "600px",
           borderRadius: 8,
           backgroundColor: "white",
-          padding: "12px",
+          padding: "24px",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            width: "100%",
-          }}
-        >
-          <button
-            style={{
-              width: "20px",
-              height: "20px",
-              backgroundColor: "gray",
-              borderRadius: 2,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            onClick={() => setIsOpen(false)}
-          >
-            X
-          </button>
-        </div>
         <div>
           <h1>{title}</h1>
           <p>{description}</p>
@@ -72,17 +51,30 @@ const ConfirmModal: FC<Props> = ({
             display: "flex",
             justifyContent: "space-around",
             width: "100%",
+            gap: "8px",
           }}
         >
-          <button onClick={() => setIsOpen(false)}>キャンセル</button>
-          <button
+          {/* <button onClick={() => setIsOpen(false)}>キャンセル</button> */}
+          <LargeButton
+            title="キャンセル"
+            onClick={() => setIsOpen(false)}
+            isOutlined
+          />
+          {/* <button
             onClick={() => {
               onOk();
               setIsOpen(false);
             }}
           >
             OK
-          </button>
+          </button> */}
+          <LargeButton
+            title="OK"
+            onClick={() => {
+              onOk();
+              setIsOpen(false);
+            }}
+          />
         </div>
       </div>
       <div

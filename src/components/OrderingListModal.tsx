@@ -7,6 +7,7 @@ import {
   orderingListModalAtom,
 } from "../database/atom";
 import { useOrderFunc } from "../database/orderFunc";
+import LargeButton from "../html&cssComps/LargeButton";
 import ConfirmModal from "./ConfirmModal";
 import HalfModal from "./HalfModal";
 
@@ -58,9 +59,10 @@ const OrderingListModal = () => {
               <p>合計</p>
               <p>￥{orderedData.totalPrice}</p>
               {orderedData.isCompleted && (
-                <button onClick={() => setIsConfirmOpen(true)}>
-                  受け取り完了
-                </button>
+                <LargeButton
+                  title="受け取り完了"
+                  onClick={() => setIsConfirmOpen(true)}
+                />
               )}
             </div>
           </div>
