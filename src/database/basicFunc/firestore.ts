@@ -129,3 +129,29 @@ export const snapOrderState = async (
     }
   });
 };
+
+export const useUserCoupon = (userData: User, couponId: string) => {
+  const tmp = {
+    ...userData.coupons,
+  };
+  tmp[couponId] = "used";
+  return updateDoc(doc(db, "users", userData.id), {
+    coupons: tmp,
+  })
+    .then(() => {
+      fetchUserData(userData.id);
+    })
+    .catch((error) => {
+      alert("クーポンを使用できませんでした。もう一度お試しください");
+    });
+};
+
+//TODO:関数を試す
+export const setUserCoupon = async (userId: string) => {
+  await updateDoc(doc(db, "users", userId), {
+    coupons: {
+      "49O2mKW3tynsEBC2LFXQ": "useable",
+    },
+  });
+  fetchUserData(userId);
+};

@@ -50,11 +50,7 @@ const CouponHalfModal: FC<Props> = ({
               description={coupon.description}
               onClick={() => {
                 if (orderMenu)
-                  orderFunc.setCouponToOrderMenu(
-                    coupon.id,
-                    orderMenu,
-                    setOrderMenu
-                  );
+                  orderFunc.useCoupon(coupon.id, orderMenu, setOrderMenu);
                 setModalIsOpen(false);
               }}
             />

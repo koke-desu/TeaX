@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useRecoilState } from "recoil";
 import { Coupon, Menu, OrderData, OrderMenu, Topping } from "../type/model";
 import {
@@ -21,6 +22,8 @@ import {
   fetchToppings,
   setOrder,
   snapOrderState,
+  updateUserData,
+  useUserCoupon,
 } from "./basicFunc/firestore";
 
 //モバイルオーダーで使用する関数をまとめたファイル
@@ -135,23 +138,10 @@ export const useOrderFunc = () => {
     console.log("setted menu to cart", orderMenu);
   };
 
-  const setCouponToOrderMenu = (
-    couponId: string,
-    orderMenu: OrderMenu,
-    setOrderMenu: (orderMenu: OrderMenu) => void
-  ) => {
-    if (orderMenu.couponID) {
-      alert("クーポンはすでに使用しています。");
-    } else {
-      const tmp = { ...orderMenu };
-      tmp.couponID = couponId;
-      setOrderMenu(tmp);
-    }
-  };
-
   //注文する関数(thenはうまく行った時の処理を書く)
   const order = async (then: () => void) => {
     if (cartItems.length !== 0) {
+      getKeywordLength();
       const keywordIndex = Math.floor(Math.random() * keywordLength);
       let keywordData;
       try {
@@ -196,7 +186,8 @@ export const useOrderFunc = () => {
         return;
       }
       try {
-        changeStateOfCoupon(userData.id, tmpCouponsState);
+        // changeStateOfCoupon(userData.id, tmpCouponsState);
+        updateUserData(userData);
       } catch (error) {
         alert(
           `クーポンを正しく使用できませんでした。注文をキャンセルします${error}`
@@ -231,6 +222,42 @@ export const useOrderFunc = () => {
     }
   };
 
+  const useCoupon = (
+    couponId: string,
+    orderMenu: OrderMenu,
+    setOrderMenu: (orderMenu: OrderMenu) => void
+  ) => {
+    if (orderMenu.couponID) {
+      alert("クーポンはすでに使用しています。");
+    } else {
+      const calcPrice = () => {
+        const couponData = getCouponByID(couponId);
+        let tmpPrice = orderMenu.menuPrice;
+        if (couponData) {
+          if (couponData.type === "multiple") {
+            tmpPrice = tmpPrice * couponData.number;
+          } else if (couponData.type === "subtract") {
+            tmpPrice = tmpPrice - couponData.number;
+          } else {
+            alert("対応していないクーポンタイプです");
+          }
+        } else {
+          alert("クーポンデータがありません");
+        }
+        return tmpPrice;
+      };
+      const tmp = { ...orderMenu };
+      const tmpUserData = { ...userData };
+      const tmpCoupons = { ...tmpUserData.coupons };
+      tmp.menuPrice = calcPrice();
+      tmp.couponID = couponId;
+      tmpCoupons[couponId] = "used";
+      tmpUserData.coupons = tmpCoupons;
+      setOrderMenu(tmp);
+      setUserData(tmpUserData);
+    }
+  };
+
   return {
     getMenus,
     getKeywordLength,
@@ -244,6 +271,6 @@ export const useOrderFunc = () => {
     order,
     getOrderState,
     completeOrder,
-    setCouponToOrderMenu,
+    useCoupon,
   };
 };

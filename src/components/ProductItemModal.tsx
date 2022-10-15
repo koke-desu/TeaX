@@ -100,7 +100,7 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
                 </div>
               </div>
               <div>
-                <h1>単品￥{menu.price}</h1>
+                <h1>単品￥{orderMenu.menuPrice}</h1>
               </div>
               {!orderData ? (
                 <div
@@ -123,6 +123,12 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
                   <button
                     onClick={() => {
                       orderFunc.setOrderMenuToCart(orderMenu);
+                      setOrderMenu({
+                        toppings: [],
+                        menuPrice: menu.price,
+                        couponID: null,
+                        menuID: menu.id,
+                      });
                       setIsOpen(false);
                     }}
                   >
