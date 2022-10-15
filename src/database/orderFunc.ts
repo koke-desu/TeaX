@@ -1,13 +1,6 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useRecoilState } from "recoil";
-import {
-  Coupon,
-  Coupons,
-  Menu,
-  OrderData,
-  OrderMenu,
-  Topping,
-  Toppings,
-} from "../type/model";
+import { Coupon, Menu, OrderData, OrderMenu, Topping } from "../type/model";
 import {
   cartItemsAtom,
   couponsAtom,
@@ -29,6 +22,8 @@ import {
   fetchToppings,
   setOrder,
   snapOrderState,
+  updateUserData,
+  useUserCoupon,
 } from "./basicFunc/firestore";
 
 //モバイルオーダーで使用する関数をまとめたファイル
@@ -43,12 +38,11 @@ export const useOrderFunc = () => {
     useRecoilState(tmpCouponsStateAtom);
   const [orderedData, setOrderedData] = useRecoilState(orderedDataAtom);
   const [keywordLength, setKeywordLength] = useRecoilState(keywordLengthAtom);
-
   //メニューデータを取得する関数
   const getMenus = () => {
-    fetchMenus().then((data: any) => {
-      console.log("got data", data);
-      setMenus(data);
+    fetchMenus().then((data) => {
+      const tmp = [...data];
+      setMenus(tmp);
     });
   };
 
@@ -65,62 +59,71 @@ export const useOrderFunc = () => {
   };
 
   const getToppings = () => {
-    fetchToppings().then((docs) => {
-      const toppings: Toppings = {};
-      docs.forEach((doc) => {
-        //TODO:ここ無理やりTopping型にしているので改善したい
-        toppings[doc.id] = doc.data() as Topping;
-      });
+    const tmp = fetchToppings();
+    tmp.then((data) => {
+      //TODO:ここ無理やりCoupon型にしているので改善したい
+      console.log("setToppingsData to recoil", data);
+      const tmp = [...data];
+      setToppings(tmp);
     });
-    setToppings(toppings);
   };
 
   const getCoupons = () => {
-    const coupons: Coupons = {};
-    fetchCoupons().then((docs) => {
-      docs.forEach((doc) => {
-        //TODO:ここ無理やりCoupon型にしているので改善したい
-        coupons[doc.id] = doc.data() as Coupon;
-      });
+    const tmp = fetchCoupons();
+    // setCoupons(coupons);
+    tmp.then((data) => {
+      //TODO:ここ無理やりCoupon型にしているので改善したい
+      console.log("setCouponData to recoil", data);
+      const tmp = [...data];
+      setCoupons(tmp);
     });
-    setCoupons(coupons);
   };
 
   //IDからメニューデータを取得する関数
   const getMenuByID = (menuId: string) => {
-    const tmp = menus[menuId];
+    const tmp = menus.find((data) => data.id === menuId);
+    console.log("get menudata", menus, menuId, tmp);
+
     return tmp;
   };
 
   //IDからクーポンデータを取得する関数
   const getCouponByID = (couponId: string) => {
-    const tmp = coupons[couponId];
+    const tmp = coupons.find((data) => data.id === couponId);
     return tmp;
   };
 
   //IDからトッピングデータを取得する関数
   const getToppingsByID = (toppingId: string) => {
-    const tmp = toppings[toppingId];
+    const tmp = toppings.find((data) => data.id === toppingId);
     return tmp;
   };
 
   //トッピングをセットする(トッピングのセットは基本的にカートに入れないのでデータを返す感じ)
   const setToppingToMenu = (
-    menuId: string,
+    orderMenu: OrderMenu,
     toppingIds: string[],
     couponID?: string
   ): OrderMenu => {
-    const menuPrice: number = menus[menuId].price;
+    const menuPrice: number | undefined = getMenuByID(orderMenu.menuID)?.price;
     const toppingList: string[] = toppingIds;
     let totalToppingPrices: number = 0;
     toppingList.forEach((topping) => {
-      const tmp: number = toppings[topping].price;
-      totalToppingPrices += tmp;
+      const tmp: number | undefined = getToppingsByID(topping)?.price;
+      if (tmp) totalToppingPrices += tmp;
+      else {
+        alert("トッピングのデータがありません");
+      }
     });
-    const totalPrice = menuPrice + totalToppingPrices;
+    let totalPrice = 0;
+    if (!menuPrice) {
+      alert("メニューデータがありません");
+    } else {
+      totalPrice = menuPrice + totalToppingPrices;
+    }
     const tmp: OrderMenu = {
       toppings: toppingIds,
-      menuID: menuId,
+      menuID: orderMenu.menuID,
       menuPrice: totalPrice,
       couponID: couponID ? couponID : null,
     };
@@ -132,11 +135,13 @@ export const useOrderFunc = () => {
     const tmp = [...cartItems];
     tmp.push(orderMenu);
     setCartItems(tmp);
+    console.log("setted menu to cart", orderMenu);
   };
 
   //注文する関数(thenはうまく行った時の処理を書く)
   const order = async (then: () => void) => {
     if (cartItems.length !== 0) {
+      getKeywordLength();
       const keywordIndex = Math.floor(Math.random() * keywordLength);
       let keywordData;
       try {
@@ -181,13 +186,15 @@ export const useOrderFunc = () => {
         return;
       }
       try {
-        changeStateOfCoupon(userData.id, tmpCouponsState);
+        // changeStateOfCoupon(userData.id, tmpCouponsState);
+        updateUserData(userData);
       } catch (error) {
         alert(
           `クーポンを正しく使用できませんでした。注文をキャンセルします${error}`
         );
         return;
       }
+      setCartItems([]);
       then();
     } else {
       alert("カートに商品がありません");
@@ -195,8 +202,8 @@ export const useOrderFunc = () => {
   };
 
   //注文状況をスナップショットで受け取る関数
-  const getOrderState = () => {
-    snapOrderState(userData.id, (orderData) => setOrderedData(orderData));
+  const getOrderState = (userId: string) => {
+    snapOrderState(userId, (orderData) => setOrderedData(orderData));
   };
 
   //支払い完了時に実行する関数（オーダーデータを削除）
@@ -204,6 +211,7 @@ export const useOrderFunc = () => {
     if (orderedData?.isCompleted) {
       deleteOrder(userData.id)
         .then(() => {
+          setOrderedData(null);
           then();
         })
         .catch((error) => {
@@ -212,5 +220,57 @@ export const useOrderFunc = () => {
           );
         });
     }
+  };
+
+  const useCoupon = (
+    couponId: string,
+    orderMenu: OrderMenu,
+    setOrderMenu: (orderMenu: OrderMenu) => void
+  ) => {
+    if (orderMenu.couponID) {
+      alert("クーポンはすでに使用しています。");
+    } else {
+      const calcPrice = () => {
+        const couponData = getCouponByID(couponId);
+        let tmpPrice = orderMenu.menuPrice;
+        if (couponData) {
+          if (couponData.type === "multiple") {
+            tmpPrice = tmpPrice * couponData.number;
+          } else if (couponData.type === "subtract") {
+            tmpPrice = tmpPrice - couponData.number;
+          } else {
+            alert("対応していないクーポンタイプです");
+          }
+        } else {
+          alert("クーポンデータがありません");
+        }
+        return tmpPrice;
+      };
+      const tmp = { ...orderMenu };
+      const tmpUserData = { ...userData };
+      const tmpCoupons = { ...tmpUserData.coupons };
+      tmp.menuPrice = calcPrice();
+      tmp.couponID = couponId;
+      tmpCoupons[couponId] = "used";
+      tmpUserData.coupons = tmpCoupons;
+      setOrderMenu(tmp);
+      setUserData(tmpUserData);
+    }
+  };
+
+  return {
+    getMenus,
+    getKeywordLength,
+    getToppings,
+    getCoupons,
+    getMenuByID,
+    getCouponByID,
+    getToppingsByID,
+    setToppingToMenu,
+    setOrderMenuToCart,
+    order,
+    getOrderState,
+    completeOrder,
+    useCoupon,
   };
 };

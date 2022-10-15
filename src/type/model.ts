@@ -31,11 +31,10 @@ export type OrderMenu = {
   couponID: string | null;
 };
 
-export type Menus = {
-  [menuID: string]: Menu;
-};
+// export type Menus =  Menu[];
 
 export type Menu = {
+  id: string;
   description: string;
   name: string;
   price: number;
@@ -47,12 +46,13 @@ export type Menu = {
 
 // トッピング。複数種類つけることが出来る。
 
-export type Toppings = {
-  [toppingID: string]: Topping;
-};
+// export type Toppings = {
+//   [toppingID: string]: Topping;
+// };
 
 // ココアパウダー、スライスした果物とか
 export type Topping = {
+  id: string;
   name: string;
   description: number;
   price: number;
@@ -60,15 +60,16 @@ export type Topping = {
   remaining: number;
 };
 
-export type Coupons = {
-  [couponID: string]: Coupon;
-};
+// export type Coupons = {
+//   [couponID: string]: Coupon;
+// };
 
 // クーポンの詳細。中身は未定。割引や隠しメニューとか？
 //typeとnumberで価格の計算を行う。例えば、type:multiple,number:0.7の場合は3割引きを意味し、価格×0.7を計算する。
 export type Coupon = {
+  id: string;
   title: string;
-  description: number;
+  description: string;
   type: CouponType;
   number: number;
 };
