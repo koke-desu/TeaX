@@ -1,25 +1,14 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useRouter } from "next/router";
 import { useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import CouponHalfModal from "../../src/components/CouponHalfModal";
-import Layout from "../../src/components/Layout";
 import Product from "../../src/components/orderComps/Product";
-import {
-  couponListModalAtom,
-  menusAtom,
-  userAtom,
-} from "../../src/database/atom";
-import { authLogOut } from "../../src/database/basicFunc/auth";
+import { menusAtom } from "../../src/database/atom";
 import { useInitPage } from "../../src/hooks/initAppHooks";
 import LargeButton from "../../src/html&cssComps/LargeButton";
 
 const Main = () => {
   useInitPage();
-
-  const router = useRouter();
-  const user = useRecoilValue(userAtom);
-  // const setIsCouponModalOpen = useSetRecoilState(couponListModalAtom);
   const [isCouponModalOpen, setIsCouponModalOpen] = useState(false);
   const menus = useRecoilValue(menusAtom);
   return (
@@ -31,15 +20,6 @@ const Main = () => {
           flexDirection: "column",
         }}
       >
-        {/* <p>userID:{user.id}</p> */}
-        {/* <button
-        onClick={() => {
-          authLogOut();
-          router.replace("/userAction/login");
-        }}
-      >
-        signout
-      </button> */}
         <div
           style={{
             display: "flex",

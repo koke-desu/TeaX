@@ -27,7 +27,7 @@ const styles = {
     background-color: rgba(0, 0, 0, 0.6);
   `,
   modal: css`
-    transition: all 0.3s ease-in-out;
+    transition: all 0.4s ease-in-out;
     transform: translateY(0);
     background-color: white;
     z-index: 10;

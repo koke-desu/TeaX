@@ -18,32 +18,8 @@ const ConfirmModal: FC<Props> = ({
   title,
 }) => {
   return (
-    <div
-      // style={{
-      //   width: "100vw",
-      //   height: "100vh",
-      //   zIndex: 1,
-      //   position: "fixed",
-      //   bottom: 0,
-      //   left: 0,
-      //   display: "flex",
-      //   flexDirection: "column",
-      //   justifyContent: "center",
-      //   alignItems: "center",
-      // }}
-      className={cx(styles.backDrop, { [styles.backDropIsOpen]: isOpen })}
-    >
-      <div
-        // style={{
-        //   zIndex: 10,
-        //   margin: "12px",
-        //   maxWidth: "600px",
-        //   borderRadius: 8,
-        //   backgroundColor: "white",
-        //   padding: "24px",
-        // }}
-        className={cx(styles.modal, { [styles.modalOpen]: isOpen })}
-      >
+    <div className={cx(styles.backDrop, { [styles.backDropIsOpen]: isOpen })}>
+      <div className={cx(styles.modal, { [styles.modalOpen]: isOpen })}>
         <div>
           <h1>{title}</h1>
           <p>{description}</p>
@@ -56,20 +32,11 @@ const ConfirmModal: FC<Props> = ({
             gap: "8px",
           }}
         >
-          {/* <button onClick={() => setIsOpen(false)}>キャンセル</button> */}
           <LargeButton
             title="キャンセル"
             onClick={() => setIsOpen(false)}
             isOutlined
           />
-          {/* <button
-            onClick={() => {
-              onOk();
-              setIsOpen(false);
-            }}
-          >
-            OK
-          </button> */}
           <LargeButton
             title="OK"
             onClick={() => {
@@ -121,8 +88,6 @@ const styles = {
     z-index: 10;
     display: flex;
     flex-direction: column;
-    /* width: 90%;
-    height: 90%; */
     padding: 16px;
     margin: 12px;
     border-radius: 8px;

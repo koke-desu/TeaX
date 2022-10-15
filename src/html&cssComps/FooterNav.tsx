@@ -39,7 +39,7 @@ const styles = {
   `,
 
   part: css`
-    background-color: #00613e;
+    background-color: #87ce41;
     width: 50vw;
     height: 10%;
     display: flex;

@@ -7,9 +7,10 @@ import { FC } from "react";
 type Props = {
   onClickCart: () => void;
   router: NextRouter;
+  cartNum: number;
 };
 /* eslint-disable @next/next/no-img-element */
-const HeaderNav: FC<Props> = ({ onClickCart, router }) => {
+const HeaderNav: FC<Props> = ({ onClickCart, router, cartNum }) => {
   return (
     <div className={styles.box}>
       {router.pathname === "/order/main" || router.pathname === "/quiz/main" ? (
@@ -24,6 +25,7 @@ const HeaderNav: FC<Props> = ({ onClickCart, router }) => {
       </div>
 
       <a onClick={onClickCart} className={styles.cart}>
+        <div className={styles.badge(cartNum !== 0)}>{cartNum}</div>
         <img src="/cartIcon.png" width="34px" height="34px" />
       </a>
     </div>
@@ -31,8 +33,22 @@ const HeaderNav: FC<Props> = ({ onClickCart, router }) => {
 };
 
 const styles = {
+  badge: (isItemInCart: boolean) => css`
+    transition: all 0.4s ease-in-out;
+    opacity: ${isItemInCart ? 1 : 0};
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100px;
+    background-color: red;
+    width: 28px;
+    height: 28px;
+  `,
   box: css`
-    background-color: #00613e;
+    background-color: #87ce41;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -62,6 +78,7 @@ const styles = {
   `,
 
   cart: css`
+    position: relative;
     margin-left: auto;
   `,
 };

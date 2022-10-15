@@ -1,11 +1,6 @@
 import { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import {
-  couponsAtom,
-  menusAtom,
-  orderedDataAtom,
-  orderingListModalAtom,
-} from "../database/atom";
+import { orderedDataAtom, orderingListModalAtom } from "../database/atom";
 import { useOrderFunc } from "../database/orderFunc";
 import LargeButton from "../html&cssComps/LargeButton";
 import ConfirmModal from "./ConfirmModal";
@@ -18,9 +13,9 @@ const OrderingListModal = () => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
   return (
-    <HalfModal isOpen={isOpen} setIsOpen={setIsOpen}>
-      {orderedData && (
-        <>
+    <>
+      <HalfModal isOpen={isOpen} setIsOpen={setIsOpen}>
+        {orderedData && (
           <div
             style={{
               display: "flex",
@@ -37,8 +32,6 @@ const OrderingListModal = () => {
             <p style={{ margin: 0 }}>{orderedData.orderKeyword}</p>
             {orderedData.OrderMenus.map((orderMenu, index) => {
               const menuData = orderFunc.getMenuByID(orderMenu.menuID);
-              console.log();
-
               return (
                 <div
                   key={index}
@@ -66,20 +59,20 @@ const OrderingListModal = () => {
               )}
             </div>
           </div>
-          <ConfirmModal
-            title="よろしいでしょうか？"
-            description="商品の料金をお支払いしたことを確認してください"
-            isOpen={isConfirmOpen}
-            setIsOpen={setIsConfirmOpen}
-            onOk={() =>
-              orderFunc.completeOrder(() => {
-                setIsOpen(false);
-              })
-            }
-          />
-        </>
-      )}
-    </HalfModal>
+        )}
+      </HalfModal>
+      <ConfirmModal
+        title="よろしいでしょうか？"
+        description="商品の料金をお支払いしたことを確認してください"
+        isOpen={isConfirmOpen}
+        setIsOpen={setIsConfirmOpen}
+        onOk={() =>
+          orderFunc.completeOrder(() => {
+            setIsOpen(false);
+          })
+        }
+      />
+    </>
   );
 };
 

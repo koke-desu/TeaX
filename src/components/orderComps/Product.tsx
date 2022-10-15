@@ -1,6 +1,5 @@
 import { FC, useState } from "react";
-import { useRecoilState } from "recoil";
-import { Menu, OrderMenu } from "../../type/model";
+import { Menu } from "../../type/model";
 import ProductItemModal from "../ProductItemModal";
 
 type Props = {

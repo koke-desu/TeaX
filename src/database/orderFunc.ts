@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useRecoilState } from "recoil";
-import { Coupon, Menu, OrderData, OrderMenu, Topping } from "../type/model";
+import { OrderData, OrderMenu, Topping } from "../type/model";
 import {
   cartItemsAtom,
   couponsAtom,
@@ -13,7 +13,6 @@ import {
 } from "./atom";
 import {
   addKeywordNum,
-  changeStateOfCoupon,
   decreaseProduct,
   deleteOrder,
   fetchCoupons,
@@ -25,7 +24,6 @@ import {
   setOrder,
   snapOrderState,
   updateUserData,
-  useUserCoupon,
 } from "./basicFunc/firestore";
 
 //モバイルオーダーで使用する関数をまとめたファイル
@@ -36,8 +34,6 @@ export const useOrderFunc = () => {
   const [toppings, setToppings] = useRecoilState(toppingsAtom);
   const [userData, setUserData] = useRecoilState(userAtom);
   const [coupons, setCoupons] = useRecoilState(couponsAtom);
-  const [tmpCouponsState, setTmpCouponsState] =
-    useRecoilState(tmpCouponsStateAtom);
   const [orderedData, setOrderedData] = useRecoilState(orderedDataAtom);
   const [keywordLength, setKeywordLength] = useRecoilState(keywordLengthAtom);
   //メニューデータを取得する関数
@@ -84,8 +80,6 @@ export const useOrderFunc = () => {
   //IDからメニューデータを取得する関数
   const getMenuByID = (menuId: string) => {
     const tmp = menus.find((data) => data.id === menuId);
-    console.log("get menudata", menus, menuId, tmp);
-
     return tmp;
   };
 

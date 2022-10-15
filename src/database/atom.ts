@@ -1,4 +1,4 @@
-import { atom, RecoilState } from "recoil";
+import { atom } from "recoil";
 import {
   User,
   OrderMenu,

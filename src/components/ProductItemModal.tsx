@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { couponsAtom, orderedDataAtom, toppingsAtom } from "../database/atom";
 import { useOrderFunc } from "../database/orderFunc";
 import LargeButton from "../html&cssComps/LargeButton";
@@ -14,7 +14,6 @@ type Props = {
 };
 
 const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
-  console.log("menu is:", menu);
   const orderFunc = useOrderFunc();
   const [isCouponModalOpen, setIsCouponModalOpen] = useState(false);
   const [orderMenu, setOrderMenu] = useState<OrderMenu>({
@@ -25,15 +24,10 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
   });
   const toppings = useRecoilValue(toppingsAtom);
   const orderData = useRecoilValue(orderedDataAtom);
-  const coupons = useRecoilValue(couponsAtom);
-  console.log("couponId is", orderMenu.couponID);
-
-  // const setIsCouponModalOpen = useSetRecoilState(couponListModalAtom);
-
   return (
-    <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-      {menu && (
-        <>
+    <>
+      <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+        {menu && (
           <div
             style={{
               display: "flex",
@@ -96,17 +90,14 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
                           (data) => data !== topping.id
                         );
                         console.log(tmp.menuPrice);
-
                         tmp.menuPrice -= topping.price;
                         console.log(tmp.menuPrice);
                       } else {
                         tmp.toppings.push(topping.id);
                         console.log(tmp.menuPrice);
-
                         tmp.menuPrice = tmp.menuPrice + topping.price;
                         console.log(tmp.menuPrice);
                       }
-
                       setOrderMenu(tmp);
                     }}
                   >
@@ -128,7 +119,7 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
                         height: "50px",
                         backgroundColor: "gray",
                       }}
-                    ></div>
+                    />
                     <p style={{ fontSize: "8px", margin: 0 }}>{topping.name}</p>
                     <p>{topping.price}</p>
                   </button>
@@ -142,7 +133,6 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
                   style={{
                     display: "flex",
                     justifyContent: "space-around",
-                    // zIndex: 2,
                   }}
                 >
                   {orderMenu.couponID ? (
@@ -154,21 +144,6 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
                       クーポンを追加
                     </button>
                   )}
-
-                  {/* <button
-                    onClick={() => {
-                      orderFunc.setOrderMenuToCart(orderMenu);
-                      setOrderMenu({
-                        toppings: [],
-                        menuPrice: menu.price,
-                        couponID: null,
-                        menuID: menu.id,
-                      });
-                      setIsOpen(false);
-                    }}
-                  >
-                    カートに追加
-                  </button> */}
                   <LargeButton
                     title="カートに追加"
                     onClick={() => {
@@ -188,15 +163,15 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
               )}
             </div>
           </div>
-          <CouponHalfModal
-            modalIsOpen={isCouponModalOpen}
-            setModalIsOpen={setIsCouponModalOpen}
-            orderMenu={orderMenu}
-            setOrderMenu={setOrderMenu}
-          />
-        </>
-      )}
-    </Modal>
+        )}
+      </Modal>
+      <CouponHalfModal
+        modalIsOpen={isCouponModalOpen}
+        setModalIsOpen={setIsCouponModalOpen}
+        orderMenu={orderMenu}
+        setOrderMenu={setOrderMenu}
+      />
+    </>
   );
 };
 

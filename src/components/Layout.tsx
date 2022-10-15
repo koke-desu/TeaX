@@ -1,14 +1,12 @@
 import Head from "next/head";
-import { FC, ReactNode, useEffect } from "react";
+import { FC, ReactNode } from "react";
 import { useRecoilValue } from "recoil";
 import { orderedDataAtom } from "../database/atom";
 import BottomNavigation from "./BottomNavigation";
 import CartProductsModal from "./CartProductsModal";
-import CouponHalfModal from "./CouponHalfModal";
 import { Header } from "./Header";
 import OrderingFAB from "./OrderingFAB";
 import OrderingListModal from "./OrderingListModal";
-import ProductItemModal from "./ProductItemModal";
 
 type Props = {
   children: ReactNode;
@@ -35,7 +33,6 @@ const Layout: FC<Props> = ({ children }) => {
       <main style={{ display: "flex", flexGrow: 1 }}>{children}</main>
       {orderData && <OrderingFAB></OrderingFAB>}
       <BottomNavigation></BottomNavigation>
-
       <OrderingListModal></OrderingListModal>
       <CartProductsModal></CartProductsModal>
     </div>

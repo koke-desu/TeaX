@@ -4,11 +4,9 @@ import {
   deleteDoc,
   doc,
   DocumentData,
-  DocumentSnapshot,
   getDoc,
   getDocs,
   onSnapshot,
-  QueryDocumentSnapshot,
   setDoc,
   updateDoc,
 } from "firebase/firestore";

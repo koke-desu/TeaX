@@ -42,7 +42,7 @@ const styles = {
     margin: 5px 0 0 50px;
   `,
   usecoupon: css`
-    background-color: #00631e;
+    background-color: #87ce41;
     border-radius: 10px;
     border: none;
   `,

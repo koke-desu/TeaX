@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useRouter } from "next/router";
 const introduction = () => {
   const router = useRouter();
