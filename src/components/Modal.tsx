@@ -28,7 +28,7 @@ const styles = {
   `,
   modal: css`
     transition: all 0.3s ease-in-out;
-    transform: translateY(0%);
+    transform: translateY(120%);
     background-color: white;
     z-index: 10;
     display: flex;
@@ -39,8 +39,8 @@ const styles = {
     margin: 12px;
     border-radius: 8px;
   `,
-  modalClose: css`
-    transform: translateY(120%);
+  modalOpen: css`
+    transform: translateY(0%);
   `,
   back: css`
     width: 100%;
@@ -53,7 +53,7 @@ const styles = {
 const Modal: FC<Props> = ({ children, isOpen, setIsOpen }) => {
   return (
     <div className={cx(styles.backDrop, { [styles.backDropIsOpen]: isOpen })}>
-      <div className={cx(styles.modal, { [styles.modalClose]: !isOpen })}>
+      <div className={cx(styles.modal, { [styles.modalOpen]: isOpen })}>
         <div
           style={{
             display: "flex",
