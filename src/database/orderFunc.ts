@@ -230,6 +230,16 @@ export const useOrderFunc = () => {
     }
   };
 
+  const resetUseCoupon = (orderMenu: OrderMenu) => {
+    if (orderMenu.couponID) {
+      const tmpUserData = { ...userData };
+      const tmpCoupons = { ...tmpUserData.coupons };
+      tmpCoupons[orderMenu.couponID] = "useable";
+      tmpUserData.coupons = tmpCoupons;
+      setUserData(tmpUserData);
+    }
+  };
+
   const useCoupon = (
     couponId: string,
     orderMenu: OrderMenu,
@@ -280,5 +290,6 @@ export const useOrderFunc = () => {
     getOrderState,
     completeOrder,
     useCoupon,
+    resetUseCoupon,
   };
 };

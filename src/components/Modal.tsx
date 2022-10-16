@@ -5,6 +5,7 @@ type Props = {
   children: ReactNode;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
+  onClose: () => void;
 };
 
 const styles = {
@@ -49,7 +50,7 @@ const styles = {
   `,
 };
 
-const Modal: FC<Props> = ({ children, isOpen, setIsOpen }) => {
+const Modal: FC<Props> = ({ children, isOpen, setIsOpen, onClose }) => {
   return (
     <>
       <div className={cx(styles.backDrop, { [styles.backDropIsOpen]: isOpen })}>
@@ -71,7 +72,10 @@ const Modal: FC<Props> = ({ children, isOpen, setIsOpen }) => {
                 alignItems: "center",
                 justifyContent: "center",
               }}
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                setIsOpen(false);
+                onClose();
+              }}
             >
               X
             </button>
@@ -81,7 +85,9 @@ const Modal: FC<Props> = ({ children, isOpen, setIsOpen }) => {
         <div
           className={styles.back}
           onClick={() => {
+            onClose();
             setIsOpen(false);
+
             console.log("pressed");
           }}
         />

@@ -27,15 +27,17 @@ const FooterNav = () => {
 
 const styles = {
   nazotoki: (isNazotoki: boolean) => css`
-    transition: all 0.2s ease-out;
+    transition: all 0.3s ease-in-out;
     color: ${isNazotoki ? "white" : "#ebebeb"};
-    font-weight: ${isNazotoki ? "bold" : "none"};
+    scale: ${isNazotoki ? 1 : 0.8};
+    font-weight: bold;
   `,
 
   order: (isOrder: boolean) => css`
-    transition: all 0.2s ease-out;
+    transition: all 0.3s ease-in-out;
     color: ${isOrder ? "white" : "#ebebeb"};
-    font-weight: ${isOrder ? "bold" : "none"};
+    font-weight: bold;
+    scale: ${isOrder ? 1 : 0.8};
   `,
 
   part: css`

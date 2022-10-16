@@ -60,7 +60,7 @@ export const useAccountFunc = () => {
           .then(() => {
             console.log("created userData");
             setUser({ id: user.uid, coupons: {}, quizzes: {} });
-            router.replace("/main/main");
+            router.replace("/order/main");
           })
           .catch((error: AuthError) => {
             console.log(error.message);

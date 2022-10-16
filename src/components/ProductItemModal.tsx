@@ -26,7 +26,20 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
   const orderData = useRecoilValue(orderedDataAtom);
   return (
     <>
-      <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+      <Modal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        onClose={() => {
+          setOrderMenu({
+            toppings: [],
+            menuPrice: menu.price,
+            couponID: null,
+            menuID: menu.id,
+          });
+          orderFunc.resetUseCoupon(orderMenu);
+          setIsOpen(false);
+        }}
+      >
         {menu && (
           <div
             style={{
