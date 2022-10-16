@@ -1,11 +1,12 @@
 import { css } from "@emotion/css";
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 
 type Props = {
   onClick: () => void;
   title: string;
   isOutlined?: boolean;
   backgroundColor?: string;
+  children?: ReactNode;
 };
 
 const LargeButton: FC<Props> = ({
@@ -13,6 +14,7 @@ const LargeButton: FC<Props> = ({
   title,
   isOutlined = false,
   backgroundColor = "#e4c76f",
+  children = <></>,
 }) => {
   return (
     <button
@@ -21,6 +23,7 @@ const LargeButton: FC<Props> = ({
       onClick={onClick}
     >
       {title}
+      {children}
     </button>
   );
 };

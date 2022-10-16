@@ -25,6 +25,8 @@ const Main = () => {
             display: "flex",
             justifyContent: "flex-end",
             margin: "12px",
+            position: "fixed",
+            right: 0,
           }}
         >
           <LargeButton
@@ -37,6 +39,7 @@ const Main = () => {
             margin: "12px",
             display: "flex",
             flexWrap: "wrap",
+            paddingTop: "72px",
           }}
         >
           {Object.values(menus).map((menu, index) => (

@@ -5,9 +5,11 @@ import { useOrderFunc } from "../database/orderFunc";
 import LargeButton from "../html&cssComps/LargeButton";
 import ConfirmModal from "./ConfirmModal";
 import HalfModal from "./HalfModal";
+import TweetModal from "./TweetModal";
 
 const OrderingListModal = () => {
   const [isOpen, setIsOpen] = useRecoilState(orderingListModalAtom);
+  const [isTweetPageOpen, setIsTweetPageOpen] = useState(false);
   const orderedData = useRecoilValue(orderedDataAtom);
   const orderFunc = useOrderFunc();
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
@@ -69,9 +71,11 @@ const OrderingListModal = () => {
         onOk={() =>
           orderFunc.completeOrder(() => {
             setIsOpen(false);
+            setIsTweetPageOpen(true);
           })
         }
       />
+      <TweetModal isOpen={isTweetPageOpen} setIsOpen={setIsTweetPageOpen} />
     </>
   );
 };
