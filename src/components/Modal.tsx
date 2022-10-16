@@ -5,7 +5,7 @@ type Props = {
   children: ReactNode;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
-  onClose: () => void;
+  onClose?: () => void;
 };
 
 const styles = {
@@ -50,7 +50,12 @@ const styles = {
   `,
 };
 
-const Modal: FC<Props> = ({ children, isOpen, setIsOpen, onClose }) => {
+const Modal: FC<Props> = ({
+  children,
+  isOpen,
+  setIsOpen,
+  onClose = () => {},
+}) => {
   return (
     <>
       <div className={cx(styles.backDrop, { [styles.backDropIsOpen]: isOpen })}>

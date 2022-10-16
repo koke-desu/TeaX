@@ -46,6 +46,7 @@ const styles = {
     background-color: red;
     width: 28px;
     height: 28px;
+    color: white;
   `,
   box: css`
     background-color: #87ce41;
