@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { FC, useState } from "react";
 import { Menu } from "../../type/model";
 import ProductItemModal from "../ProductItemModal";
@@ -27,9 +28,14 @@ const Product: FC<Props> = ({ menu }) => {
         <div
           style={{
             border: "1px solid black",
+            width: "64px",
+            height: "64px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          <p>商品画像</p>
+          <img src={menu.imageUrl} alt="menuImg" width="auto" height="60px" />
         </div>
         <p>{menu.name}</p>
         <p>￥{menu.price}</p>

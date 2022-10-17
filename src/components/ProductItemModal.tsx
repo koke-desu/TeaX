@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { FC, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { couponsAtom, orderedDataAtom, toppingsAtom } from "../database/atom";
@@ -50,11 +51,21 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
           >
             <div
               style={{
+                border: "1px solid black",
                 width: "100px",
                 height: "100px",
-                backgroundColor: "gray",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
-            ></div>
+            >
+              <img
+                src={menu.imageUrl}
+                alt="menuImg"
+                width="auto"
+                height="100px"
+              />
+            </div>
             <div
               style={{
                 display: "flex",
@@ -124,11 +135,21 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
                     )}
                     <div
                       style={{
-                        width: "50px",
-                        height: "50px",
-                        backgroundColor: "gray",
+                        border: "1px solid black",
+                        width: "40px",
+                        height: "40px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
                       }}
-                    />
+                    >
+                      <img
+                        src={menu.imageUrl}
+                        alt="menuImg"
+                        width="auto"
+                        height="40px"
+                      />
+                    </div>
                     <p style={{ fontSize: "8px", margin: 0 }}>{topping.name}</p>
                     <p>{topping.price}</p>
                   </button>
