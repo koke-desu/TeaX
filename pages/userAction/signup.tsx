@@ -1,6 +1,6 @@
 import TestSigninInput from "../../src/components/TestSigninInput";
 
-const signUp = () => {
+const SignUp = () => {
   return (
     <div>
       signUpがめん<TestSigninInput></TestSigninInput>
@@ -8,4 +8,4 @@ const signUp = () => {
   );
 };
 
-export default signUp;
+export default SignUp;
