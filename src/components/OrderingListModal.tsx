@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { orderedDataAtom, orderingListModalAtom } from "../database/atom";
@@ -41,11 +42,21 @@ const OrderingListModal = () => {
                 >
                   <div
                     style={{
-                      width: "20px",
-                      height: "20px",
-                      backgroundColor: "gray",
+                      border: "1px solid black",
+                      width: "64px",
+                      height: "64px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
                     }}
-                  ></div>
+                  >
+                    <img
+                      src={menuData?.imageUrl}
+                      alt="menuImg"
+                      width="auto"
+                      height="100%"
+                    />
+                  </div>
                   <p>{menuData?.name}</p>
                 </div>
               );

@@ -147,7 +147,7 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
                         src={menu.imageUrl}
                         alt="menuImg"
                         width="auto"
-                        height="40px"
+                        height="100%"
                       />
                     </div>
                     <p style={{ fontSize: "8px", margin: 0 }}>{topping.name}</p>
