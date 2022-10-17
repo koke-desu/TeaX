@@ -80,7 +80,6 @@ const HalfModal: FC<Props> = ({ children, isOpen, setIsOpen }) => {
         }}
         onClick={() => {
           setIsOpen(false);
-          console.log("pressed");
         }}
       />
     </div>

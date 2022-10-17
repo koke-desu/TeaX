@@ -19,7 +19,6 @@ const CouponHalfModal: FC<Props> = ({
   orderMenu,
   setOrderMenu = () => {},
 }) => {
-  console.log(modalIsOpen);
   const coupons = useRecoilValue(couponsAtom);
   const userData = useRecoilValue(userAtom);
   const orderFunc = useOrderFunc();

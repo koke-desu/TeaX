@@ -102,14 +102,10 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
                         tmp.toppings = tmp.toppings.filter(
                           (data) => data !== topping.id
                         );
-                        console.log(tmp.menuPrice);
                         tmp.menuPrice -= topping.price;
-                        console.log(tmp.menuPrice);
                       } else {
                         tmp.toppings.push(topping.id);
-                        console.log(tmp.menuPrice);
                         tmp.menuPrice = tmp.menuPrice + topping.price;
-                        console.log(tmp.menuPrice);
                       }
                       setOrderMenu(tmp);
                     }}

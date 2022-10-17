@@ -92,7 +92,6 @@ const Modal: FC<Props> = ({
           onClick={() => {
             onClose();
             setIsOpen(false);
-
             console.log("pressed");
           }}
         />

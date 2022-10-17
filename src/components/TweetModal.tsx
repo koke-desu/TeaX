@@ -58,7 +58,6 @@ const TweetModal: FC<Props> = ({ isOpen, setIsOpen }) => {
         }}
         onClick={() => {
           setIsOpen(false);
-          console.log("pressed");
         }}
       />
     </div>

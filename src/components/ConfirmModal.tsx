@@ -55,7 +55,6 @@ const ConfirmModal: FC<Props> = ({
         }}
         onClick={() => {
           setIsOpen(false);
-          console.log("pressed");
         }}
       />
     </div>
