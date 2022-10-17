@@ -11,6 +11,7 @@ const Main = () => {
   useInitPage();
   const [isCouponModalOpen, setIsCouponModalOpen] = useState(false);
   const menus = useRecoilValue(menusAtom);
+  console.log("rendered!!");
   return (
     <>
       <div
