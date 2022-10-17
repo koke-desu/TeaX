@@ -17,6 +17,25 @@ import { auth } from "./firebase";
 //TODO:処理後に受け取ったユーザーデータをローカルに保存しなければいけない（Reduxを使うかRecoilを使うか）
 //TODO:またどの関数でデータを格納するかも考えないと（ここのファイルで格納するかfirestore.tsで格納するか）
 
+export const useInitPage = () => {
+  const router = useRouter();
+  const setUser = useSetRecoilState(userAtom);
+  useEffect(() => {
+    isLogined(
+      () => {
+        router.replace("/userAction/login");
+      },
+      (id: string) => {
+        fetchUserData(id).then((data: User) => {
+          console.log("setUserData to recoil", data);
+          setUser(data);
+        });
+        router.replace("/main/main");
+      }
+    );
+  }, []);
+};
+
 export const useAccountFunc = () => {
   const [user, setUser] = useRecoilState(userAtom);
   const router = useRouter();
@@ -40,7 +59,7 @@ export const useAccountFunc = () => {
       await fetchUserData(userId)
         .then((data: User) => {
           setUser(data);
-          router.replace("/order/main");
+          router.replace("/main/main");
         })
         .catch((error: AuthError) => {
           console.log(error.message);

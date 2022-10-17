@@ -1,13 +1,13 @@
 import { atom } from "recoil";
 import {
+  Coupons,
+  Menus,
+  quizzes,
   User,
   OrderMenu,
+  Toppings,
   couponState,
   OrderData,
-  Menu,
-  Coupon,
-  Topping,
-  quiz,
 } from "../type/model";
 import { auth } from "./firebase";
 
@@ -27,22 +27,22 @@ export const tmpCouponsStateAtom = atom({
 
 export const couponsAtom = atom({
   key: "couponsAtom",
-  default: [] as Coupon[],
+  default: {} as Coupons,
 });
 
 export const menusAtom = atom({
   key: "menusAtom",
-  default: [] as Menu[],
+  default: {} as Menus,
 });
 
 export const toppingsAtom = atom({
   key: "toppingsAtom",
-  default: [] as Topping[],
+  default: {} as Toppings,
 });
 
 export const quizzesAtom = atom({
   key: "quizzesAtom",
-  default: [] as quiz[],
+  default: {} as quizzes,
 });
 
 export const cartItemsAtom = atom({
@@ -59,19 +59,4 @@ export const orderedDataAtom = atom({
 export const keywordLengthAtom = atom({
   key: "keywordLengthAtom",
   default: 0 as number,
-});
-
-export const couponListModalAtom = atom({
-  key: "couponListModalAtom",
-  default: false,
-});
-
-export const orderingListModalAtom = atom({
-  key: "orderingListModalAtom",
-  default: false,
-});
-
-export const cartProductModalAtom = atom({
-  key: "cartProductModalAtom",
-  default: false,
 });

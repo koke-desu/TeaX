@@ -21,14 +21,8 @@ export const fetchUserData = (id: string): any => {
 };
 
 //TODO:関数を試す
-export const fetchToppings = async () => {
-  const docs = await getDocs(collection(db, "toppings"));
-  console.log("getCoupons from firestore");
-  let tmp: any[] = [];
-  docs.forEach((doc) => {
-    tmp.push(doc.data());
-  });
-  return tmp;
+export const fetchToppings = () => {
+  return getDocs(collection(db, "toppings"));
 };
 
 //TODO:関数を試す
@@ -40,25 +34,16 @@ export const fetchQuizzes = () => {
 };
 
 //TODO:関数を試す
-export const fetchMenus = async () => {
-  const docs = await getDocs(collection(db, "menus"));
-  console.log("getMenus from firestore");
-  let tmp: any[] = [];
-  docs.forEach((doc) => {
-    tmp.push(doc.data());
+export const fetchMenus = () => {
+  return getDocs(collection(db, "menus")).then((docs: any) => {
+    console.log("getMenus from firestore");
+    return docs.docs();
   });
-  return tmp;
 };
 
 //TODO:関数を試す
-export const fetchCoupons = async () => {
-  const docs = await getDocs(collection(db, "coupons"));
-  console.log("getCoupons from firestore");
-  let tmp: any[] = [];
-  docs.forEach((doc) => {
-    tmp.push(doc.data());
-  });
-  return tmp;
+export const fetchCoupons = () => {
+  return getDocs(collection(db, "coupons"));
 };
 
 //TODO:関数を試す
@@ -122,8 +107,9 @@ export const snapOrderState = async (
   return onSnapshot(doc(db, "orders", userId), (doc) => {
     const orderData = doc.data();
     if (orderData) {
-      console.log("get orderState from firestore", orderData);
       then(orderData as OrderData);
+    } else {
+      alert(`間違ったデータを取得しました。:${orderData}`);
     }
   });
 };
