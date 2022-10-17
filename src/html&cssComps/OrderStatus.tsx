@@ -2,6 +2,9 @@
 
 import { css } from "@emotion/css";
 import { FC } from "react";
+import { useRecoilValue } from "recoil";
+import { isContext } from "vm";
+import { orderedDataAtom } from "../database/atom";
 
 type Props = {
   onClick: () => void;
@@ -9,23 +12,36 @@ type Props = {
 
 /* eslint-disable @next/next/no-img-element */
 const OrderStatus: FC<Props> = ({ onClick }) => {
+  const orderData = useRecoilValue(orderedDataAtom);
+  const isVisible = orderData ? true : false;
   return (
-    <button className={styles.box} onClick={onClick}>
-      <img
-        className={styles.app_icon}
-        src="/tea.png"
-        width="29px"
-        height="50px"
-      />
-      {/* <div className={styles.text}>
-        <p className={styles.line_1}>現在</p>
-        <p className={styles.line_2}>作成中です</p>
-      </div> */}
-    </button>
+    <div className={styles.visible(isVisible)}>
+      <button className={styles.box} onClick={onClick}>
+        {orderData && (
+          <>
+            <img
+              src="/checkIcon.png"
+              className={styles.checkIcon(orderData.isCompleted)}
+              height="50px"
+              width="50px"
+            />
+            <img
+              className={styles.app_icon(orderData.isCompleted)}
+              src="/tea.png"
+              width="29px"
+              height="50px"
+            />
+          </>
+        )}
+      </button>
+    </div>
   );
 };
 
 const styles = {
+  visible: (isVisible: boolean) => css`
+    opacity: ${isVisible ? 1 : 0};
+  `,
   box: css`
     border: none;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
@@ -47,8 +63,16 @@ const styles = {
     }
   `,
 
-  app_icon: css`
+  app_icon: (isComplete: boolean) => css`
+    transition: all 0.3s ease-in-out;
     margin: 0;
+    opacity: ${isComplete ? 0 : 1};
+  `,
+
+  checkIcon: (isComplete: boolean) => css`
+    transition: all 0.3s ease-in-out;
+    position: absolute;
+    opacity: ${isComplete ? 1 : 0};
   `,
 
   text: css`

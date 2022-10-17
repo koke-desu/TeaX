@@ -13,7 +13,6 @@ type Props = {
 };
 
 const Layout: FC<Props> = ({ children }) => {
-  const orderData = useRecoilValue(orderedDataAtom);
   return (
     <div
       style={{
@@ -31,7 +30,7 @@ const Layout: FC<Props> = ({ children }) => {
       </Head>
       <Header></Header>
       <main style={{ display: "flex", flexGrow: 1 }}>{children}</main>
-      {orderData && <OrderingFAB></OrderingFAB>}
+      <OrderingFAB></OrderingFAB>
       <BottomNavigation></BottomNavigation>
       <OrderingListModal></OrderingListModal>
       <CartProductsModal></CartProductsModal>
