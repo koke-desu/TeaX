@@ -1,10 +1,8 @@
 //アプリでのログインや新規登録（authのログインとfirestoreのドキュメント作成など）などの処理をまとめたファイル
 
-import { FirebaseError } from "firebase/app";
 import { AuthError } from "firebase/auth";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { User } from "../type/model";
 import { userAtom } from "./atom";
 import {
@@ -46,7 +44,6 @@ export const useAccountFunc = () => {
     if (id) setUser(fetchUserData(id));
     else console.log("ログインしてません");
   };
-  //ログイン
   const logIn = async (email: string, password: string) => {
     let userId: string | null = null;
     await authLogin(email, password)
@@ -82,7 +79,7 @@ export const useAccountFunc = () => {
           .then(() => {
             console.log("created userData");
             setUser({ id: user.uid, coupons: {}, quizzes: {} });
-            router.replace("/main/main");
+            router.replace("/order/main");
           })
           .catch((error: AuthError) => {
             console.log(error.message);

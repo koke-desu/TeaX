@@ -6,7 +6,6 @@ import {
   deleteUser,
   User,
 } from "firebase/auth";
-// import { User } from "../../type/model";
 import { auth } from "../firebase";
 
 //ログインしているかどうかを確かめる。

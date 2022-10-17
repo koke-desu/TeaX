@@ -4,14 +4,13 @@ import {
   deleteDoc,
   doc,
   DocumentData,
-  DocumentSnapshot,
   getDoc,
   getDocs,
   onSnapshot,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { Coupons, couponState, OrderData, User } from "../../type/model";
+import { couponState, OrderData, OrderMenu, User } from "../../type/model";
 import { db } from "../firebase";
 //ユーザーのアカウント情報を取得
 export const fetchUserData = (id: string): any => {
@@ -113,4 +112,63 @@ export const snapOrderState = async (
       alert(`間違ったデータを取得しました。:${orderData}`);
     }
   });
+};
+
+export const useUserCoupon = (userData: User, couponId: string) => {
+  const tmp = {
+    ...userData.coupons,
+  };
+  tmp[couponId] = "used";
+  return updateDoc(doc(db, "users", userData.id), {
+    coupons: tmp,
+  })
+    .then(() => {
+      fetchUserData(userData.id);
+    })
+    .catch((error) => {
+      alert("クーポンを使用できませんでした。もう一度お試しください");
+    });
+};
+
+//TODO:関数を試す
+export const setUserCoupon = async (userId: string) => {
+  await updateDoc(doc(db, "users", userId), {
+    coupons: {
+      "49O2mKW3tynsEBC2LFXQ": "useable",
+    },
+  });
+  fetchUserData(userId);
+};
+
+export const decreaseProduct = (docRef: string) => {
+  getDoc(doc(db, docRef)).then((docData) => {
+    const data = docData.data();
+    if (data) {
+      let remaining = data.remaining;
+      let soldNum = data.soldNum;
+      remaining -= 1;
+      soldNum += 1;
+      updateDoc(doc(db, docRef), {
+        remaining: remaining,
+        soldNum: soldNum,
+      });
+    }
+  });
+};
+
+export const setAnalytics = async (orderData: OrderData) => {
+  const docData = await getDoc(doc(db, "appAnalytics", "earnings"));
+  const data = docData.data();
+  if (data) {
+    let tmpEarnMoney = data.totalEarnMoney;
+    tmpEarnMoney = tmpEarnMoney + orderData.totalPrice;
+    let tmpSoldedProducts: OrderMenu[] = [...data.soldedProducts];
+    orderData.OrderMenus.forEach((menu) => {
+      tmpSoldedProducts.push(menu);
+    });
+    setDoc(doc(db, "appAnalytics", "earnings"), {
+      soldedProducts: tmpSoldedProducts,
+      totalEarnMoney: tmpEarnMoney,
+    });
+  }
 };

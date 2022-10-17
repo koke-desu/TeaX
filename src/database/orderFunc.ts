@@ -21,14 +21,17 @@ import {
 import {
   addKeywordNum,
   changeStateOfCoupon,
+  decreaseProduct,
   deleteOrder,
   fetchCoupons,
   fetchKeyword,
   fetchKeywordLength,
   fetchMenus,
   fetchToppings,
+  setAnalytics,
   setOrder,
   snapOrderState,
+  updateUserData,
 } from "./basicFunc/firestore";
 
 //モバイルオーダーで使用する関数をまとめたファイル
@@ -39,8 +42,6 @@ export const useOrderFunc = () => {
   const [toppings, setToppings] = useRecoilState(toppingsAtom);
   const [userData, setUserData] = useRecoilState(userAtom);
   const [coupons, setCoupons] = useRecoilState(couponsAtom);
-  const [tmpCouponsState, setTmpCouponsState] =
-    useRecoilState(tmpCouponsStateAtom);
   const [orderedData, setOrderedData] = useRecoilState(orderedDataAtom);
   const [keywordLength, setKeywordLength] = useRecoilState(keywordLengthAtom);
 
@@ -50,6 +51,19 @@ export const useOrderFunc = () => {
       console.log("got data", data);
       setMenus(data);
     });
+  };
+
+  const deleteCartItem = (index: number) => {
+    let tmp = [...cartItems];
+    tmp.splice(index, 1);
+    const coupon = cartItems[index].couponID;
+    const tmpUserData = { ...userData };
+    const tmpUserCoupons = { ...tmpUserData.coupons };
+    if (coupon) {
+      tmpUserCoupons[coupon] = "useable";
+    }
+    setUserData(tmpUserData);
+    setCartItems(tmp);
   };
 
   const getKeywordLength = () => {
@@ -176,12 +190,13 @@ export const useOrderFunc = () => {
         setOrder(userData.id, tmp);
       } catch (error) {
         alert(
-          "注文のキャンセルができませんでした。以下のメールアドレスから連絡をお願いします。"
+          `注文のキャンセルができませんでした。以下のメールアドレスから連絡をお願いします。${error}`
         );
         return;
       }
       try {
-        changeStateOfCoupon(userData.id, tmpCouponsState);
+        // changeStateOfCoupon(userData.id, tmpCouponsState);
+        updateUserData(userData);
       } catch (error) {
         alert(
           `クーポンを正しく使用できませんでした。注文をキャンセルします${error}`
@@ -204,7 +219,20 @@ export const useOrderFunc = () => {
     if (orderedData?.isCompleted) {
       deleteOrder(userData.id)
         .then(() => {
-          then();
+          setOrderedData(null);
+          orderedData.OrderMenus.forEach((menu) => {
+            decreaseProduct(`menus/${menu.menuID}`);
+            menu.toppings.forEach((topping) => {
+              decreaseProduct(`toppings/${topping}`);
+            });
+          });
+          setAnalytics(orderedData)
+            .then(() => {
+              then();
+            })
+            .catch((error) => {
+              then();
+            });
         })
         .catch((error) => {
           alert(
@@ -212,5 +240,69 @@ export const useOrderFunc = () => {
           );
         });
     }
+  };
+
+  const resetUseCoupon = (orderMenu: OrderMenu) => {
+    if (orderMenu.couponID) {
+      const tmpUserData = { ...userData };
+      const tmpCoupons = { ...tmpUserData.coupons };
+      tmpCoupons[orderMenu.couponID] = "useable";
+      tmpUserData.coupons = tmpCoupons;
+      setUserData(tmpUserData);
+    }
+  };
+
+  const useCoupon = (
+    couponId: string,
+    orderMenu: OrderMenu,
+    setOrderMenu: (orderMenu: OrderMenu) => void
+  ) => {
+    if (orderMenu.couponID) {
+      alert("クーポンはすでに使用しています。");
+    } else {
+      const calcPrice = () => {
+        const couponData = getCouponByID(couponId);
+        let tmpPrice = orderMenu.menuPrice;
+        if (couponData) {
+          if (couponData.type === "multiple") {
+            tmpPrice = tmpPrice * couponData.number;
+          } else if (couponData.type === "subtract") {
+            tmpPrice = tmpPrice - couponData.number;
+          } else {
+            alert("対応していないクーポンタイプです");
+          }
+        } else {
+          alert("クーポンデータがありません");
+        }
+        return tmpPrice;
+      };
+      const tmp = { ...orderMenu };
+      const tmpUserData = { ...userData };
+      const tmpCoupons = { ...tmpUserData.coupons };
+      tmp.menuPrice = calcPrice();
+      tmp.couponID = couponId;
+      tmpCoupons[couponId] = "used";
+      tmpUserData.coupons = tmpCoupons;
+      setOrderMenu(tmp);
+      setUserData(tmpUserData);
+    }
+  };
+
+  return {
+    getMenus,
+    getKeywordLength,
+    getToppings,
+    getCoupons,
+    getMenuByID,
+    getCouponByID,
+    getToppingsByID,
+    setToppingToMenu,
+    setOrderMenuToCart,
+    order,
+    getOrderState,
+    completeOrder,
+    useCoupon,
+    resetUseCoupon,
+    deleteCartItem,
   };
 };

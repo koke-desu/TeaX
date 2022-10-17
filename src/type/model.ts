@@ -43,6 +43,7 @@ export type Menu = {
   allergy: { [allergyName: string]: boolean };
   soldNum: number;
   remaining: number;
+  imageUrl: string;
 };
 
 // トッピング。複数種類つけることが出来る。
@@ -58,6 +59,7 @@ export type Topping = {
   price: number;
   soldNum: number;
   remaining: number;
+  imageUrl: string;
 };
 
 export type Coupons = {
