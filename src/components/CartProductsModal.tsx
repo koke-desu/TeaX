@@ -27,23 +27,43 @@ const CartProductsModal = () => {
             {cartItems.length ? (
               <div>
                 <p>カートのアイテム一覧</p>
-                {cartItems.map((item, index) => (
-                  <div
-                    key={item.menuID}
-                    style={{ border: "1px solid black", padding: "4px" }}
-                  >
-                    <p>{item.menuID}</p>
-                    <button
-                      onClick={() => {
-                        SetSelectedDeleteIndex(index);
-                        setIsDeleteModalOpen(true);
-                        // orderFunc.deleteCartItem(index);
-                      }}
+                {cartItems.map((item, index) => {
+                  const menuData = orderFunc.getMenuByID(item.menuID);
+                  return (
+                    <div
+                      key={item.menuID}
+                      style={{ border: "1px solid black", padding: "4px" }}
                     >
-                      <img src="/Trash.png" />
-                    </button>
-                  </div>
-                ))}
+                      <div
+                        style={{
+                          border: "1px solid black",
+                          width: "64px",
+                          height: "64px",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <img
+                          src={menuData?.imageUrl}
+                          alt="menuImg"
+                          width="auto"
+                          height="100%"
+                        />
+                      </div>
+                      <p>{item.menuID}</p>
+                      <button
+                        onClick={() => {
+                          SetSelectedDeleteIndex(index);
+                          setIsDeleteModalOpen(true);
+                          // orderFunc.deleteCartItem(index);
+                        }}
+                      >
+                        <img src="/Trash.png" />
+                      </button>
+                    </div>
+                  );
+                })}
 
                 <div>
                   <button onClick={() => setIsConfirmOpen(true)}>

@@ -35,7 +35,7 @@ const Product: FC<Props> = ({ menu }) => {
             justifyContent: "center",
           }}
         >
-          <img src={menu.imageUrl} alt="menuImg" width="auto" height="60px" />
+          <img src={menu.imageUrl} alt="menuImg" width="auto" height="100%" />
         </div>
         <p>{menu.name}</p>
         <p>￥{menu.price}</p>
