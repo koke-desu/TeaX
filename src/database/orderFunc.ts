@@ -44,6 +44,19 @@ export const useOrderFunc = () => {
     });
   };
 
+  const deleteCartItem = (index: number) => {
+    let tmp = [...cartItems];
+    tmp.splice(index, 1);
+    const coupon = cartItems[index].couponID;
+    const tmpUserData = { ...userData };
+    const tmpUserCoupons = { ...tmpUserData.coupons };
+    if (coupon) {
+      tmpUserCoupons[coupon] = "useable";
+    }
+    setUserData(tmpUserData);
+    setCartItems(tmp);
+  };
+
   const getKeywordLength = () => {
     fetchKeywordLength()
       .then((docs) => {
@@ -291,5 +304,6 @@ export const useOrderFunc = () => {
     completeOrder,
     useCoupon,
     resetUseCoupon,
+    deleteCartItem,
   };
 };
