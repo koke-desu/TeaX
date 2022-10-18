@@ -19,7 +19,7 @@ const PushPage: FC<Props> = ({ isOpen, children, onClose }) => {
 
 const styles = {
   pushPage: css`
-    transition: all 0.4s ease-in-out;
+    transition: all 0.3s ease-in-out;
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -29,7 +29,7 @@ const styles = {
     top: 0;
     right: -100vw;
     transform: translateX(0);
-    z-index: 100;
+    z-index: 0;
     background-color: white;
   `,
   pushPageIsClose: css`
