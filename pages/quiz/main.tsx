@@ -12,6 +12,7 @@ import {
 import { authLogOut } from "../../src/database/basicFunc/auth";
 import { setUserCoupon } from "../../src/database/basicFunc/firestore";
 import { useInitPage } from "../../src/hooks/initAppHooks";
+import MenuCard from "../../src/html&cssComps/MenuCard";
 
 const Main = () => {
   useInitPage();
@@ -42,7 +43,6 @@ const Main = () => {
       >
         クーポン獲得する
       </button>
-
       <button onClick={() => setIsQrPageOpen(true)}>
         goto qrcodereader page
       </button>

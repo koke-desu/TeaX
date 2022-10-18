@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { FC, useState } from "react";
+import MenuCard from "../../html&cssComps/MenuCard";
 import { Menu } from "../../type/model";
 import ProductItemModal from "../ProductItemModal";
 
@@ -11,7 +12,7 @@ const Product: FC<Props> = ({ menu }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <>
-      <div
+      {/* <div
         style={{
           backgroundColor: "white",
           width: "150px",
@@ -39,7 +40,16 @@ const Product: FC<Props> = ({ menu }) => {
         </div>
         <p>{menu.name}</p>
         <p>￥{menu.price}</p>
+      </div> */}
+      <div style={{ margin: "6px" }}>
+        <MenuCard
+          name={menu.name}
+          price={menu.price}
+          imageUrl={menu.imageUrl}
+          onClick={() => setIsModalOpen(true)}
+        />
       </div>
+
       <ProductItemModal
         menu={menu}
         isOpen={isModalOpen}
