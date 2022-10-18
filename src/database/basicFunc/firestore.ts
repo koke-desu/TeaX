@@ -148,10 +148,10 @@ export const useUserCoupon = (userData: User, couponId: string) => {
 };
 
 //TODO:関数を試す
-export const setUserCoupon = async (userId: string) => {
+export const setUserCoupon = async (userId: string, couponId: string) => {
   await updateDoc(doc(db, "users", userId), {
     coupons: {
-      "49O2mKW3tynsEBC2LFXQ": "useable",
+      [`${couponId}`]: "useable",
     },
   });
   fetchUserData(userId);
