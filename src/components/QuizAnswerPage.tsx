@@ -5,6 +5,7 @@ import { useQuizFunc } from "../database/quizFunc";
 import LargeButton from "../html&cssComps/LargeButton";
 import PushPage from "./PushPage";
 import { css } from "@emotion/css";
+import { useRouter } from "next/router";
 
 const QuizAnswerPage = () => {
   const [selectedItem, setSelectedItem] = useState<number[]>([]);
@@ -12,6 +13,8 @@ const QuizAnswerPage = () => {
   const quizId = useRecoilValue(pushPageQuizAtom);
   const quizFunc = useQuizFunc();
   const quizData = quizFunc.getQuizByID(quizId);
+
+  const router = useRouter();
 
   return (
     <>
@@ -38,9 +41,10 @@ const QuizAnswerPage = () => {
             <LargeButton
               title="回答する"
               onClick={() => {
-                const tmp = [...selectedItem];
-                tmp.push(focusedItem);
-                setSelectedItem(tmp);
+                if (focusedItem === quizData?.answer) {
+                  router.push("quiz/explain");
+                }
+                setSelectedItem([...selectedItem, focusedItem]);
               }}
             />
           )}
