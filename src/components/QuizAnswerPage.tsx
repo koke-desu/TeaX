@@ -1,44 +1,45 @@
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
-import { pushPageQuizAtom, quizzesAtom } from "../database/atom";
+import { pushPageQuizAtom } from "../database/atom";
 import { useQuizFunc } from "../database/quizFunc";
 import LargeButton from "../html&cssComps/LargeButton";
 import PushPage from "./PushPage";
+import { css } from "@emotion/css";
 
 const QuizAnswerPage = () => {
   const [selectedItem, setSelectedItem] = useState<number[]>([]);
-  const [selectingItem, setSelectingItem] = useState<number | null>(null);
+  const [focusedItem, setFocusedItem] = useState<number | null>(null);
   const quizId = useRecoilValue(pushPageQuizAtom);
   const quizFunc = useQuizFunc();
   const quizData = quizFunc.getQuizByID(quizId);
+
   return (
     <>
-      <div>
-        <h1>残り{3 - selectedItem.length}回</h1>
-        {[1, 2, 3, 4].map((num) => (
-          <div key={num}>
-            {selectedItem.some((number) => number === num) ? (
-              <div>osenai</div>
-            ) : selectingItem === num ? (
-              <button onClick={() => setSelectingItem(null)}>selected</button>
-            ) : (
-              <button
-                onClick={() => {
-                  setSelectingItem(num);
-                }}
-              >
-                {num}
-              </button>
-            )}
-          </div>
-        ))}
-        <div>
-          {selectingItem && (
+      <div className={style.container}>
+        <p className={style.description}>残り回答可能回数：{3 - selectedItem.length}回</p>
+        <div className={style.choices_list}>
+          {[1, 2, 3, 4].map((num) => (
+            <button
+              key={`quiz-choices-${num}`}
+              className={style.choice({
+                selected: selectedItem.includes(num),
+                focused: focusedItem === num,
+              })}
+              onClick={() => {
+                if (!selectedItem.includes(num)) setFocusedItem(num);
+              }}
+            >
+              {num}
+            </button>
+          ))}
+        </div>
+        <div className={style.submit}>
+          {focusedItem && (
             <LargeButton
               title="回答する"
               onClick={() => {
                 const tmp = [...selectedItem];
-                tmp.push(selectingItem);
+                tmp.push(focusedItem);
                 setSelectedItem(tmp);
               }}
             />
@@ -47,8 +48,7 @@ const QuizAnswerPage = () => {
       </div>
       <PushPage
         isOpen={
-          selectedItem.length >= 3 ||
-          selectedItem.some((num) => num === quizData?.answer)
+          selectedItem.length >= 3 || selectedItem.some((num) => num === quizData?.answer)
             ? true
             : false
         }
@@ -61,3 +61,41 @@ const QuizAnswerPage = () => {
 };
 
 export default QuizAnswerPage;
+
+const style = {
+  container: css`
+    padding: 16px;
+    width: 100vw;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  `,
+
+  description: css`
+    font-size: 20px;
+  `,
+
+  choices_list: css`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-top: 32px;
+    width: 100%;
+  `,
+
+  choice: ({ focused, selected }: { focused: boolean; selected: boolean }) => css`
+    width: 80%;
+    padding: 16px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: ${selected ? "gray" : focused ? "green" : "white"};
+    border: 1px solid ${focused ? "green" : "gray"};
+    border-radius: 8px;
+  `,
+
+  submit: css`
+    margin-top: 64px;
+  `,
+};
