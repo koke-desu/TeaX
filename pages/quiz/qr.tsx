@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import jsQR from "jsqr";
 import { useWindowSize } from "../../src/hooks/useWindowSize";
-import { useQuizFunc } from "../../src/database/quizFunc";
-import { Quiz } from "../../src/type/model";
 import { useRouter } from "next/router";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { pushPageQuizAtom, quizzesAtom } from "../../src/database/atom";
 
 const QRCodeScanner: React.VFC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -14,7 +14,8 @@ const QRCodeScanner: React.VFC = () => {
   const { width, height } = useWindowSize();
   const router = useRouter();
 
-  const quizzes: Quiz[] = [{ id: "quiz-1" } as Quiz];
+  const setQuizId = useSetRecoilState(pushPageQuizAtom);
+  const quizzes = useRecoilValue(quizzesAtom);
 
   // カメラで撮影し、プレビューを表示
   useEffect(() => {
@@ -58,13 +59,13 @@ const QRCodeScanner: React.VFC = () => {
 
   // 正しいQRコードが読み込まれたら別ページに遷移
   useEffect(() => {
-    console.log(qrData);
     const quiz = quizzes.find((q) => q.id === qrData);
-    console.log(quiz);
+
     if (quiz !== undefined) {
-      router.push(`quiz/${quiz.id}`);
+      setQuizId(quiz.id);
+      router.push(`answer`);
     }
-  }, [qrData, quizzes, router]);
+  }, [qrData, quizzes, router, setQuizId]);
 
   return (
     <div>
