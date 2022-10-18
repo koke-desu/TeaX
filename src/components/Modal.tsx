@@ -7,6 +7,7 @@ type Props = {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   onClose?: () => void;
+  title: string;
 };
 
 const styles = {
@@ -36,6 +37,7 @@ const styles = {
     display: flex;
     flex-direction: column;
     width: 90%;
+
     padding: 16px;
     margin: 12px;
     border-radius: 8px;
@@ -56,6 +58,7 @@ const Modal: FC<Props> = ({
   isOpen,
   setIsOpen,
   onClose = () => {},
+  title,
 }) => {
   return (
     <>
@@ -65,7 +68,9 @@ const Modal: FC<Props> = ({
             style={{
               display: "flex",
               justifyContent: "flex-end",
-              width: "100%",
+              alignItems: "center",
+              position: "relative",
+              marginBottom: "8px",
             }}
           >
             <CloseButton
@@ -74,8 +79,28 @@ const Modal: FC<Props> = ({
                 onClose();
               }}
             />
+            <h2
+              style={{
+                width: "100%",
+                position: "absolute",
+                top: 0,
+                textAlign: "center",
+                margin: 0,
+                zIndex: -1,
+              }}
+            >
+              {title}
+            </h2>
           </div>
-          {children}
+          <div
+            style={{
+              maxHeight: "80vh",
+              overflowY: "scroll",
+              padding: "12px 0",
+            }}
+          >
+            {children}
+          </div>
         </div>
         <div
           className={styles.back}

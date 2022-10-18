@@ -1,9 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
+import { css } from "@emotion/css";
 import { FC, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { couponsAtom, orderedDataAtom, toppingsAtom } from "../database/atom";
 import { useOrderFunc } from "../database/orderFunc";
 import LargeButton from "../html&cssComps/LargeButton";
+import ToppingCard from "../html&cssComps/ToppingCard";
 import { Menu, OrderMenu } from "../type/model";
 import CouponHalfModal from "./CouponHalfModal";
 import Modal from "./Modal";
@@ -28,6 +30,7 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
   return (
     <>
       <Modal
+        title=""
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         onClose={() => {
@@ -52,8 +55,9 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
             <div
               style={{
                 border: "1px solid black",
-                width: "100px",
-                height: "100px",
+                width: "60%",
+                aspectRatio: 1,
+                marginBottom: "12px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -73,86 +77,55 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
                 textAlign: "center",
               }}
             >
-              <p style={{ margin: 0 }}>{menu.name}</p>
-              <p style={{ margin: 0 }}>{menu.description}</p>
-              <div
+              <h1 style={{ margin: 0 }}>{menu.name}</h1>
+              <p
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-around",
+                  margin: 0,
+                  fontWeight: "bold",
+                  color: "#868686",
+                  padding: "12px 12px",
                 }}
               >
-                <p>トッピング</p>
-              </div>
+                {menu.description}
+              </p>
+
+              <h2 style={{ margin: 0, textAlign: "start", margin: "4px 4%" }}>
+                トッピング
+              </h2>
               <div
                 style={{
                   display: "flex",
                   flexDirection: "row",
-                  alignItems: "flex-start",
-                  marginLeft: "10%",
+                  justifyContent: "space-around",
+                  padding: "8px",
                 }}
               >
                 {toppings.map((topping) => (
-                  <button
-                    style={{
-                      width: "80px",
-                      height: "100px",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      margin: "4px",
-                      padding: 0,
-                      position: "relative",
-                    }}
-                    key={topping.id}
-                    onClick={() => {
-                      let tmp = { ...orderMenu };
-                      if (
-                        orderMenu.toppings.some((data) => data === topping.id)
-                      ) {
-                        tmp.toppings = tmp.toppings.filter(
-                          (data) => data !== topping.id
-                        );
-                        tmp.menuPrice -= topping.price;
-                      } else {
-                        tmp.toppings.push(topping.id);
-                        tmp.menuPrice = tmp.menuPrice + topping.price;
-                      }
-                      setOrderMenu(tmp);
-                    }}
-                  >
-                    {orderMenu.toppings.some((data) => data === topping.id) && (
-                      <div
-                        style={{
-                          backgroundColor: "rgba(0,0,0,0.6)",
-                          position: "absolute",
-                          width: "100%",
-                          height: "100%",
-                        }}
-                      >
-                        <p style={{ color: "white" }}>check</p>
-                      </div>
-                    )}
-                    <div
-                      style={{
-                        border: "1px solid black",
-                        width: "40px",
-                        height: "40px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
+                  <div key={topping.id} style={{ width: "30%" }}>
+                    <ToppingCard
+                      name={topping.name}
+                      price={topping.price}
+                      imageUrl={topping.imageUrl}
+                      onClick={() => {
+                        let tmp = { ...orderMenu };
+                        if (
+                          orderMenu.toppings.some((data) => data === topping.id)
+                        ) {
+                          tmp.toppings = tmp.toppings.filter(
+                            (data) => data !== topping.id
+                          );
+                          tmp.menuPrice -= topping.price;
+                        } else {
+                          tmp.toppings.push(topping.id);
+                          tmp.menuPrice = tmp.menuPrice + topping.price;
+                        }
+                        setOrderMenu(tmp);
                       }}
-                    >
-                      <img
-                        src={menu.imageUrl}
-                        alt="menuImg"
-                        width="auto"
-                        height="40px"
-                      />
-                    </div>
-                    <p style={{ fontSize: "8px", margin: 0 }}>{topping.name}</p>
-                    <p>{topping.price}</p>
-                  </button>
+                      isSelected={orderMenu.toppings.some(
+                        (data) => data === topping.id
+                      )}
+                    />
+                  </div>
                 ))}
               </div>
               <div>

@@ -6,6 +6,7 @@ type Props = {
   children: ReactNode;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
+  title: string;
 };
 
 const styles = {
@@ -50,26 +51,32 @@ const styles = {
   `,
 };
 
-const HalfModal: FC<Props> = ({ children, isOpen, setIsOpen }) => {
+const HalfModal: FC<Props> = ({ children, isOpen, setIsOpen, title }) => {
   return (
     <div className={cx(styles.backDrop, { [styles.backDropIsOpen]: isOpen })}>
       <div className={cx(styles.modal, { [styles.modalClose]: !isOpen })}>
-        <div style={{ display: "flex", justifyContent: "flex-end" }}>
-          {/* <button
-            style={{
-              width: "20px",
-              height: "20px",
-              backgroundColor: "gray",
-              borderRadius: 100,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            onClick={() => setIsOpen(false)}
-          >
-            X
-          </button> */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+            position: "relative",
+            marginBottom: "8px",
+          }}
+        >
           <CloseButton onClick={() => setIsOpen(false)} />
+          <h2
+            style={{
+              width: "100%",
+              position: "absolute",
+              top: 0,
+              textAlign: "center",
+              margin: 0,
+              zIndex: -1,
+            }}
+          >
+            {title}
+          </h2>
         </div>
         {children}
       </div>

@@ -23,7 +23,11 @@ const CouponHalfModal: FC<Props> = ({
   const userData = useRecoilValue(userAtom);
   const orderFunc = useOrderFunc();
   return (
-    <HalfModal isOpen={modalIsOpen} setIsOpen={setModalIsOpen}>
+    <HalfModal
+      isOpen={modalIsOpen}
+      setIsOpen={setModalIsOpen}
+      title="クーポン一覧"
+    >
       <div
         style={{
           display: "flex",
@@ -31,7 +35,6 @@ const CouponHalfModal: FC<Props> = ({
           alignItems: "center",
         }}
       >
-        <p>クーポン一覧</p>
         {coupons.map((coupon, index) => {
           const state: couponState = userData.coupons
             ? userData.coupons[coupon.id]
