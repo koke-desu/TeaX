@@ -32,11 +32,14 @@ export const fetchToppings = async () => {
 };
 
 //TODO:関数を試す
-export const fetchQuizzes = () => {
-  return getDocs(collection(db, "quizzes")).then((docs: any) => {
-    console.log("get quizzes from firestore", docs.data());
-    return docs.data();
+export const fetchQuizzes = async () => {
+  const docs = await getDocs(collection(db, "quizzes"));
+  console.log("get quizzes from firestore", docs);
+  let tmp: any[] = [];
+  docs.forEach((doc) => {
+    tmp.push(doc.data());
   });
+  return tmp;
 };
 
 //TODO:関数を試す

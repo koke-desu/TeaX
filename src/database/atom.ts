@@ -75,3 +75,13 @@ export const cartProductModalAtom = atom({
   key: "cartProductModalAtom",
   default: false,
 });
+
+export const pushPageQuizAtom = atom({
+  key: "pushPageQuizAtom",
+  default: "" as string,
+});
+
+export const pushPageQrCodeReaderAtom = atom({
+  key: "pushPageQrCodeReaderAtom",
+  default: false,
+});

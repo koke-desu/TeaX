@@ -3,31 +3,35 @@
 import { css } from "@emotion/css";
 import { NextRouter } from "next/router";
 import { FC } from "react";
+import { useSetRecoilState } from "recoil";
+import { pushPageQuizAtom } from "../database/atom";
 
 type Props = {
   onClickCart: () => void;
-  router: NextRouter;
   cartNum: number;
+  isHome: boolean;
+  onClose: () => void;
 };
 /* eslint-disable @next/next/no-img-element */
-const HeaderNav: FC<Props> = ({ onClickCart, router, cartNum }) => {
+const HeaderNav: FC<Props> = ({ onClickCart, cartNum, isHome, onClose }) => {
   return (
     <div className={styles.box}>
-      {router.pathname === "/order/main" || router.pathname === "/quiz/main" ? (
-        <img src="/appIcon.png" width="42px" height="46px" />
+      {isHome ? (
+        <>
+          <img src="/appIcon.png" width="42px" height="46px" />
+          <div className={styles.text}>
+            <p className={styles.title}>TeaX</p>
+            <p className={styles.description}>sponsored by polygon</p>
+          </div>
+
+          <a onClick={onClickCart} className={styles.cart}>
+            <div className={styles.badge(cartNum !== 0)}>{cartNum}</div>
+            <img src="/cartIcon.png" width="34px" height="34px" />
+          </a>
+        </>
       ) : (
-        <button onClick={() => router.back()}>戻る</button>
+        <button onClick={onClose}>戻る</button>
       )}
-
-      <div className={styles.text}>
-        <p className={styles.title}>TeaX</p>
-        <p className={styles.description}>sponsored by polygon</p>
-      </div>
-
-      <a onClick={onClickCart} className={styles.cart}>
-        <div className={styles.badge(cartNum !== 0)}>{cartNum}</div>
-        <img src="/cartIcon.png" width="34px" height="34px" />
-      </a>
     </div>
   );
 };
@@ -56,6 +60,19 @@ const styles = {
     padding: 16px;
     position: fixed;
     top: 0;
+    left: 0;
+    width: 100vw;
+    height: 80px;
+  `,
+  box2: css`
+    background-color: #87ce41;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 16px;
+    position: fixed;
+    top: 0;
+    left: 100vw;
     width: 100vw;
   `,
 
