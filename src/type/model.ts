@@ -8,7 +8,7 @@ export type User = {
   quizzes: { [quizID: string]: quizState };
 };
 
-export type quizState = "notCleared" | "cleared";
+export type quizState = "notCleared" | "cleared" | "failed";
 
 export type couponState = "used" | "unOwned" | "useable";
 
@@ -74,14 +74,18 @@ export type Coupon = {
   description: string;
   type: CouponType;
   number: number;
+  achieveType: achieveType;
 };
+
+//stringはクイズのIdを指定
+export type achieveType = string | "all";
 
 //○○割引はmultiple,○○円引きはsubtract,○○無料はfree123でタイプで分ける
 export type CouponType = "multiple" | "subtract" | "free1" | "free2" | "free3";
 
-export type quizzes = {
-  [quizID: string]: quiz;
-};
+// export type quizzes = {
+//   [quizID: string]: quiz;
+// };
 
 export type quiz = {
   tips: string;
@@ -89,4 +93,5 @@ export type quiz = {
   explaneImgURL: string;
   explane: string;
   answer: number;
+  id: string;
 };

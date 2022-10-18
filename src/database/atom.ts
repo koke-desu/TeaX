@@ -85,3 +85,9 @@ export const pushPageQrCodeReaderAtom = atom({
   key: "pushPageQrCodeReaderAtom",
   default: false,
 });
+
+//stringには獲得したクーポンのIDを入れる
+export const achieveCouponModalAtom = atom({
+  key: "achieveCouponModalAtom",
+  default: null as string | null,
+});
