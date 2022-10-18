@@ -4,7 +4,6 @@
 export type User = {
   id: string;
   coupons: { [couponID: string]: couponState };
-  //booleanはスタンプラリーのスポットをクリアし終わっていたらtrueそうでなければfalse
   quizzes: { [quizID: string]: quizState };
 };
 
@@ -83,11 +82,12 @@ export type achieveType = string | "all";
 //○○割引はmultiple,○○円引きはsubtract,○○無料はfree123でタイプで分ける
 export type CouponType = "multiple" | "subtract" | "free1" | "free2" | "free3";
 
-// export type quizzes = {
-//   [quizID: string]: quiz;
-// };
+export type Quizzes = {
+  [quizID: string]: Quiz;
+};
 
-export type quiz = {
+export type Quiz = {
+  id: string;
   tips: string;
   choiceNum: number;
   explaneImgURL: string;
