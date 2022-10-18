@@ -1,5 +1,6 @@
 import { css, cx } from "@emotion/css";
 import { FC, ReactNode } from "react";
+import CloseButton from "../html&cssComps/CloseButton";
 
 type Props = {
   children: ReactNode;
@@ -67,23 +68,12 @@ const Modal: FC<Props> = ({
               width: "100%",
             }}
           >
-            <button
-              style={{
-                width: "20px",
-                height: "20px",
-                backgroundColor: "gray",
-                borderRadius: 2,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
+            <CloseButton
               onClick={() => {
                 setIsOpen(false);
                 onClose();
               }}
-            >
-              X
-            </button>
+            />
           </div>
           {children}
         </div>

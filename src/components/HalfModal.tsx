@@ -1,5 +1,6 @@
 import { css, cx } from "@emotion/css";
 import { FC, ReactNode } from "react";
+import CloseButton from "../html&cssComps/CloseButton";
 
 type Props = {
   children: ReactNode;
@@ -54,7 +55,7 @@ const HalfModal: FC<Props> = ({ children, isOpen, setIsOpen }) => {
     <div className={cx(styles.backDrop, { [styles.backDropIsOpen]: isOpen })}>
       <div className={cx(styles.modal, { [styles.modalClose]: !isOpen })}>
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
-          <button
+          {/* <button
             style={{
               width: "20px",
               height: "20px",
@@ -67,7 +68,8 @@ const HalfModal: FC<Props> = ({ children, isOpen, setIsOpen }) => {
             onClick={() => setIsOpen(false)}
           >
             X
-          </button>
+          </button> */}
+          <CloseButton onClick={() => setIsOpen(false)} />
         </div>
         {children}
       </div>
