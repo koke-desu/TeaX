@@ -93,5 +93,4 @@ export type Quiz = {
   explaneImgURL: string;
   explane: string;
   answer: number;
-  id: string;
 };

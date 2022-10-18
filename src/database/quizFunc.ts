@@ -3,7 +3,7 @@
 import { useRecoilState } from "recoil";
 import { fetchQuizzes, setUserCoupon } from "./basicFunc/firestore";
 import { couponsAtom, quizzesAtom, userAtom } from "./atom";
-import { quiz, quizState } from "../type/model";
+import { Quiz, quizState } from "../type/model";
 
 export const useQuizFunc = () => {
   const [quizzes, setQuizzes] = useRecoilState(quizzesAtom);
@@ -26,7 +26,7 @@ export const useQuizFunc = () => {
   };
 
   //クイズ回答後の処理
-  const afterFinishQuiz = (quizData: quiz, result: quizState) => {
+  const afterFinishQuiz = (quizData: Quiz, result: quizState) => {
     const tmp = { ...userData };
     const tmp2 = { ...tmp.quizzes };
     tmp2[quizData.id] = result;
