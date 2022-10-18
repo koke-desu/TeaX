@@ -12,20 +12,20 @@ type Props = {
 
 const MenuCard: FC<Props> = ({ onClick, name, price, imageUrl }) => {
   return (
-    <a onClick={onClick}>
-      <div className={styles.card}>
-        <div className={styles.image}>
-          <img
-            width="auto"
-            height="100%"
-            src={imageUrl ? imageUrl : "/sample.png"}
-          />
-        </div>
-        <div className={styles.text}>
-          <p className={styles.title}>{name ? name : "サンプル"}</p>
-          <p className={styles.price}>¥{price ? price : 500}</p>
-        </div>
+    <a onClick={onClick} className={styles.card}>
+      {/* <div className={styles.card}> */}
+      <div className={styles.image}>
+        <img
+          width="auto"
+          height="100%"
+          src={imageUrl ? imageUrl : "/sample.png"}
+        />
       </div>
+      <div className={styles.text}>
+        <p className={styles.title}>{name ? name : "サンプル"}</p>
+        <p className={styles.price}>¥{price ? price : 500}</p>
+      </div>
+      {/* </div> */}
     </a>
   );
 };
@@ -48,7 +48,7 @@ const styles = {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    width: 160px;
+    width: 100%;
     height: 180px;
     padding: 12px 0px;
     border-radius: 10px;

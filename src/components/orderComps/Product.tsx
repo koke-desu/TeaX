@@ -12,36 +12,12 @@ const Product: FC<Props> = ({ menu }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <>
-      {/* <div
+      <div
         style={{
-          backgroundColor: "white",
-          width: "150px",
-          height: "180px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "flex-start",
-          border: "1px solid black",
-          borderRadius: 10,
+          width: "50%",
+          padding: "8px",
         }}
-        onClick={() => setIsModalOpen(true)}
       >
-        <div
-          style={{
-            border: "1px solid black",
-            width: "64px",
-            height: "64px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <img src={menu.imageUrl} alt="menuImg" width="auto" height="60px" />
-        </div>
-        <p>{menu.name}</p>
-        <p>￥{menu.price}</p>
-      </div> */}
-      <div style={{ margin: "6px" }}>
         <MenuCard
           name={menu.name}
           price={menu.price}
