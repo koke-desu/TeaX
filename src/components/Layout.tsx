@@ -42,7 +42,7 @@ const Layout: FC<Props> = ({ children }) => {
       <QuizPage />
 
       <QRReaderPage />
-      <Infomation />
+      <Infomation title="" description="" />
     </>
   );
 };
