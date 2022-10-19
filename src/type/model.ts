@@ -87,10 +87,10 @@ export type Quizzes = {
 };
 
 export type Quiz = {
+  id: string;
   tips: string;
   choiceNum: number;
   explaneImgURL: string;
   explane: string;
   answer: number;
-  id: string;
 };
