@@ -5,7 +5,7 @@ import { orderedDataAtom } from "../database/atom";
 import BottomNavigation from "./BottomNavigation";
 import CartProductsModal from "./CartProductsModal";
 import { Header } from "./Header";
-import Infomation from "./Infomation";
+import AchieveCouponModal from "./AchieveCouponModal";
 import OrderingFAB from "./OrderingFAB";
 import OrderingListModal from "./OrderingListModal";
 import QRReaderPage from "./QRReaderPage";
@@ -42,7 +42,7 @@ const Layout: FC<Props> = ({ children }) => {
       <QuizPage />
 
       <QRReaderPage />
-      <Infomation title="" description="" />
+      <AchieveCouponModal />
     </>
   );
 };
