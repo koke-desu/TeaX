@@ -2,13 +2,28 @@
 
 import { useRecoilState } from "recoil";
 import { fetchQuizzes, setUserCoupon } from "./basicFunc/firestore";
-import { couponsAtom, quizzesAtom, userAtom } from "./atom";
+import {
+  achieveCouponModalAtom,
+  couponsAtom,
+  pushPageQuixExplanationAtom,
+  pushPageQuizAtom,
+  quizzesAtom,
+  userAtom,
+} from "./atom";
 import { Quiz, QuizState } from "../type/model";
 
 export const useQuizFunc = () => {
   const [quizzes, setQuizzes] = useRecoilState(quizzesAtom);
   const [userData, setUserData] = useRecoilState(userAtom);
   const [coupons, setCoupons] = useRecoilState(couponsAtom);
+  const [answerPageIsOpen, setAnswerPageIsOpen] =
+    useRecoilState(pushPageQuizAtom);
+  const [explanationPageIsOpen, setExplanationPageIsOpen] = useRecoilState(
+    pushPageQuixExplanationAtom
+  );
+  const [achieveCouponModal, setAchieveCouponModal] = useRecoilState(
+    achieveCouponModalAtom
+  );
   const getQuizzes = () => {
     const tmp = fetchQuizzes();
     tmp.then((data) => {
@@ -33,17 +48,26 @@ export const useQuizFunc = () => {
     if (result === "cleared") {
       coupons.forEach((coupon) => {
         if (coupon.achieveType === quizData.id) {
-          setUserCoupon(userData.id, coupon.achieveType);
+          setUserCoupon(userData.id, coupon.id).then((data) => {
+            setUserData(data);
+          });
+          setAchieveCouponModal(coupon.achieveType);
         } else {
           if (quizzes.length === Object.values(tmp2).length) {
-            setUserCoupon(userData.id, quizData.id);
+            setUserCoupon(userData.id, coupon.id).then((data) => {
+              setUserData(data);
+            });
+            setAchieveCouponModal(quizData.id);
           }
         }
+        setAnswerPageIsOpen("");
+        setExplanationPageIsOpen(false);
       });
     }
   };
   return {
     getQuizzes,
     getQuizByID,
+    afterFinishQuiz,
   };
 };

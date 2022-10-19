@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 //ユーザーのデータをfirestoreから取得したり変更したりする処理をまとめたファイル
 import {
   collection,
@@ -11,6 +12,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { CouponState, OrderData, OrderMenu, User } from "../../type/model";
+import { useAccountFunc } from "../authFunc";
 import { db } from "../firebase";
 //ユーザーのアカウント情報を取得
 export const fetchUserData = (id: string): any => {
@@ -148,13 +150,16 @@ export const useUserCoupon = (userData: User, couponId: string) => {
 };
 
 //TODO:関数を試す
-export const setUserCoupon = async (userId: string, couponId: string) => {
+export const setUserCoupon = async (
+  userId: string,
+  couponId: string
+): Promise<User> => {
   await updateDoc(doc(db, "users", userId), {
     coupons: {
       [`${couponId}`]: "useable",
     },
   });
-  fetchUserData(userId);
+  return fetchUserData(userId) as User;
 };
 
 export const decreaseProduct = (docRef: string) => {

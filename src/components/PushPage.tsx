@@ -12,7 +12,9 @@ const PushPage: FC<Props> = ({ isOpen, children, onClose }) => {
   return (
     <div className={cx(styles.pushPage, { [styles.pushPageIsClose]: isOpen })}>
       <Header isHome={false} onClose={onClose}></Header>
-      {isOpen && <div style={{ marginTop: "40px" }}>{children}</div>}
+      {isOpen && (
+        <div style={{ marginTop: "40px", height: "100%" }}>{children}</div>
+      )}
     </div>
   );
 };
@@ -21,7 +23,7 @@ const styles = {
   pushPage: css`
     transition: all 0.3s ease-in-out;
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -30,7 +32,7 @@ const styles = {
     right: -100vw;
     transform: translateX(0);
     z-index: 0;
-    background-color: white;
+    background-color: #e9e9e9;
   `,
   pushPageIsClose: css`
     transform: translateX(-100%);
