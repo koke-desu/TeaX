@@ -3,13 +3,13 @@
 // idはauthのUUID
 export type User = {
   id: string;
-  coupons: { [couponID: string]: couponState };
-  quizzes: { [quizID: string]: quizState };
+  coupons: { [couponID: string]: CouponState };
+  quizzes: { [quizID: string]: QuizState };
 };
 
-export type quizState = "notCleared" | "cleared" | "failed";
+export type QuizState = "notCleared" | "cleared" | "failed";
 
-export type couponState = "used" | "unOwned" | "useable";
+export type CouponState = "used" | "unOwned" | "useable";
 
 export type OrderData = {
   OrderMenus: OrderMenu[];
@@ -73,11 +73,11 @@ export type Coupon = {
   description: string;
   type: CouponType;
   number: number;
-  achieveType: achieveType;
+  achieveType: AchieveType;
 };
 
 //stringはクイズのIdを指定
-export type achieveType = string | "all";
+export type AchieveType = string | "all";
 
 //○○割引はmultiple,○○円引きはsubtract,○○無料はfree123でタイプで分ける
 export type CouponType = "multiple" | "subtract" | "free1" | "free2" | "free3";
@@ -87,7 +87,6 @@ export type Quizzes = {
 };
 
 export type Quiz = {
-  id: string;
   tips: string;
   choiceNum: number;
   explaneImgURL: string;
