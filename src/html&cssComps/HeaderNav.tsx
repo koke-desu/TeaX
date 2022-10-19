@@ -30,7 +30,9 @@ const HeaderNav: FC<Props> = ({ onClickCart, cartNum, isHome, onClose }) => {
           </a>
         </>
       ) : (
-        <button onClick={onClose}>戻る</button>
+        <a onClick={onClose}>
+          <img src="/arrowBack.png" />
+        </a>
       )}
     </div>
   );
