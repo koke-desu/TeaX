@@ -6,14 +6,14 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";
-import { couponState } from "../type/model";
+import { CouponState } from "../type/model";
 import image from "/couponCard.png";
 
 type Props = {
   title: string;
   description: string;
   onClick: () => void;
-  state: couponState;
+  state: CouponState;
   isUseMode: boolean;
 };
 

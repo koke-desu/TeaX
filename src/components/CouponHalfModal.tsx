@@ -3,7 +3,7 @@ import { useRecoilValue } from "recoil";
 import { couponsAtom, userAtom } from "../database/atom";
 import { useOrderFunc } from "../database/orderFunc";
 import CouponCard from "../html&cssComps/CouponCard";
-import { couponState, OrderMenu } from "../type/model";
+import { CouponState, OrderMenu } from "../type/model";
 import HalfModal from "./HalfModal";
 
 type Props = {
@@ -36,7 +36,7 @@ const CouponHalfModal: FC<Props> = ({
         }}
       >
         {coupons.map((coupon, index) => {
-          const state: couponState = userData.coupons
+          const state: CouponState = userData.coupons
             ? userData.coupons[coupon.id]
             : "unOwned";
           return (

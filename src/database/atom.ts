@@ -2,7 +2,7 @@ import { atom } from "recoil";
 import {
   User,
   OrderMenu,
-  couponState,
+  CouponState,
   OrderData,
   Menu,
   Coupon,
@@ -22,7 +22,7 @@ export const userAtom = atom({
 
 export const tmpCouponsStateAtom = atom({
   key: "tmpCouponsStateAtom",
-  default: {} as { [couponID: string]: couponState },
+  default: {} as { [couponID: string]: CouponState },
 });
 
 export const couponsAtom = atom({
