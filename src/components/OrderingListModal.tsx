@@ -67,7 +67,7 @@ const OrderingListModal = () => {
                     width: "100%",
                   }}
                 >
-                  <img src={menuData?.imageUrl} />
+                  <img src={menuData?.imageUrl} width="52px" />
                   <p>{menuData?.name}</p>
                 </div>
               );
@@ -77,10 +77,18 @@ const OrderingListModal = () => {
                 display: "flex",
                 borderTop: "solid 1px #e9e9e9",
                 width: "100%",
+                justifyContent: "space-between",
+                paddingTop: "12px",
               }}
             >
-              <p style={{ fontWeight: "bold" }}>合計</p>
-              <p style={{ fontWeight: "bold" }}>￥{orderedData.totalPrice}</p>
+              <div
+                style={{
+                  display: "flex",
+                }}
+              >
+                <p style={{ fontWeight: "bold" }}>合計</p>
+                <p style={{ fontWeight: "bold" }}>￥{orderedData.totalPrice}</p>
+              </div>
               {orderedData.isCompleted && (
                 <LargeButton
                   title="受け取り完了"
