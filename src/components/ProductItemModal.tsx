@@ -56,7 +56,7 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
               style={{
                 border: "1px solid black",
                 width: "60%",
-                aspectRatio: 1,
+                aspectRatio: "1",
                 marginBottom: "12px",
                 display: "flex",
                 alignItems: "center",
@@ -89,7 +89,16 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
                 {menu.description}
               </p>
 
-              <h2 style={{ margin: 0, textAlign: "start", margin: "4px 4%" }}>
+              <h2
+                style={{
+                  margin: 0,
+                  textAlign: "start",
+                  marginTop: "4px",
+                  marginBottom: "4px",
+                  marginRight: "4%",
+                  marginLeft: "4%",
+                }}
+              >
                 トッピング
               </h2>
               <div
