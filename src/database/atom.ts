@@ -7,7 +7,7 @@ import {
   Menu,
   Coupon,
   Topping,
-  quiz,
+  Quiz,
 } from "../type/model";
 import { auth } from "./firebase";
 
@@ -42,7 +42,7 @@ export const toppingsAtom = atom({
 
 export const quizzesAtom = atom({
   key: "quizzesAtom",
-  default: [] as quiz[],
+  default: [] as Quiz[],
 });
 
 export const cartItemsAtom = atom({
