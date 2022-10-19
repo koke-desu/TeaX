@@ -5,11 +5,13 @@ import { userAtom } from "../database/atom";
 import { isLogined } from "../database/basicFunc/auth";
 import { fetchUserData } from "../database/basicFunc/firestore";
 import { useOrderFunc } from "../database/orderFunc";
+import { useQuizFunc } from "../database/quizFunc";
 import { User } from "../type/model";
 
 export const useInitPage = () => {
   const router = useRouter();
   const orderFunc = useOrderFunc();
+  const quizFunc = useQuizFunc();
   const [user, setUser] = useRecoilState(userAtom);
   useEffect(() => {
     isLogined(
@@ -23,6 +25,7 @@ export const useInitPage = () => {
           orderFunc.getMenus();
           orderFunc.getCoupons();
           orderFunc.getToppings();
+          quizFunc.getQuizzes();
           orderFunc.getOrderState(data.id);
         });
         if (router.pathname === "/") router.replace("/order/main");

@@ -10,7 +10,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { couponState, OrderData, OrderMenu, User } from "../../type/model";
+import { CouponState, OrderData, OrderMenu, User } from "../../type/model";
 import { db } from "../firebase";
 //ユーザーのアカウント情報を取得
 export const fetchUserData = (id: string): any => {
@@ -97,7 +97,7 @@ export const addKeywordNum = (index: number, preNum: number) => {
 //クーポンのステートを変更する関数
 export const changeStateOfCoupon = (
   userId: string,
-  couponStates: { [couponID: string]: couponState }
+  couponStates: { [couponID: string]: CouponState }
 ) => {
   return updateDoc(doc(db, "users", userId), {
     coupons: couponStates,
@@ -148,10 +148,10 @@ export const useUserCoupon = (userData: User, couponId: string) => {
 };
 
 //TODO:関数を試す
-export const setUserCoupon = async (userId: string) => {
+export const setUserCoupon = async (userId: string, couponId: string) => {
   await updateDoc(doc(db, "users", userId), {
     coupons: {
-      "49O2mKW3tynsEBC2LFXQ": "useable",
+      [`${couponId}`]: "useable",
     },
   });
   fetchUserData(userId);

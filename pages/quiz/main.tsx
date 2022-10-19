@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import Layout from "../../src/components/Layout";
 import {
+  achieveCouponModalAtom,
   pushPageQrCodeReaderAtom,
   pushPageQuizAtom,
   userAtom,
@@ -11,9 +12,14 @@ import {
 import { authLogOut } from "../../src/database/basicFunc/auth";
 import { setUserCoupon } from "../../src/database/basicFunc/firestore";
 import { useInitPage } from "../../src/hooks/initAppHooks";
+import MenuCard from "../../src/html&cssComps/MenuCard";
 
 const Main = () => {
   useInitPage();
+  const [isAchieveModalOpen, setIsAchieveModalOpen] = useRecoilState(
+    achieveCouponModalAtom
+  );
+  console.log(isAchieveModalOpen);
   const router = useRouter();
   const user = useRecoilValue(userAtom);
   const setQuizId = useSetRecoilState(pushPageQuizAtom);
@@ -29,8 +35,14 @@ const Main = () => {
       >
         signout
       </button>
-      <button onClick={() => setUserCoupon(user.id)}>クーポン獲得する</button>
-
+      <button
+        onClick={() => {
+          setIsAchieveModalOpen("49O2mKW3tynsEBC2LFXQ");
+          setUserCoupon(user.id, "49O2mKW3tynsEBC2LFXQ");
+        }}
+      >
+        クーポン獲得する
+      </button>
       <button onClick={() => setIsQrPageOpen(true)}>
         goto qrcodereader page
       </button>

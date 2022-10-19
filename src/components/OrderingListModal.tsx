@@ -16,7 +16,7 @@ const OrderingListModal = () => {
 
   return (
     <>
-      <HalfModal isOpen={isOpen} setIsOpen={setIsOpen}>
+      <HalfModal title="" isOpen={isOpen} setIsOpen={setIsOpen}>
         {orderedData && (
           <div
             style={{

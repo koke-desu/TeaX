@@ -2,12 +2,12 @@ import { atom } from "recoil";
 import {
   User,
   OrderMenu,
-  couponState,
+  CouponState,
   OrderData,
   Menu,
   Coupon,
   Topping,
-  quiz,
+  Quiz,
 } from "../type/model";
 import { auth } from "./firebase";
 
@@ -22,7 +22,7 @@ export const userAtom = atom({
 
 export const tmpCouponsStateAtom = atom({
   key: "tmpCouponsStateAtom",
-  default: {} as { [couponID: string]: couponState },
+  default: {} as { [couponID: string]: CouponState },
 });
 
 export const couponsAtom = atom({
@@ -42,7 +42,7 @@ export const toppingsAtom = atom({
 
 export const quizzesAtom = atom({
   key: "quizzesAtom",
-  default: [] as quiz[],
+  default: [] as Quiz[],
 });
 
 export const cartItemsAtom = atom({
@@ -84,4 +84,10 @@ export const pushPageQuizAtom = atom({
 export const pushPageQrCodeReaderAtom = atom({
   key: "pushPageQrCodeReaderAtom",
   default: false,
+});
+
+//stringには獲得したクーポンのIDを入れる
+export const achieveCouponModalAtom = atom({
+  key: "achieveCouponModalAtom",
+  default: null as string | null,
 });

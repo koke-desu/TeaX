@@ -3,14 +3,13 @@
 // idはauthのUUID
 export type User = {
   id: string;
-  coupons: { [couponID: string]: couponState };
-  //booleanはスタンプラリーのスポットをクリアし終わっていたらtrueそうでなければfalse
-  quizzes: { [quizID: string]: quizState };
+  coupons: { [couponID: string]: CouponState };
+  quizzes: { [quizID: string]: QuizState };
 };
 
-export type quizState = "notCleared" | "cleared";
+export type QuizState = "notCleared" | "cleared" | "failed";
 
-export type couponState = "used" | "unOwned" | "useable";
+export type CouponState = "used" | "unOwned" | "useable";
 
 export type OrderData = {
   OrderMenus: OrderMenu[];
@@ -74,19 +73,24 @@ export type Coupon = {
   description: string;
   type: CouponType;
   number: number;
+  achieveType: AchieveType;
 };
+
+//stringはクイズのIdを指定
+export type AchieveType = string | "all";
 
 //○○割引はmultiple,○○円引きはsubtract,○○無料はfree123でタイプで分ける
 export type CouponType = "multiple" | "subtract" | "free1" | "free2" | "free3";
 
-export type quizzes = {
-  [quizID: string]: quiz;
+export type Quizzes = {
+  [quizID: string]: Quiz;
 };
 
-export type quiz = {
+export type Quiz = {
   tips: string;
   choiceNum: number;
   explaneImgURL: string;
   explane: string;
   answer: number;
+  id: string;
 };

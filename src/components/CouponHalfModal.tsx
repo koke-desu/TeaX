@@ -3,7 +3,7 @@ import { useRecoilValue } from "recoil";
 import { couponsAtom, userAtom } from "../database/atom";
 import { useOrderFunc } from "../database/orderFunc";
 import CouponCard from "../html&cssComps/CouponCard";
-import { couponState, OrderMenu } from "../type/model";
+import { CouponState, OrderMenu } from "../type/model";
 import HalfModal from "./HalfModal";
 
 type Props = {
@@ -23,7 +23,11 @@ const CouponHalfModal: FC<Props> = ({
   const userData = useRecoilValue(userAtom);
   const orderFunc = useOrderFunc();
   return (
-    <HalfModal isOpen={modalIsOpen} setIsOpen={setModalIsOpen}>
+    <HalfModal
+      isOpen={modalIsOpen}
+      setIsOpen={setModalIsOpen}
+      title="クーポン一覧"
+    >
       <div
         style={{
           display: "flex",
@@ -31,9 +35,8 @@ const CouponHalfModal: FC<Props> = ({
           alignItems: "center",
         }}
       >
-        <p>クーポン一覧</p>
         {coupons.map((coupon, index) => {
-          const state: couponState = userData.coupons
+          const state: CouponState = userData.coupons
             ? userData.coupons[coupon.id]
             : "unOwned";
           return (
