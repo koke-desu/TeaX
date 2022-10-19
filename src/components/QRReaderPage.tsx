@@ -20,6 +20,7 @@ const QRCodeScanner: React.VFC = () => {
 
   const [isOpen, setIsOpen] = useRecoilState(pushPageQrCodeReaderAtom);
   const onClose = () => {
+    console.log("close");
     setIsOpen(false);
   };
 
@@ -75,12 +76,12 @@ const QRCodeScanner: React.VFC = () => {
 
   return (
     <PushPage isOpen={isOpen} onClose={onClose}>
-      <div style={{ position: "fixed", top: 0 }}>
+      <div style={{ height: "100%", width: "100%", top: 0, position: "absolute", zIndex: -1 }}>
         <video
           autoPlay
           playsInline={true}
           ref={videoRef}
-          style={{ width: "100vw", height: "100vh" }}
+          style={{ width: "100vw", height: "100vh", zIndex: -1 }}
         >
           <canvas width={width} height={height} ref={canvasRef} />
         </video>
