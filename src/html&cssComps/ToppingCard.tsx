@@ -20,13 +20,6 @@ const ToppingCard: FC<Props> = ({
 }) => {
   return (
     <a onClick={onClick} className={styles.card}>
-      <div className={styles.image}>
-        <img
-          width="auto"
-          height="100%"
-          src={imageUrl ? imageUrl : "/sample.png"}
-        />
-      </div>
       <div className={styles.text}>
         <p className={styles.title}>{name ? name : "サンプル"}</p>
         <p className={styles.price}>¥{price ? price : 500}</p>
@@ -55,14 +48,6 @@ const styles = {
   text: css`
     margin: 0;
   `,
-  image: css`
-    height: 90px;
-    aspect-ratio: 1;
-    margin: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  `,
   card: css`
     position: relative;
     transition: all 0.1s ease-out;
@@ -71,7 +56,6 @@ const styles = {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    height: 150px;
     padding: 12px 0px;
     border-radius: 10px;
     overflow: hidden;
