@@ -22,7 +22,7 @@ const ToppingCard: FC<Props> = ({
     <a onClick={onClick} className={styles.card}>
       <div className={styles.text}>
         <p className={styles.title}>{name ? name : "サンプル"}</p>
-        <p className={styles.price}>¥{price ? price : 500}</p>
+        <p className={styles.price}>¥{price ? price : 0}</p>
       </div>
       {isSelected && (
         <div
