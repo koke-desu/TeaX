@@ -1,7 +1,11 @@
 //クイズアプリで使用する関数をまとめたファイル
 
 import { useRecoilState } from "recoil";
-import { fetchQuizzes, setUserCoupon } from "./basicFunc/firestore";
+import {
+  fetchQuizzes,
+  setUserCoupon,
+  setUserQuiz,
+} from "./basicFunc/firestore";
 import {
   achieveCouponModalAtom,
   couponsAtom,
@@ -49,13 +53,17 @@ export const useQuizFunc = () => {
       coupons.forEach((coupon) => {
         if (coupon.achieveType === quizData.id) {
           setUserCoupon(userData.id, coupon.id).then((data) => {
-            setUserData(data);
+            setUserQuiz(userData.id, quizData.id, result).then((data) => {
+              setUserData(data);
+            });
           });
           setAchieveCouponModal(coupon.achieveType);
         } else {
           if (quizzes.length === Object.values(tmp2).length) {
             setUserCoupon(userData.id, coupon.id).then((data) => {
-              setUserData(data);
+              setUserQuiz(userData.id, quizData.id, result).then((data) => {
+                setUserData(data);
+              });
             });
             setAchieveCouponModal(quizData.id);
           }

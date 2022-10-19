@@ -11,7 +11,13 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { CouponState, OrderData, OrderMenu, User } from "../../type/model";
+import {
+  CouponState,
+  OrderData,
+  OrderMenu,
+  User,
+  QuizState,
+} from "../../type/model";
 import { useAccountFunc } from "../authFunc";
 import { db } from "../firebase";
 //ユーザーのアカウント情報を取得
@@ -157,6 +163,19 @@ export const setUserCoupon = async (
   await updateDoc(doc(db, "users", userId), {
     coupons: {
       [`${couponId}`]: "useable",
+    },
+  });
+  return fetchUserData(userId) as User;
+};
+
+export const setUserQuiz = async (
+  userId: string,
+  quizId: string,
+  result: QuizState
+): Promise<User> => {
+  await updateDoc(doc(db, "users", userId), {
+    quizzes: {
+      [`${quizId}`]: result,
     },
   });
   return fetchUserData(userId) as User;

@@ -10,14 +10,10 @@ import { Quiz, QuizState } from "../type/model";
 
 type Props = {
   quizData: Quiz;
-  quizResult: QuizState;
+  quizResult: QuizState | null;
 };
 
 const QuizExplanationPage: FC<Props> = ({ quizData, quizResult }) => {
-  const setExplanationPageIsOpen = useSetRecoilState(
-    pushPageQuixExplanationAtom
-  );
-  const setAnswerPageIsOpen = useSetRecoilState(pushPageQuizAtom);
   const quizFunc = useQuizFunc();
   return (
     <div
@@ -28,7 +24,13 @@ const QuizExplanationPage: FC<Props> = ({ quizData, quizResult }) => {
         alignItems: "center",
       }}
     >
-      <h2>正解は{quizData.answer}です！</h2>
+      <h2>
+        {quizResult
+          ? "解説"
+          : quizResult === "cleared"
+          ? "正解です！"
+          : `正解は${quizData.answer}です！`}
+      </h2>
       <div
         style={{ height: "30vh", aspectRatio: "1.4", backgroundColor: "gray" }}
       >
@@ -55,16 +57,16 @@ const QuizExplanationPage: FC<Props> = ({ quizData, quizResult }) => {
         >
           {quizData.explane}
         </p>
-        <div style={{ position: "absolute", bottom: "24px", right: "24px" }}>
-          <SmallButton
-            title="閉じる"
-            onClick={() => {
-              //   setAnswerPageIsOpen("");
-              //   setExplanationPageIsOpen(false);
-              quizFunc.afterFinishQuiz(quizData, quizResult);
-            }}
-          />
-        </div>
+        {quizResult && (
+          <div style={{ position: "absolute", bottom: "24px", right: "24px" }}>
+            <SmallButton
+              title="閉じる"
+              onClick={() => {
+                quizFunc.afterFinishQuiz(quizData, quizResult);
+              }}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
