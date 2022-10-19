@@ -54,7 +54,6 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
           >
             <div
               style={{
-                border: "1px solid black",
                 width: "60%",
                 aspectRatio: "1",
                 marginBottom: "12px",
@@ -66,8 +65,8 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
               <img
                 src={menu.imageUrl}
                 alt="menuImg"
-                width="auto"
-                height="100px"
+                width="100%"
+                height="auto"
               />
             </div>
             <div
