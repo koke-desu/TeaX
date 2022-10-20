@@ -169,5 +169,6 @@ const style = {
     background-color: ${selected ? "gray" : focused ? "#87ce41" : "white"};
     border: 1px solid ${focused ? "#87ce41" : "gray"};
     border-radius: 8px;
+    color: black;
   `,
 };

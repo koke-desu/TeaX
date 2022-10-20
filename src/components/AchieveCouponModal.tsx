@@ -100,6 +100,7 @@ const styles = {
     padding: 20px;
     width: 90vw;
     border-radius: 8px;
+    color: black;
   `,
   modalOpen: css`
     transform: translateY(0);
