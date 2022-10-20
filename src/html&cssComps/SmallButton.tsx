@@ -27,6 +27,11 @@ const styles = {
     width: 110px;
     height: 30px;
     padding: 0%;
+    transition: background-color 0.1s ease-out;
+
+    &:active {
+      background: #eeeeee;
+    }
   `,
 };
 

@@ -11,6 +11,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
+import { useRecoilValue } from "recoil";
 import {
   CouponState,
   OrderData,
@@ -18,6 +19,7 @@ import {
   User,
   QuizState,
 } from "../../type/model";
+import { userAtom } from "../atom";
 import { useAccountFunc } from "../authFunc";
 import { db } from "../firebase";
 //ユーザーのアカウント情報を取得

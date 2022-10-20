@@ -19,15 +19,16 @@ export const useInitPage = () => {
         router.replace("/userAction/login");
       },
       (id: string) => {
-        fetchUserData(id).then((data: User) => {
-          console.log("setUserData to recoil", data);
-          setUser(data);
-          orderFunc.getMenus();
-          orderFunc.getCoupons();
-          orderFunc.getToppings();
-          quizFunc.getQuizzes();
-          orderFunc.getOrderState(data.id);
-        });
+        if (user.id === "")
+          fetchUserData(id).then((data: User) => {
+            console.log("setUserData to recoil", data);
+            setUser(data);
+            orderFunc.getMenus();
+            orderFunc.getCoupons();
+            orderFunc.getToppings();
+            quizFunc.getQuizzes();
+            orderFunc.getOrderState(data.id);
+          });
         if (router.pathname === "/") router.replace("/order/main");
       }
     );
