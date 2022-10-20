@@ -27,6 +27,7 @@ const Layout: FC<Props> = ({ children }) => {
           flexDirection: "column",
           justifyContent: "space-between",
           marginTop: "50px",
+          color: "black",
         }}
       >
         <Head>
