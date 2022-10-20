@@ -39,9 +39,9 @@ const Layout: FC<Props> = ({ children }) => {
         <OrderingListModal></OrderingListModal>
         <CartProductsModal></CartProductsModal>
       </div>
+      <QRReaderPage />
       <QuizPage />
 
-      <QRReaderPage />
       <AchieveCouponModal />
     </>
   );
