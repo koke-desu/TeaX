@@ -81,7 +81,7 @@ export const useOrderFunc = () => {
   };
 
   const getCoupons = () => {
-    if (!coupons)
+    if (!coupons.length)
       fetchCoupons().then((data) => {
         //TODO:ここ無理やりCoupon型にしているので改善したい
         console.log("setCouponData to recoil", data);

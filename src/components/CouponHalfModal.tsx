@@ -22,6 +22,7 @@ const CouponHalfModal: FC<Props> = ({
   const coupons = useRecoilValue(couponsAtom);
   const userData = useRecoilValue(userAtom);
   const orderFunc = useOrderFunc();
+  console.log("coupon is", coupons);
   return (
     <HalfModal
       isOpen={modalIsOpen}
