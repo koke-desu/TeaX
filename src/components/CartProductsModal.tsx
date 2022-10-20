@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { cartItemsAtom, cartProductModalAtom } from "../database/atom";
 import { useOrderFunc } from "../database/orderFunc";
+import LargeButton from "../html&cssComps/LargeButton";
 import SmallButton from "../html&cssComps/SmallButton";
 import { OrderMenu } from "../type/model";
 import ConfirmModal from "./ConfirmModal";
@@ -119,7 +120,7 @@ const CartProductsModal = () => {
                     alignItems: "flex-end",
                   }}
                 >
-                  <SmallButton
+                  <LargeButton
                     onClick={() => setIsConfirmOpen(true)}
                     title="注文する"
                   />

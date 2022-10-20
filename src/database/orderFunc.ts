@@ -38,10 +38,11 @@ export const useOrderFunc = () => {
   const [keywordLength, setKeywordLength] = useRecoilState(keywordLengthAtom);
   //メニューデータを取得する関数
   const getMenus = () => {
-    fetchMenus().then((data) => {
-      const tmp = [...data];
-      setMenus(tmp);
-    });
+    if (!menus.length)
+      fetchMenus().then((data) => {
+        const tmp = [...data];
+        setMenus(tmp);
+      });
   };
 
   const deleteCartItem = (index: number) => {
@@ -70,24 +71,23 @@ export const useOrderFunc = () => {
   };
 
   const getToppings = () => {
-    const tmp = fetchToppings();
-    tmp.then((data) => {
-      //TODO:ここ無理やりCoupon型にしているので改善したい
-      console.log("setToppingsData to recoil", data);
-      const tmp = [...data];
-      setToppings(tmp);
-    });
+    if (!toppings.length)
+      fetchToppings().then((data) => {
+        //TODO:ここ無理やりCoupon型にしているので改善したい
+        console.log("setToppingsData to recoil", data);
+        const tmp = [...data];
+        setToppings(tmp);
+      });
   };
 
   const getCoupons = () => {
-    const tmp = fetchCoupons();
-    // setCoupons(coupons);
-    tmp.then((data) => {
-      //TODO:ここ無理やりCoupon型にしているので改善したい
-      console.log("setCouponData to recoil", data);
-      const tmp = [...data];
-      setCoupons(tmp);
-    });
+    if (!coupons)
+      fetchCoupons().then((data) => {
+        //TODO:ここ無理やりCoupon型にしているので改善したい
+        console.log("setCouponData to recoil", data);
+        const tmp = [...data];
+        setCoupons(tmp);
+      });
   };
 
   //IDからメニューデータを取得する関数

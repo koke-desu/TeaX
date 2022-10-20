@@ -16,7 +16,13 @@ const OrderingListModal = () => {
 
   return (
     <>
-      <HalfModal title="" isOpen={isOpen} setIsOpen={setIsOpen}>
+      <HalfModal
+        title={
+          orderedData?.isCompleted ? "注文の品が完成しました！" : "作成中の商品"
+        }
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      >
         {orderedData && (
           <div
             style={{
@@ -25,34 +31,64 @@ const OrderingListModal = () => {
               alignItems: "center",
             }}
           >
-            <p style={{ margin: 0 }}>
-              {orderedData.isCompleted
-                ? "注文の品が完成しました！"
-                : "作成中の商品"}
-            </p>
-            <p style={{ margin: 0 }}>注文番号</p>
-            <p style={{ margin: 0 }}>{orderedData.orderKeyword}</p>
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+              <p
+                style={{
+                  margin: 0,
+                  color: "#005B7A",
+                  fontSize: "20px",
+                  fontWeight: "bold",
+                }}
+              >
+                注文番号
+              </p>
+              <p
+                style={{
+                  margin: 0,
+                  color: "#005B7A",
+                  fontSize: "24px",
+                  fontWeight: "bold",
+                }}
+              >
+                {orderedData.orderKeyword}
+              </p>
+            </div>
             {orderedData.OrderMenus.map((orderMenu, index) => {
               const menuData = orderFunc.getMenuByID(orderMenu.menuID);
               return (
                 <div
                   key={index}
-                  style={{ display: "flex", alignItems: "center" }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    padding: "8px",
+                    gap: "24px",
+                    width: "100%",
+                  }}
                 >
-                  <div
-                    style={{
-                      width: "20px",
-                      height: "20px",
-                      backgroundColor: "gray",
-                    }}
-                  ></div>
+                  <img src={menuData?.imageUrl} width="52px" />
                   <p>{menuData?.name}</p>
                 </div>
               );
             })}
-            <div style={{ display: "flex" }}>
-              <p>合計</p>
-              <p>￥{orderedData.totalPrice}</p>
+            <div
+              style={{
+                display: "flex",
+                borderTop: "solid 1px #e9e9e9",
+                width: "100%",
+                justifyContent: "space-between",
+                paddingTop: "12px",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                }}
+              >
+                <p style={{ fontWeight: "bold" }}>合計</p>
+                <p style={{ fontWeight: "bold" }}>￥{orderedData.totalPrice}</p>
+              </div>
               {orderedData.isCompleted && (
                 <LargeButton
                   title="受け取り完了"

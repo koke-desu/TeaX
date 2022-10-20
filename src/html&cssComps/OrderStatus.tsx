@@ -16,7 +16,7 @@ const OrderStatus: FC<Props> = ({ onClick }) => {
   const isVisible = orderData ? true : false;
   return (
     <div className={styles.visible(isVisible)}>
-      <button className={styles.box} onClick={onClick}>
+      <button className={styles.box} onClick={onClick} disabled={!isVisible}>
         {orderData && (
           <>
             <img

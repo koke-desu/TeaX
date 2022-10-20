@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 //ユーザーのデータをfirestoreから取得したり変更したりする処理をまとめたファイル
 import {
   collection,
@@ -10,7 +11,16 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { CouponState, OrderData, OrderMenu, User } from "../../type/model";
+import { useRecoilValue } from "recoil";
+import {
+  CouponState,
+  OrderData,
+  OrderMenu,
+  User,
+  QuizState,
+} from "../../type/model";
+import { userAtom } from "../atom";
+import { useAccountFunc } from "../authFunc";
 import { db } from "../firebase";
 //ユーザーのアカウント情報を取得
 export const fetchUserData = (id: string): any => {
@@ -148,13 +158,29 @@ export const useUserCoupon = (userData: User, couponId: string) => {
 };
 
 //TODO:関数を試す
-export const setUserCoupon = async (userId: string, couponId: string) => {
+export const setUserCoupon = async (
+  userId: string,
+  couponId: string
+): Promise<User> => {
   await updateDoc(doc(db, "users", userId), {
     coupons: {
       [`${couponId}`]: "useable",
     },
   });
-  fetchUserData(userId);
+  return fetchUserData(userId) as User;
+};
+
+export const setUserQuiz = async (
+  userId: string,
+  quizId: string,
+  result: QuizState
+): Promise<User> => {
+  await updateDoc(doc(db, "users", userId), {
+    quizzes: {
+      [`${quizId}`]: result,
+    },
+  });
+  return fetchUserData(userId) as User;
 };
 
 export const decreaseProduct = (docRef: string) => {

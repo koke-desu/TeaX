@@ -91,3 +91,8 @@ export const achieveCouponModalAtom = atom({
   key: "achieveCouponModalAtom",
   default: null as string | null,
 });
+
+export const pushPageQuixExplanationAtom = atom({
+  key: "pushPageQuixExplanationAtom",
+  default: false,
+});

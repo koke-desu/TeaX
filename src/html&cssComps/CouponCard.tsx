@@ -15,12 +15,13 @@ type Props = {
   onClick: () => void;
   state: CouponState;
   isUseMode: boolean;
+  width?: string;
 };
 
 const styles = {
-  all: css`
+  all: (width: string) => css`
     position: relative;
-    width: 331px;
+    width: ${width};
     height: 80px;
     font-size: 7px;
     margin: 8px;
@@ -28,6 +29,7 @@ const styles = {
   image: css`
     position: absolute;
     width: 100%;
+    height: 100%;
     top: 0;
     z-index: -1;
   `,
@@ -108,10 +110,11 @@ const CouponCard: FC<Props> = ({
   onClick,
   state,
   isUseMode,
+  width = "331px",
 }) => {
   return (
     <>
-      <div className={styles.all}>
+      <div className={styles.all(width)}>
         <img src="/couponCard.png" className={styles.image} />
         {state !== "useable" && (
           <div className={styles.backdrop}>

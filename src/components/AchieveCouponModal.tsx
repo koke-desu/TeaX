@@ -1,16 +1,20 @@
 import { css, cx } from "@emotion/css";
 import { FC } from "react";
-import { useRecoilState } from "recoil";
-import { achieveCouponModalAtom } from "../database/atom";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  achieveCouponModalAtom,
+  couponListModalAtom,
+  couponsAtom,
+} from "../database/atom";
+import CouponCard from "../html&cssComps/CouponCard";
 import LargeButton from "../html&cssComps/LargeButton";
+import SmallButton from "../html&cssComps/SmallButton";
 
-type Props = {
-  title: string;
-  description: string;
-};
-const Infomation: FC<Props> = ({ title, description }) => {
+const AchieveCouponModal: FC = () => {
   const [isOpen, setIsOpen] = useRecoilState(achieveCouponModalAtom);
   console.log(isOpen);
+  const coupons = useRecoilValue(couponsAtom);
+  const couponData = coupons.find((data) => data.achieveType === isOpen);
   return (
     <div
       className={cx(styles.backDrop, {
@@ -22,10 +26,7 @@ const Infomation: FC<Props> = ({ title, description }) => {
           [styles.modalOpen]: isOpen !== null ? true : false,
         })}
       >
-        <div>
-          <h1>{title}</h1>
-          <p>{description}</p>
-        </div>
+        <h3>クーポンを獲得しました！</h3>
         <div
           style={{
             display: "flex",
@@ -33,15 +34,27 @@ const Infomation: FC<Props> = ({ title, description }) => {
             justifyContent: "space-around",
             width: "100%",
             gap: "8px",
+            alignItems: "center",
           }}
         >
-          <p>{isOpen}を獲得しました</p>
-          <LargeButton
-            title="OK"
-            onClick={() => {
-              setIsOpen(null);
-            }}
-          />
+          {couponData && (
+            <CouponCard
+              title={couponData.title}
+              description={couponData.description}
+              onClick={() => {}}
+              state={"useable"}
+              isUseMode={false}
+              width={"100%"}
+            />
+          )}
+          <div style={{ display: "flex", alignSelf: "flex-end" }}>
+            <SmallButton
+              title="閉じる"
+              onClick={() => {
+                setIsOpen(null);
+              }}
+            />
+          </div>
         </div>
       </div>
       <div
@@ -84,8 +97,8 @@ const styles = {
     z-index: 10;
     display: flex;
     flex-direction: column;
-    padding: 16px;
-    margin: 12px;
+    padding: 20px;
+    width: 90vw;
     border-radius: 8px;
   `,
   modalOpen: css`
@@ -99,4 +112,4 @@ const styles = {
   `,
 };
 
-export default Infomation;
+export default AchieveCouponModal;

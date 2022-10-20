@@ -33,7 +33,7 @@ const QRCodeScanner: React.VFC = () => {
           video.srcObject = stream;
         });
     }
-  }, []);
+  }, [isOpen]);
 
   // QRコードを読み取り
   useEffect(() => {

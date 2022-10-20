@@ -16,8 +16,8 @@ const MenuCard: FC<Props> = ({ onClick, name, price, imageUrl }) => {
       {/* <div className={styles.card}> */}
       <div className={styles.image}>
         <img
-          width="auto"
-          height="100%"
+          width="100%"
+          height="auto"
           src={imageUrl ? imageUrl : "/sample.png"}
         />
       </div>
