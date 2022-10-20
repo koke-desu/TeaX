@@ -20,7 +20,6 @@ const QRCodeScanner: React.VFC = () => {
 
   const [isOpen, setIsOpen] = useRecoilState(pushPageQrCodeReaderAtom);
   const onClose = () => {
-    console.log("close");
     setIsOpen(false);
   };
 
@@ -70,7 +69,6 @@ const QRCodeScanner: React.VFC = () => {
 
     if (quiz !== undefined) {
       setQuizId(quiz.id);
-      router.push(`answer`);
     }
   }, [qrData, quizzes, router, setQuizId]);
 
