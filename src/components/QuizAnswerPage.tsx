@@ -116,7 +116,7 @@ const style = {
   `,
   footer: css`
     display: flex;
-    margin-top: 64px;
+    /* margin-top: 64px; */
     width: 100%;
     justify-content: space-between;
     align-items: center;
@@ -129,6 +129,7 @@ const style = {
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
+    color: black;
   `,
 
   description: css`

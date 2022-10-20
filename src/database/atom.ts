@@ -78,7 +78,7 @@ export const cartProductModalAtom = atom({
 
 export const pushPageQuizAtom = atom({
   key: "pushPageQuizAtom",
-  default: "" as string,
+  default: "pmV59XG6XuetioTe1eWX" as string,
 });
 
 export const pushPageQrCodeReaderAtom = atom({
