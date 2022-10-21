@@ -24,20 +24,28 @@ const InstallButton = () => {
 
     // present install prompt to user
     function presentAddToHome() {
+      alert("1");
       promptEvent
         .prompt()
-        .then((res) => console.log(res))
+        .then((res) => {
+          alert("2");
+          console.log(res);
+        })
         .catch((error) => {
+          alert("3");
           console.log(`----> ${error}`);
         }); // Wait for the user to respond to the prompt
       promptEvent.userChoice.then((choice) => {
+        alert("4");
         if (choice.outcome === "accepted") {
+          alert("5");
           console.log("User accepted");
           let tmpUserData = { ...userData };
           tmpUserData.isInstalled = true;
           updateUserData(tmpUserData);
           setUserData();
         } else {
+          alert("6");
           console.log("User dismissed");
         }
       });
@@ -46,6 +54,9 @@ const InstallButton = () => {
   if (userData.isInstalled) return <></>;
   return (
     <a
+      onClick={() => {
+        alert("aaaaaaaa");
+      }}
       id="InstallBtn"
       style={{
         width: "60px",
