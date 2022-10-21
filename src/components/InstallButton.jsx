@@ -9,13 +9,15 @@ const InstallButton = () => {
   const [promptEvent, setPromptEvent] = useState(null);
   useEffect(() => {
     // Capture event and defer
+    alert;
     window.addEventListener("beforeinstallprompt", function (e) {
       e.preventDefault();
       setPromptEvent(e);
     });
-  }, []);
+  }, [setPromptEvent]);
   function presentAddToHome() {
     alert("1");
+
     if (promptEvent)
       promptEvent
         .prompt()
@@ -35,7 +37,7 @@ const InstallButton = () => {
         let tmpUserData = { ...userData };
         tmpUserData.isInstalled = true;
         updateUserData(tmpUserData);
-        setUserData();
+        setUserData(tmpUserData);
       } else {
         alert("6");
         console.log("User dismissed");

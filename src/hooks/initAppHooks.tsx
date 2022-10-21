@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { userAtom } from "../database/atom";
+import { isLoadingAtom, userAtom } from "../database/atom";
 import { isLogined } from "../database/basicFunc/auth";
 import { fetchUserData } from "../database/basicFunc/firestore";
 import { useOrderFunc } from "../database/orderFunc";
@@ -13,6 +13,7 @@ export const useInitPage = () => {
   const orderFunc = useOrderFunc();
   const quizFunc = useQuizFunc();
   const [user, setUser] = useRecoilState(userAtom);
+  const setSplashScreenIsOpen = useSetRecoilState(isLoadingAtom);
   useEffect(() => {
     isLogined(
       () => {
@@ -30,6 +31,7 @@ export const useInitPage = () => {
             orderFunc.getOrderState(data.id);
           });
         if (router.pathname === "/") router.replace("/quiz/main");
+        setSplashScreenIsOpen(false);
       }
     );
   }, []);

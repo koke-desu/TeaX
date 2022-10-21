@@ -11,6 +11,7 @@ import OrderingListModal from "./OrderingListModal";
 import QRReaderPage from "./QRReaderPage";
 import QuizPage from "./QuizPage";
 import InstallButton from "./InstallButton";
+import SplashScreen from "./SplashScreen";
 
 type Props = {
   children: ReactNode;
@@ -50,6 +51,7 @@ const Layout: FC<Props> = ({ children }) => {
       <QuizPage />
 
       <AchieveCouponModal />
+      <SplashScreen />
     </>
   );
 };

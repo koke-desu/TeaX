@@ -96,3 +96,8 @@ export const pushPageQuixExplanationAtom = atom({
   key: "pushPageQuixExplanationAtom",
   default: false,
 });
+
+export const isLoadingAtom = atom({
+  key: "isLoadingAtom",
+  default: true,
+});
