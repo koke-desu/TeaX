@@ -3,7 +3,11 @@ import jsQR from "jsqr";
 import { useWindowSize } from "../../src/hooks/useWindowSize";
 import { useRouter } from "next/router";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { pushPageQrCodeReaderAtom, pushPageQuizAtom, quizzesAtom } from "../../src/database/atom";
+import {
+  pushPageQrCodeReaderAtom,
+  pushPageQuizAtom,
+  quizzesAtom,
+} from "../../src/database/atom";
 import PushPage from "./PushPage";
 
 const QRCodeScanner: React.VFC = () => {
@@ -69,12 +73,21 @@ const QRCodeScanner: React.VFC = () => {
     console.log(qrData);
     if (quiz !== undefined) {
       setQuizId(quiz.id);
+      setIsOpen(false);
     }
   }, [qrData, quizzes, router, setQuizId]);
 
   return (
     <PushPage isOpen={isOpen} onClose={onClose}>
-      <div style={{ height: "100%", width: "100%", top: 0, position: "absolute", zIndex: -1 }}>
+      <div
+        style={{
+          height: "100%",
+          width: "100%",
+          top: 0,
+          position: "absolute",
+          zIndex: -1,
+        }}
+      >
         <video
           autoPlay
           playsInline={true}

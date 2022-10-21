@@ -29,7 +29,7 @@ export const useInitPage = () => {
             quizFunc.getQuizzes();
             orderFunc.getOrderState(data.id);
           });
-        if (router.pathname === "/") router.replace("/order/main");
+        if (router.pathname === "/") router.replace("/quiz/main");
       }
     );
   }, []);
