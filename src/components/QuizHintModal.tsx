@@ -1,13 +1,5 @@
 import { css, cx } from "@emotion/css";
 import { FC } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import {
-  achieveCouponModalAtom,
-  couponListModalAtom,
-  couponsAtom,
-} from "../database/atom";
-import CouponCard from "../html&cssComps/CouponCard";
-import LargeButton from "../html&cssComps/LargeButton";
 import SmallButton from "../html&cssComps/SmallButton";
 
 type Props = {

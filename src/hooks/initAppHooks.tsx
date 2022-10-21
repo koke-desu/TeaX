@@ -16,17 +16,13 @@ export const useInitPage = () => {
   const setSplashScreenIsOpen = useSetRecoilState(isLoadingAtom);
   useEffect(() => {
     isLogined(
-      async () => {
-        await setTimeout(() => {
-          setSplashScreenIsOpen(false);
-        }, 1000);
-        router.replace("/userAction/login");
+      () => {
+        setSplashScreenIsOpen(false);
+
+        router.replace("/userAction/signup");
       },
 
-      async (id: string) => {
-        await setTimeout(() => {
-          setSplashScreenIsOpen(false);
-        }, 1000);
+      (id: string) => {
         if (user.id === "")
           fetchUserData(id).then((data: User) => {
             console.log("setUserData to recoil", data);
@@ -37,6 +33,7 @@ export const useInitPage = () => {
             quizFunc.getQuizzes();
             orderFunc.getOrderState(data.id);
           });
+        setSplashScreenIsOpen(false);
       }
     );
   }, []);

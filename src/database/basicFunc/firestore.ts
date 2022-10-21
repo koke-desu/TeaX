@@ -18,6 +18,7 @@ import {
   OrderMenu,
   User,
   QuizState,
+  Quiz,
 } from "../../type/model";
 import { userAtom } from "../atom";
 import { useAccountFunc } from "../authFunc";
@@ -161,12 +162,14 @@ export const useUserCoupon = (userData: User, couponId: string) => {
 //TODO:関数を試す
 export const setUserCoupon = async (
   userId: string,
-  couponId: string
+  couponId: string,
+  result: QuizState,
+  userData: User
 ): Promise<User> => {
+  const tmp = { ...userData.coupons };
+  tmp[couponId] = result === "cleared" ? "useable" : "unOwned";
   await updateDoc(doc(db, "users", userId), {
-    coupons: {
-      [`${couponId}`]: "useable",
-    },
+    coupons: tmp,
   });
   return fetchUserData(userId) as User;
 };
@@ -174,12 +177,13 @@ export const setUserCoupon = async (
 export const setUserQuiz = async (
   userId: string,
   quizId: string,
-  result: QuizState
+  result: QuizState,
+  userData: User
 ): Promise<User> => {
+  const tmp = { ...userData.quizzes };
+  tmp[quizId] = result;
   await updateDoc(doc(db, "users", userId), {
-    quizzes: {
-      [`${quizId}`]: result,
-    },
+    quizzes: tmp,
   });
   return fetchUserData(userId) as User;
 };

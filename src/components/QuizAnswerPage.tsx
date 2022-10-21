@@ -22,7 +22,6 @@ const QuizAnswerPage = () => {
     pushPageQuixExplanationAtom
   );
   const [quizResult, setQuizResult] = useState<QuizState>("notCleared");
-  const router = useRouter();
 
   return (
     <>

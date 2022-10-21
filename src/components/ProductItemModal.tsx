@@ -3,7 +3,9 @@ import { css } from "@emotion/css";
 import { FC, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { couponsAtom, orderedDataAtom, toppingsAtom } from "../database/atom";
+import { setOrder } from "../database/basicFunc/firestore";
 import { useOrderFunc } from "../database/orderFunc";
+import CouponIcon from "../html&cssComps/CouponIcon";
 import LargeButton from "../html&cssComps/LargeButton";
 import ToppingCard from "../html&cssComps/ToppingCard";
 import { Menu, OrderMenu } from "../type/model";
@@ -143,18 +145,31 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
                 <div
                   style={{
                     display: "flex",
-                    justifyContent: "space-around",
+                    justifyContent: "space-between",
                   }}
                 >
-                  {orderMenu.couponID ? (
+                  {/* {orderMenu.couponID ? (
                     <div>
                       {orderFunc.getCouponByID(orderMenu.couponID)?.title}
                     </div>
-                  ) : (
-                    <button onClick={() => setIsCouponModalOpen(true)}>
-                      クーポンを追加
-                    </button>
-                  )}
+                  ) : ( */}
+                  {/* // <button onClick={() => setIsCouponModalOpen(true)}>
+                    //   クーポンを追加
+                    // </button> */}
+                  <CouponIcon
+                    isCouponUsed={orderMenu.couponID ? false : true}
+                    onClick={() => {
+                      if (orderMenu.couponID) {
+                        const tmp = { ...orderMenu };
+                        tmp.couponID = null;
+                        setOrderMenu(tmp);
+                      } else {
+                        setIsCouponModalOpen(true);
+                      }
+                    }}
+                  />
+
+                  {/* )} */}
                   <LargeButton
                     title="カートに追加"
                     onClick={() => {

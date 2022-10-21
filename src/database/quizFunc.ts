@@ -52,21 +52,16 @@ export const useQuizFunc = () => {
     if (result === "cleared") {
       coupons.forEach((coupon) => {
         if (coupon.achieveType === quizData.id) {
-          setUserCoupon(userData.id, coupon.id).then((data) => {
-            setUserQuiz(userData.id, quizData.id, result).then((data) => {
-              setUserData(data);
-            });
-          });
+          setUserCoupon(userData.id, coupon.id, result, userData).then(
+            (tmpData) => {
+              setUserQuiz(userData.id, quizData.id, result, tmpData).then(
+                (data) => {
+                  setUserData(data);
+                }
+              );
+            }
+          );
           setAchieveCouponModal(coupon.achieveType);
-        } else {
-          if (quizzes.length === Object.values(tmp2).length) {
-            setUserCoupon(userData.id, coupon.id).then((data) => {
-              setUserQuiz(userData.id, quizData.id, result).then((data) => {
-                setUserData(data);
-              });
-            });
-            setAchieveCouponModal(quizData.id);
-          }
         }
         setAnswerPageIsOpen("");
         setExplanationPageIsOpen(false);

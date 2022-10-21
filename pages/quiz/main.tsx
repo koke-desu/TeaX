@@ -13,6 +13,8 @@ import {
   userAtom,
 } from "../../src/database/atom";
 import { useInitPage } from "../../src/hooks/initAppHooks";
+import CouponCard from "../../src/html&cssComps/CouponCard";
+import CouponIcon from "../../src/html&cssComps/CouponIcon";
 import LargeButton from "../../src/html&cssComps/LargeButton";
 import { Quiz, QuizState } from "../../src/type/model";
 
@@ -69,6 +71,7 @@ const Main = () => {
                 <a
                   className={style.quizIcon}
                   onClick={() => {
+                    console.log(quiz);
                     if (user.quizzes[quiz.id] === "cleared") {
                       setIsExplanationOpen(quiz);
                     } else setHint(quiz.tips);
@@ -145,6 +148,7 @@ const style = {
   `,
   quizIconContainer: css`
     width: 33%;
+    aspect-ratio: 1;
     display: flex;
     justify-content: center;
     align-items: center;
