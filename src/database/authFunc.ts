@@ -40,7 +40,7 @@ export const useAccountFunc = () => {
       await fetchUserData(userId)
         .then((data: User) => {
           setUser(data);
-          router.replace("/order/main");
+          router.replace("/");
         })
         .catch((error: AuthError) => {
           console.log(error.message);
