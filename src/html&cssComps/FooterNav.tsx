@@ -14,7 +14,7 @@ const FooterNav = () => {
           </p>
         </div>
       </Link>
-      <Link href="/order/main">
+      <Link href="/">
         <div className={styles.part}>
           <p className={styles.order(router.pathname === "/order/main")}>
             オーダー
