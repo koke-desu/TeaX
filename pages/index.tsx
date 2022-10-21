@@ -19,7 +19,7 @@ const Home: NextPage = () => {
         <meta name="theme-color" content="#fff" />
       </Head>
 
-      <main style={{ backgroundColor: "red" }}>
+      <main>
         <Main />
       </main>
     </div>
