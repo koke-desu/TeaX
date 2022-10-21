@@ -59,7 +59,12 @@ export const useAccountFunc = () => {
         createUserData(user.uid)
           .then(() => {
             console.log("created userData");
-            setUser({ id: user.uid, coupons: {}, quizzes: {} });
+            setUser({
+              id: user.uid,
+              coupons: {},
+              quizzes: {},
+              isInstalled: false,
+            });
             router.replace("/order/main");
           })
           .catch((error: AuthError) => {
@@ -86,7 +91,7 @@ export const useAccountFunc = () => {
     await authLogOut()
       .then(() => {
         console.log("logouted");
-        setUser({ id: "", coupons: {}, quizzes: {} });
+        setUser({ id: "", coupons: {}, quizzes: {}, isInstalled: false });
         then();
       })
       .catch((error: AuthError) => {

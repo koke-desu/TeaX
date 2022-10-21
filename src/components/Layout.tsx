@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { orderedDataAtom } from "../database/atom";
 import BottomNavigation from "./BottomNavigation";
@@ -10,12 +10,20 @@ import OrderingFAB from "./OrderingFAB";
 import OrderingListModal from "./OrderingListModal";
 import QRReaderPage from "./QRReaderPage";
 import QuizPage from "./QuizPage";
+import InstallButton from "./InstallButton";
 
 type Props = {
   children: ReactNode;
 };
 
 const Layout: FC<Props> = ({ children }) => {
+  useEffect(() => {
+    window.addEventListener("appinstalled", () => {
+      // Optionally, send analytics event to indicate successful install
+      console.log("PWA was installed");
+    });
+  }, []);
+
   return (
     <>
       <div
@@ -30,11 +38,9 @@ const Layout: FC<Props> = ({ children }) => {
           color: "black",
         }}
       >
-        <Head>
-          <title>about me</title>
-        </Head>
         <Header isHome onClose={() => {}}></Header>
         <main style={{ display: "flex", flexGrow: 1 }}>{children}</main>
+        <InstallButton />
         <OrderingFAB></OrderingFAB>
         <BottomNavigation></BottomNavigation>
         <OrderingListModal></OrderingListModal>

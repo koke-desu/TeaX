@@ -5,6 +5,7 @@ export type User = {
   id: string;
   coupons: { [couponID: string]: CouponState };
   quizzes: { [quizID: string]: QuizState };
+  isInstalled: boolean;
 };
 
 export type QuizState = "notCleared" | "cleared" | "failed";
