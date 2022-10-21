@@ -40,7 +40,7 @@ const MainPage = () => {
             margin: "12px",
             display: "flex",
             flexWrap: "wrap",
-            paddingTop: "72px",
+            paddingTop: "120px",
           }}
         >
           {Object.values(menus).map((menu, index) => (

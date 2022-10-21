@@ -32,7 +32,7 @@ const Layout: FC<Props> = ({ children }) => {
           marginTop: "50px",
           color: "black",
           overflowY: "scroll",
-          paddingBottom: "40px",
+          paddingBottom: "100px",
         }}
       >
         <Header isHome onClose={() => {}}></Header>
