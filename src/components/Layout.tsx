@@ -12,6 +12,7 @@ import QRReaderPage from "./QRReaderPage";
 import QuizPage from "./QuizPage";
 import InstallButton from "./InstallButton";
 import SplashScreen from "./SplashScreen";
+import { NodeNextRequest } from "next/dist/server/base-http/node";
 
 type Props = {
   children: ReactNode;
