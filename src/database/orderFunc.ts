@@ -59,6 +59,14 @@ export const useOrderFunc = () => {
     setCartItems(tmp);
   };
 
+  const regetCoupon = (couponId: string) => {
+    const tmpUserData = { ...userData };
+    const tmpUserCoupons = { ...tmpUserData.coupons };
+    tmpUserCoupons[couponId] = "useable";
+    tmpUserData.coupons = tmpUserCoupons;
+    setUserData(tmpUserData);
+  };
+
   const getKeywordLength = () => {
     fetchKeywordLength()
       .then((docs) => {
@@ -306,5 +314,6 @@ export const useOrderFunc = () => {
     useCoupon,
     resetUseCoupon,
     deleteCartItem,
+    regetCoupon,
   };
 };

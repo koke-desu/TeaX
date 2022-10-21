@@ -161,6 +161,7 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
                     onClick={() => {
                       if (orderMenu.couponID) {
                         const tmp = { ...orderMenu };
+                        orderFunc.regetCoupon(tmp.couponID);
                         tmp.couponID = null;
                         setOrderMenu(tmp);
                       } else {
