@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useEffect } from "react";
-import Main from "../src/components/main";
+import MainPage from "../src/components/MainPage";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
@@ -18,9 +17,8 @@ const Home: NextPage = () => {
         <link rel="apple-touch-icon" href="/icon.png"></link>
         <meta name="theme-color" content="#fff" />
       </Head>
-
       <main>
-        <Main />
+        <MainPage />
       </main>
     </div>
   );

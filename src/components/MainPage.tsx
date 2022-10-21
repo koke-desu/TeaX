@@ -7,7 +7,7 @@ import { menusAtom } from "../database/atom";
 import { useInitPage } from "../hooks/initAppHooks";
 import LargeButton from "../html&cssComps/LargeButton";
 
-const Main = () => {
+const MainPage = () => {
   useInitPage();
   const [isCouponModalOpen, setIsCouponModalOpen] = useState(false);
   const menus = useRecoilValue(menusAtom);
@@ -56,4 +56,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default MainPage;
