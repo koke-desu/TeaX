@@ -14,7 +14,7 @@ const QRCodeScanner: React.VFC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const intervalRef = useRef<number | undefined>(undefined);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [qrData, setQrData] = useState<string>("");
+  const [qrData, setQrData] = useState<string>("quiz-1");
 
   const { width, height } = useWindowSize();
   const router = useRouter();
@@ -74,12 +74,12 @@ const QRCodeScanner: React.VFC = () => {
     if (quiz !== undefined) {
       console.log(quiz);
       setQuizId(quiz.id);
-      setIsOpen(false);
+      onClose();
     } else if (isOpen) {
       alert("すでに回答した問題のQRコードです。");
     }
   }, [qrData, quizzes, setQuizId]);
-
+  if (!isOpen) return <></>;
   return (
     <PushPage isOpen={isOpen} onClose={onClose}>
       <div
