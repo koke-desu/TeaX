@@ -73,7 +73,7 @@ const styles = {
     -webkit-line-clamp: 1;
     overflow: hidden;
     color: rgb(98, 96, 96);
-    font-size: 16px;
+    font-size: 8px;
     font-weight: bold;
     margin: 10px 0px 4px 0px;
   `,
