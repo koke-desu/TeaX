@@ -75,8 +75,10 @@ const QRCodeScanner: React.VFC = () => {
       console.log(quiz);
       setQuizId(quiz.id);
       setIsOpen(false);
+    } else if (isOpen) {
+      alert("すでに回答した問題のQRコードです。");
     }
-  }, [qrData, quizzes, router, setQuizId]);
+  }, [qrData, quizzes, setQuizId]);
 
   return (
     <PushPage isOpen={isOpen} onClose={onClose}>
