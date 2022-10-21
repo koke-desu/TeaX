@@ -31,6 +31,8 @@ const Layout: FC<Props> = ({ children }) => {
           justifyContent: "space-between",
           marginTop: "50px",
           color: "black",
+          overflowY: "scroll",
+          paddingBottom: "40px",
         }}
       >
         <Header isHome onClose={() => {}}></Header>
