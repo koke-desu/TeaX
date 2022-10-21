@@ -19,13 +19,6 @@ type Props = {
 };
 
 const Layout: FC<Props> = ({ children }) => {
-  useEffect(() => {
-    window.addEventListener("appinstalled", () => {
-      // Optionally, send analytics event to indicate successful install
-      console.log("PWA was installed");
-    });
-  }, []);
-
   return (
     <>
       <div
@@ -42,7 +35,7 @@ const Layout: FC<Props> = ({ children }) => {
       >
         <Header isHome onClose={() => {}}></Header>
         <main style={{ display: "flex", flexGrow: 1 }}>{children}</main>
-        <InstallButton />
+        {/* <InstallButton /> */}
         <OrderingFAB></OrderingFAB>
         <BottomNavigation></BottomNavigation>
         <OrderingListModal></OrderingListModal>
