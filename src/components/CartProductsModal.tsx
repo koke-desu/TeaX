@@ -40,7 +40,7 @@ const CartProductsModal = () => {
                   const cartItem = orderFunc.getMenuByID(item.menuID);
                   return (
                     <div
-                      key={item.menuID}
+                      key={index}
                       style={{
                         borderBottom: "1px solid #e9e9e9",
                         display: "flex",
