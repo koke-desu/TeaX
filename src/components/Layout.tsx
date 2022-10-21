@@ -50,7 +50,6 @@ const Layout: FC<Props> = ({ children }) => {
       </div>
       <QRReaderPage />
       <QuizPage />
-
       <AchieveCouponModal />
       <SplashScreen />
     </>

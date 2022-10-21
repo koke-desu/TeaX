@@ -18,7 +18,7 @@ const InstallButton = () => {
   function presentAddToHome() {
     alert("1");
 
-    if (promptEvent)
+    if (promptEvent) {
       promptEvent
         .prompt()
         .then((res) => {
@@ -29,23 +29,24 @@ const InstallButton = () => {
           alert("3");
           console.log(`----> ${error}`);
         }); // Wait for the user to respond to the prompt
-    promptEvent.userChoice.then((choice) => {
-      alert("4");
-      if (choice.outcome === "accepted") {
-        alert("5");
-        console.log("User accepted");
-        let tmpUserData = { ...userData };
-        tmpUserData.isInstalled = true;
-        updateUserData(tmpUserData);
-        setUserData(tmpUserData);
-      } else {
-        alert("6");
-        console.log("User dismissed");
-      }
-    });
+      promptEvent.userChoice.then((choice) => {
+        alert("4");
+        if (choice.outcome === "accepted") {
+          alert("5");
+          console.log("User accepted");
+          let tmpUserData = { ...userData };
+          tmpUserData.isInstalled = true;
+          updateUserData(tmpUserData);
+          setUserData(tmpUserData);
+        } else {
+          alert("6");
+          console.log("User dismissed");
+        }
+      });
+    }
   }
 
-  if (userData.isInstalled) return <></>;
+  if (userData.id === "" || userData.isInstalled) return <></>;
   return (
     <a
       onClick={() => {

@@ -16,7 +16,10 @@ export const useInitPage = () => {
   const setSplashScreenIsOpen = useSetRecoilState(isLoadingAtom);
   useEffect(() => {
     isLogined(
-      () => {
+      async () => {
+        await setTimeout(() => {
+          setSplashScreenIsOpen(false);
+        }, 1000);
         router.replace("/userAction/login");
       },
 

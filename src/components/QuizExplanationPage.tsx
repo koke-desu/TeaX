@@ -22,7 +22,8 @@ const QuizExplanationPage: FC<Props> = ({ quizData, quizResult }) => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        // overflowY: "scroll",
+        overflowY: "scroll",
+        backgroundColor: "red",
       }}
     >
       <h2>
@@ -41,11 +42,8 @@ const QuizExplanationPage: FC<Props> = ({ quizData, quizResult }) => {
         style={{
           width: "100%",
           backgroundColor: "white",
-          // height: "40vh",
           borderRadius: "12px",
-          marginTop: "12px",
           padding: "24px",
-          paddingBottom: "50px",
           position: "relative",
         }}
       >
