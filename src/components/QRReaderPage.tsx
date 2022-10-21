@@ -72,6 +72,7 @@ const QRCodeScanner: React.VFC = () => {
     const quiz = quizzes.find((q) => q.id === qrData);
     console.log(qrData);
     if (quiz !== undefined) {
+      console.log(quiz);
       setQuizId(quiz.id);
       setIsOpen(false);
     }

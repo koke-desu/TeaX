@@ -13,7 +13,9 @@ const PushPage: FC<Props> = ({ isOpen, children, onClose }) => {
     <div className={cx(styles.pushPage, { [styles.pushPageIsClose]: isOpen })}>
       <Header isHome={false} onClose={onClose}></Header>
       {isOpen && (
-        <div style={{ marginTop: "40px", height: "100%" }}>{children}</div>
+        <div style={{ marginTop: "40px", height: "100%", overflowY: "scroll" }}>
+          {children}
+        </div>
       )}
     </div>
   );
