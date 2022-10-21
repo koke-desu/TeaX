@@ -54,6 +54,7 @@ export const useOrderFunc = () => {
     if (coupon) {
       tmpUserCoupons[coupon] = "useable";
     }
+    tmpUserData.coupons = tmpUserCoupons;
     setUserData(tmpUserData);
     setCartItems(tmp);
   };
