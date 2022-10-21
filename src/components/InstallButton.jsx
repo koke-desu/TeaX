@@ -36,6 +36,7 @@ const InstallButton = () => {
           let tmpUserData = { ...userData };
           tmpUserData.isInstalled = true;
           updateUserData(tmpUserData);
+          setUserData();
         } else {
           console.log("User dismissed");
         }
@@ -53,9 +54,10 @@ const InstallButton = () => {
         position: "absolute",
         borderRadius: "100px",
         display: "flex",
-        alignItems: "center,",
+        alignItems: "center",
         justifyContent: "center",
         top: "100px",
+        zIndex: 100,
       }}
     >
       <img src="/install.png" width="30px" height="40px" />
