@@ -3,7 +3,6 @@ import { FC } from "react";
 import { useRecoilValue } from "recoil";
 import { isLoadingAtom } from "../database/atom";
 import { useInitPage } from "../hooks/initAppHooks";
-import InitialPage from "./InitialPage";
 
 const SplashScreen: FC = () => {
   const isOpen = useRecoilValue(isLoadingAtom);

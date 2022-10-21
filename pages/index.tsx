@@ -1,24 +1,10 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useEffect } from "react";
-import InitialPage from "../src/components/InitialPage";
+import Main from "../src/components/main";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
-  // useEffect(() => {
-  //   let deferredPrompt;
-
-  //   window.addEventListener("beforeinstallprompt", (e) => {
-  //     // Prevent the mini-infobar from appearing on mobile
-  //     e.preventDefault();
-  //     // Stash the event so it can be triggered later.
-  //     deferredPrompt = e;
-  //     // Update UI notify the user they can install the PWA
-  //     showInstallPromotion();
-  //     // Optionally, send analytics event that PWA install promo was shown.
-  //     console.log(`'beforeinstallprompt' event was fired.`);
-  //   });
-  // }, []);
   return (
     <div className={styles.container}>
       {/* <Head>
@@ -27,19 +13,17 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head> */}
       <Head>
+        <title>TeaX</title>
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/icon.png"></link>
         <meta name="theme-color" content="#fff" />
       </Head>
 
-      <main className={styles.main}>
-        <InitialPage></InitialPage>
+      <main style={{ backgroundColor: "red" }}>
+        <Main />
       </main>
     </div>
   );
 };
 
 export default Home;
-function showInstallPromotion() {
-  throw new Error("Function not implemented.");
-}

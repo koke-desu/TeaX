@@ -19,7 +19,11 @@ export const useInitPage = () => {
       () => {
         router.replace("/userAction/login");
       },
-      (id: string) => {
+
+      async (id: string) => {
+        await setTimeout(() => {
+          setSplashScreenIsOpen(false);
+        }, 1000);
         if (user.id === "")
           fetchUserData(id).then((data: User) => {
             console.log("setUserData to recoil", data);
@@ -30,8 +34,6 @@ export const useInitPage = () => {
             quizFunc.getQuizzes();
             orderFunc.getOrderState(data.id);
           });
-        if (router.pathname === "/") router.replace("/quiz/main");
-        setSplashScreenIsOpen(false);
       }
     );
   }, []);
