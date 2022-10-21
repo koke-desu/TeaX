@@ -65,7 +65,7 @@ export const useAccountFunc = () => {
               quizzes: {},
               isInstalled: false,
             });
-            router.replace("/order/main");
+            router.replace("/");
           })
           .catch((error: AuthError) => {
             console.log(error.message);

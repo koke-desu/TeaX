@@ -99,6 +99,7 @@ export const fetchKeyword = (index: number) => {
 //キーワードの後半の番号を1つ増やす
 //TODO:関数を試す
 export const addKeywordNum = (index: number, preNum: number) => {
+  console.log("ordered index is:", index);
   return updateDoc(doc(db, "keywords", `${index}`), {
     number: preNum + 1,
   });

@@ -27,7 +27,7 @@ const QuizExplanationPage: FC<Props> = ({ quizData, quizResult }) => {
       }}
     >
       <h2>
-        {quizResult
+        {!quizResult
           ? "解説"
           : quizResult === "cleared"
           ? "正解です！"
@@ -49,7 +49,14 @@ const QuizExplanationPage: FC<Props> = ({ quizData, quizResult }) => {
       >
         <p>{quizData.explane}</p>
         {quizResult && (
-          <div style={{ position: "absolute", bottom: "24px", right: "24px" }}>
+          <div
+            style={{
+              display: "flex",
+              width: "100%",
+              flexDirection: "column",
+              alignItems: "flex-end",
+            }}
+          >
             <SmallButton
               title="閉じる"
               onClick={() => {
