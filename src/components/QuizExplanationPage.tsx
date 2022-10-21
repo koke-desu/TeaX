@@ -22,6 +22,7 @@ const QuizExplanationPage: FC<Props> = ({ quizData, quizResult }) => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        overflowY: "scroll",
       }}
     >
       <h2>
@@ -48,15 +49,7 @@ const QuizExplanationPage: FC<Props> = ({ quizData, quizResult }) => {
           position: "relative",
         }}
       >
-        <p
-          style={{
-            overflowY: "scroll",
-            height: "100%",
-            paddingBottom: "40px",
-          }}
-        >
-          {quizData.explane}
-        </p>
+        <p>{quizData.explane}</p>
         {quizResult && (
           <div style={{ position: "absolute", bottom: "24px", right: "24px" }}>
             <SmallButton
