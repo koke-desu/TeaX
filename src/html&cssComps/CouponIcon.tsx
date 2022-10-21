@@ -8,7 +8,7 @@ type Props = {
 
 const CouponIcon: FC<Props> = ({ isCouponUsed, onClick }) => {
   return (
-    <a onClick={onClick}>
+    <a onClick={onClick} className={styles.container}>
       <div
         className={cx(styles.couponExsists, {
           [styles.disableCoupon(isCouponUsed)]: isCouponUsed,
@@ -28,6 +28,10 @@ const CouponIcon: FC<Props> = ({ isCouponUsed, onClick }) => {
 };
 
 const styles = {
+  container: css`
+    position: relative;
+    background-color: red;
+  `,
   couponExsists: css`
     opacity: 1;
     z-index: 100;

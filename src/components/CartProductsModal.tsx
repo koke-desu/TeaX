@@ -33,7 +33,7 @@ const CartProductsModal = () => {
       <Modal title="" isOpen={isModalOpen} setIsOpen={setIsModalOpen}>
         <>
           <div>
-            <h2 style={{ margin: 0 }}>合計 {totalPrice()}￥</h2>
+            <h2 style={{ margin: 0 }}>合計 ￥{totalPrice()}</h2>
             {cartItems.length ? (
               <div>
                 {cartItems.map((item, index) => {
