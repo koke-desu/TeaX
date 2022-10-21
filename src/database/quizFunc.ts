@@ -46,11 +46,10 @@ export const useQuizFunc = () => {
 
   //クイズ回答後の処理
   const afterFinishQuiz = (quizData: Quiz, result: QuizState) => {
-    const tmp = { ...userData };
-    const tmp2 = { ...tmp.quizzes };
-    tmp2[quizData.id] = result;
     if (result === "cleared") {
       coupons.forEach((coupon) => {
+        console.log("id=aiueo", coupon);
+
         if (coupon.achieveType === quizData.id) {
           setUserCoupon(userData.id, coupon.id, result, userData).then(
             (tmpData) => {
@@ -62,6 +61,12 @@ export const useQuizFunc = () => {
             }
           );
           setAchieveCouponModal(coupon.achieveType);
+        } else {
+          setUserQuiz(userData.id, quizData.id, result, userData).then(
+            (data) => {
+              setUserData(data);
+            }
+          );
         }
       });
     }

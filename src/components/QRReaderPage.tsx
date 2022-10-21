@@ -14,7 +14,7 @@ const QRCodeScanner: React.VFC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const intervalRef = useRef<number | undefined>(undefined);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [qrData, setQrData] = useState<string>("quiz-1");
+  const [qrData, setQrData] = useState<string>("");
 
   const { width, height } = useWindowSize();
   const router = useRouter();
