@@ -1,30 +1,22 @@
 import { userAgent } from "next/server";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { userAtom } from "../database/atom";
 import { updateUserData } from "../database/basicFunc/firestore";
 
 const InstallButton = () => {
   const [userData, setUserData] = useRecoilState(userAtom);
+  const [promptEvent, setPromptEvent] = useState(null);
   useEffect(() => {
-    let promptEvent;
-
     // Capture event and defer
     window.addEventListener("beforeinstallprompt", function (e) {
       e.preventDefault();
-      promptEvent = e;
-      listenToUserAction();
+      setPromptEvent(e);
     });
-
-    // listen to install button clic
-    function listenToUserAction() {
-      const installBtn = document.getElementById("InstallBtn");
-      installBtn.addEventListener("click", presentAddToHome);
-    }
-
-    // present install prompt to user
-    function presentAddToHome() {
-      alert("1");
+  }, []);
+  function presentAddToHome() {
+    alert("1");
+    if (promptEvent)
       promptEvent
         .prompt()
         .then((res) => {
@@ -35,29 +27,29 @@ const InstallButton = () => {
           alert("3");
           console.log(`----> ${error}`);
         }); // Wait for the user to respond to the prompt
-      promptEvent.userChoice.then((choice) => {
-        alert("4");
-        if (choice.outcome === "accepted") {
-          alert("5");
-          console.log("User accepted");
-          let tmpUserData = { ...userData };
-          tmpUserData.isInstalled = true;
-          updateUserData(tmpUserData);
-          setUserData();
-        } else {
-          alert("6");
-          console.log("User dismissed");
-        }
-      });
-    }
-  }, []);
+    promptEvent.userChoice.then((choice) => {
+      alert("4");
+      if (choice.outcome === "accepted") {
+        alert("5");
+        console.log("User accepted");
+        let tmpUserData = { ...userData };
+        tmpUserData.isInstalled = true;
+        updateUserData(tmpUserData);
+        setUserData();
+      } else {
+        alert("6");
+        console.log("User dismissed");
+      }
+    });
+  }
+
   if (userData.isInstalled) return <></>;
   return (
     <a
       onClick={() => {
         alert("aaaaaaaa");
+        presentAddToHome();
       }}
-      id="InstallBtn"
       style={{
         width: "60px",
         height: "60px",
