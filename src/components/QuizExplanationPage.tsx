@@ -23,6 +23,7 @@ const QuizExplanationPage: FC<Props> = ({ quizData, quizResult }) => {
         flexDirection: "column",
         alignItems: "center",
         overflowY: "scroll",
+        overflowX: "hidden",
       }}
     >
       <h2>

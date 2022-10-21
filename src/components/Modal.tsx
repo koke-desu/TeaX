@@ -96,6 +96,7 @@ const Modal: FC<Props> = ({
             style={{
               maxHeight: "80vh",
               overflowY: "scroll",
+              overflowX: "hidden",
               padding: "12px 0",
             }}
           >

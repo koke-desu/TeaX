@@ -32,6 +32,7 @@ const Layout: FC<Props> = ({ children }) => {
           marginTop: "50px",
           color: "black",
           overflowY: "scroll",
+          overflowX: "hidden",
           paddingBottom: "100px",
         }}
       >
