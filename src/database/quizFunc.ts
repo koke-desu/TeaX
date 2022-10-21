@@ -63,10 +63,10 @@ export const useQuizFunc = () => {
           );
           setAchieveCouponModal(coupon.achieveType);
         }
-        setAnswerPageIsOpen("");
-        setExplanationPageIsOpen(false);
       });
     }
+    setAnswerPageIsOpen("");
+    setExplanationPageIsOpen(false);
   };
   return {
     getQuizzes,
