@@ -165,9 +165,7 @@ export const useOrderFunc = () => {
       try {
         keywordData = (await fetchKeyword(keywordIndex)).data();
       } catch (error) {
-        alert(
-          `注文番号を取得できませんでした。注文をし直してください:${error}`
-        );
+        alert(`注文番号を取得できませんでした。注文をし直してください:${error}`);
         return;
       }
       if (!keywordData) {
@@ -177,9 +175,7 @@ export const useOrderFunc = () => {
       try {
         addKeywordNum(keywordIndex, keywordData.number);
       } catch (error) {
-        alert(
-          `注文番号を取得できませんでした。注文をし直してください:${error}`
-        );
+        alert(`注文番号を取得できませんでした。注文をし直してください:${error}`);
         return;
       }
       const keyword: string = keywordData.name + keywordData.number;
@@ -207,9 +203,7 @@ export const useOrderFunc = () => {
         // changeStateOfCoupon(userData.id, tmpCouponsState);
         updateUserData(userData);
       } catch (error) {
-        alert(
-          `クーポンを正しく使用できませんでした。注文をキャンセルします${error}`
-        );
+        alert(`クーポンを正しく使用できませんでした。注文をキャンセルします${error}`);
         return;
       }
       setCartItems([]);
@@ -284,7 +278,7 @@ export const useOrderFunc = () => {
         } else {
           alert("クーポンデータがありません");
         }
-        return tmpPrice;
+        return Math.floor(tmpPrice);
       };
       const tmp = { ...orderMenu };
       const tmpUserData = { ...userData };

@@ -3,7 +3,6 @@ import { css } from "@emotion/css";
 import { FC, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { couponsAtom, orderedDataAtom, toppingsAtom } from "../database/atom";
-import { setOrder } from "../database/basicFunc/firestore";
 import { useOrderFunc } from "../database/orderFunc";
 import CouponIcon from "../html&cssComps/CouponIcon";
 import LargeButton from "../html&cssComps/LargeButton";
