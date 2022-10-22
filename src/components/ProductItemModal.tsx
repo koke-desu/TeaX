@@ -29,6 +29,19 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
   });
   const toppings = useRecoilValue(toppingsAtom);
   const orderData = useRecoilValue(orderedDataAtom);
+
+  const reCalcPrice = () => {
+    let val = menu.price;
+    orderMenu.toppings.forEach((id) => {
+      const topping = toppings.find((v) => v.id === id);
+      if (topping) {
+        val += topping.price;
+      }
+    });
+
+    return val;
+  };
+
   return (
     <>
       <Modal
@@ -64,12 +77,7 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
                 justifyContent: "center",
               }}
             >
-              <img
-                src={menu.imageUrl}
-                alt="menuImg"
-                width="100%"
-                height="auto"
-              />
+              <img src={menu.imageUrl} alt="menuImg" width="100%" height="auto" />
             </div>
             <div
               style={{
@@ -118,12 +126,8 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
                       imageUrl={topping.imageUrl}
                       onClick={() => {
                         let tmp = { ...orderMenu };
-                        if (
-                          orderMenu.toppings.some((data) => data === topping.id)
-                        ) {
-                          tmp.toppings = tmp.toppings.filter(
-                            (data) => data !== topping.id
-                          );
+                        if (orderMenu.toppings.some((data) => data === topping.id)) {
+                          tmp.toppings = tmp.toppings.filter((data) => data !== topping.id);
                           tmp.menuPrice -= topping.price;
                         } else {
                           tmp.toppings.push(topping.id);
@@ -131,9 +135,7 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
                         }
                         setOrderMenu(tmp);
                       }}
-                      isSelected={orderMenu.toppings.some(
-                        (data) => data === topping.id
-                      )}
+                      isSelected={orderMenu.toppings.some((data) => data === topping.id)}
                     />
                   </div>
                 ))}
@@ -161,6 +163,7 @@ const ProductItemModal: FC<Props> = ({ menu, isOpen, setIsOpen }) => {
                     onClick={() => {
                       if (orderMenu.couponID) {
                         const tmp = { ...orderMenu };
+                        tmp.menuPrice = reCalcPrice();
                         if (tmp.couponID) orderFunc.regetCoupon(tmp.couponID);
                         tmp.couponID = null;
                         setOrderMenu(tmp);
